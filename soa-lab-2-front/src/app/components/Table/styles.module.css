@@ -1,0 +1,7 @@
+.table {
+    background-color: var(--foreground);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow) 0 0 15px;
+}
