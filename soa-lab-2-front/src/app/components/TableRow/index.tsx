@@ -12,7 +12,7 @@ export const TableRow = ({ band }: TableRowProps) => {
     return (
         <>
                 <div className={styles.container}>
-                    <TableCell className={styles.title} cellKey={SortKeys.NAME}>
+                    <TableCell className={`${styles.title} title`} cellKey={SortKeys.NAME}>
                         {band.name}
                     </TableCell>
                     <TableCell className='textProperty' cellKey={SortKeys.DESCRIPTION}>
