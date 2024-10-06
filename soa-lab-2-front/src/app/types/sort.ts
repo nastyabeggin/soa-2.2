@@ -5,6 +5,7 @@ export enum SortOrder {
 }
 
 export enum SortKeys {
+    ID,
     NAME,
     DESCRIPTION,
     CREATION_DATE,

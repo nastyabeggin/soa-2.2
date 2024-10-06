@@ -10,7 +10,7 @@
 .sort {
     height: 14px;
     width: 14px;
-    fill: var(--secondary-text);
+    fill: var(--secondary-text-unfocused);
 }
 
 .sort.desc {

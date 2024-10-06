@@ -6,6 +6,7 @@ export type SortOrderMap = {
 };
 
 export const DEFAULT_SORT_ORDER: SortOrderMap = {
+    [SortKeys.ID]: SortOrder.UNDEFINED,
     [SortKeys.NAME]: SortOrder.UNDEFINED,
     [SortKeys.DESCRIPTION]: SortOrder.UNDEFINED,
     [SortKeys.CREATION_DATE]: SortOrder.UNDEFINED,

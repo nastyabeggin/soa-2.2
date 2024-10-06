@@ -5,9 +5,18 @@
   --border: #f0f0f0;
 
   --primary-text: #000000;
-  --secondary-text: #7e7e7e;
+  --primary-text-inverted: #ffffff;
+  --secondary-text: #656565;
+  --secondary-text-unfocused: #989898;
 
-  --active: #2b77df;
+  --accent-text: #3478d8;
+  --accent-green-text: #369d61;
+
+  --active: #2e89ff;
+  --active-shadow: rgba(42, 124, 230, 0.39);
+
+  --accent: #d6e8fd;
+  --accent-green: #c8f0d3;
 
   --font-size-xs: 12px;
   --font-size-s: 14px;
@@ -26,12 +35,58 @@ body {
 .table-grid {
   padding: 16px;
   display: grid;
-  grid-template-columns: 150px 180px 120px repeat(2, 60px) 80px 100px 180px 80px;
+  grid-template-columns: 30px 150px 180px 120px repeat(2, 60px) 80px 100px 180px 150px;
   grid-column-gap: 16px;
+  color: var(--secondary-text);
 }
 
 .divider {
   height: 1px;
   width: 100%;
   background-color: var(--border);
+}
+
+.button {
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: var(--shadow) 0 0 3px;
+}
+
+.button.s {
+  height: 24px;
+  width: 120px;
+}
+.button.m {
+  height: 30px;
+  width: 72px;
+}
+.button.l {
+  height: 36px;
+  width: 180px;
+}
+
+.button.primary {
+  background-color: var(--active);
+  color: var(--primary-text-inverted);
+  box-shadow: var(--active-shadow) 0 0 5px;
+}
+.button.secondary {
+  background-color: var(--foreground);
+  color: var(--primary-text);
+}
+.button.accent {
+  background-color: var(--accent);
+  color: var(--accent-text);
+  border-radius: 16px;
+}
+.button.accent-green {
+  background-color: var(--accent-green);
+  color: var(--accent-green-text);
+  border-radius: 16px;
 }

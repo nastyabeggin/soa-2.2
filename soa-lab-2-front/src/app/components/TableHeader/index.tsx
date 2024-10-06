@@ -9,6 +9,9 @@ export const TableHeader = () => {
         <>
             <div className={`table-grid ${styles.container}`}>
                 <TableCell withSort cellKey={SortKeys.NAME}>
+                    ID
+                </TableCell>
+                <TableCell withSort cellKey={SortKeys.NAME}>
                     Name
                 </TableCell>
                 <TableCell withSort cellKey={SortKeys.DESCRIPTION}>

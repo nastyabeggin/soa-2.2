@@ -1,10 +1,10 @@
 'use client'
 
 import styles from './styles.module.css';
-import SortIcon from '@/static/icons/sort-amount-up.svg';
 import {useContext} from "react";
 import {SortContext, transitionSortOrder} from "@/app/context/sort";
 import {SortKeys, SortOrder} from "@/app/types/sort";
+import {SortIcon} from "@/static/icons";
 
 type SortProps = {
     sortKey: SortKeys;
