@@ -10,7 +10,7 @@ public class Coordinates {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private long x;
+    private Long x;
 
     @NotNull(message = "Y coordinate cannot be null")
     @Min(value = -439, message = "Y coordinate cannot be less than -439")

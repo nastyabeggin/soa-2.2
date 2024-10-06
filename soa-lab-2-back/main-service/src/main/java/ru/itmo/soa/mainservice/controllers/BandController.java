@@ -8,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.itmo.soa.mainservice.model.Band;
+import ru.itmo.soa.mainservice.model.MusicGenre;
 import ru.itmo.soa.mainservice.services.BandService;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,9 +29,14 @@ public class BandController {
     }
 
     @GetMapping
-    public Page<Band> getBands(@RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "10") int size) {
-        return bandService.getBands(PageRequest.of(page, size));
+    public ResponseEntity<List<Band>> getBands(
+            @RequestParam(required = false) String[] sort,
+            @RequestParam(required = false) String[] filter,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "10") int size) {
+
+        List<Band> bands = bandService.getBands(sort, filter, page, size);
+        return ResponseEntity.ok(bands);
     }
 
     @GetMapping("/{id}")
@@ -38,12 +46,28 @@ public class BandController {
 
     @PatchMapping("/{id}")
     public Band updateBand(@RequestBody Band band, @PathVariable Long id) {
-        band.setId(id);
-        return bandService.updateBand(band);
+        return bandService.updateBand(band, id);
     }
 
     @DeleteMapping("/{id}")
     public void deleteBandById(@PathVariable Long id) {
         bandService.deleteBandById(id);
+    }
+
+    @GetMapping("/genre")
+    public ResponseEntity<List<MusicGenre>> getAllGenres() {
+        return ResponseEntity.ok(bandService.getAllGenres());
+    }
+
+    @DeleteMapping("/genre/{genre}")
+    public ResponseEntity<Void> deleteBandsByGenre(@PathVariable("genre") String genre) {
+        bandService.deleteBandsByGenre(genre);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/genre/min")
+    public ResponseEntity<Band> getGroupWithMinGenre() {
+        Band band = bandService.getGroupWithMinGenre();
+        return ResponseEntity.ok(band);
     }
 }
