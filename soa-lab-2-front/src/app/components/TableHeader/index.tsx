@@ -3,7 +3,6 @@
 import styles from './styles.module.css';
 import {TableCell} from "@/app/components/TableCell";
 import {SortKeys} from "@/app/types/sort";
-import {EditIcon} from "@/static/icons";
 
 export const TableHeader = () => {
     return (
@@ -39,7 +38,9 @@ export const TableHeader = () => {
                 <TableCell withSort cellKey={SortKeys.SINGLE}>
                     Singles
                 </TableCell>
-                <TableCell />
+                <TableCell>
+                    Actions
+                </TableCell>
             </div>
             <div className='divider'></div>
         </>

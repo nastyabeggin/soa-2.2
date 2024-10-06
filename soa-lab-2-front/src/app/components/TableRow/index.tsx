@@ -7,6 +7,7 @@ import {EditIcon, PlusIcon, ShowIcon} from "@/static/icons";
 import {AddSingleModal} from "@/app/components/AddSingleModal";
 import {useState} from "react";
 import {ShowSinglesModal} from "@/app/components/ShowSinglesModal";
+import {AddMemberModal} from "@/app/components/AddMemberModal";
 
 type TableRowProps = {
     band: Band;
@@ -15,6 +16,7 @@ type TableRowProps = {
 export const TableRow = ({ band }: TableRowProps) => {
     const [isAddSingleModalVisible, setAddSingleModalVisible] = useState<boolean>(false);
     const [isShowSinglesModalVisible, setShowSinglesModalVisible] = useState<boolean>(false);
+    const [isAddMemberModalVisible, setAddMemberModalVisible] = useState<boolean>(false);
 
     return (
         <>
@@ -62,6 +64,10 @@ export const TableRow = ({ band }: TableRowProps) => {
                         }
                     </TableCell>
                     <TableCell>
+                        <Button style='accent-green' size='s' onClick={() => setAddMemberModalVisible(true)}>
+                            <PlusIcon className={`${styles.icon} ${styles.green}`}/>
+                            Add member
+                        </Button>
                         <EditIcon className={`${styles.icon} ${styles.edit}`}/>
                     </TableCell>
                 </div>
@@ -71,6 +77,9 @@ export const TableRow = ({ band }: TableRowProps) => {
             }
             {isShowSinglesModalVisible &&
                 <ShowSinglesModal bandId={band.id} bandName={band.name} isVisible={isShowSinglesModalVisible} onClose={() => setShowSinglesModalVisible(false)}/>
+            }
+            {isAddMemberModalVisible &&
+                <AddMemberModal bandId={band.id} bandName={band.name} isVisible={isAddMemberModalVisible} onClose={() => setAddMemberModalVisible(false)} />
             }
         </>
     )

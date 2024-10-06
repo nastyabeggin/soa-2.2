@@ -7,9 +7,9 @@ import {Single} from "@/app/types/single";
 type AddSingleModalProps = {
     bandId: number;
     bandName: string;
+    isVisible: boolean;
+    onClose: () => void;
     currentValue?: Single;
-    isVisible?: boolean;
-    onClose?: () => void;
 }
 
 export const AddSingleModal = ({ bandId, currentValue, bandName, isVisible, onClose }: AddSingleModalProps) => {

@@ -10,8 +10,8 @@ import {AddSingleModal} from "@/app/components/AddSingleModal";
 type AddSingleModalProps = {
     bandId: number;
     bandName: string;
-    isVisible?: boolean;
-    onClose?: () => void;
+    isVisible: boolean;
+    onClose: () => void;
 }
 
 export const ShowSinglesModal = ({ bandId, bandName, isVisible, onClose }: AddSingleModalProps) => {
