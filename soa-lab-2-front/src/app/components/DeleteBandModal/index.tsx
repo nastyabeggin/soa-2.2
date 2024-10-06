@@ -16,7 +16,7 @@ export const DeleteBandModal = ({ bandName, isVisible, onClose }: DeleteBandModa
         <Modal isVisible={isVisible} onClose={onClose}>
             <div className='modal-container'>
                 <h2>Do you want to delete {bandName}?</h2>
-                <span className={styles.caption}>This action cannot be undone.</span>
+                <span className={styles.caption}>This action cannot be undone. Think wisely</span>
                 <div className='buttons'>
                     <Button style='cancel' size='m' onClick={onClose}>
                         Cancel
