@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 import java.time.LocalDate;
 
 @Entity
+@Data
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +30,6 @@ public class Person {
     @OneToOne(cascade = CascadeType.ALL)
     private Location location;
 
-    @NotNull(message = "Band ID is required")
     @Min(value = 1, message = "Band ID must be greater than or equal to 1")
     private Long bandID;
 }

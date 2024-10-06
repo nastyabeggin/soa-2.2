@@ -36,7 +36,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<DefaultError> handleConstraintViolation(ConstraintViolationException ex) {
         DefaultError errorResponse = new DefaultError(
-                HttpStatus.BAD_REQUEST.value(),
                 "Invalid input: " + ex.getMessage()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
@@ -46,7 +45,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<DefaultError> handleResourceNotFound(ResourceNotFoundException ex) {
         DefaultError errorResponse = new DefaultError(
-                HttpStatus.NOT_FOUND.value(),
                 ex.getMessage() != null ? ex.getMessage() : "Resource not found"
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
@@ -65,7 +63,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<DefaultError> handleGeneralException(Exception ex) {
         DefaultError errorResponse = new DefaultError(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "An unexpected error occurred: " + ex.getMessage()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -7,8 +7,8 @@ public class DefaultError {
     private int code;
     private String message;
 
-    public DefaultError(int code, String message) {
-        this.code = code;
+    public DefaultError(String message) {
+        this.code = 404;
         this.message = message;
     }
 }

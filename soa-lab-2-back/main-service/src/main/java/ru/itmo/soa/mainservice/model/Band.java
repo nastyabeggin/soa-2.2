@@ -30,7 +30,6 @@ public class Band {
     @OneToOne(cascade = CascadeType.ALL)
     private Coordinates coordinates;
 
-    @NotNull(message = "Creation date is required")
     @Column(nullable = false, updatable = false)
     private LocalDateTime creationDate;
 

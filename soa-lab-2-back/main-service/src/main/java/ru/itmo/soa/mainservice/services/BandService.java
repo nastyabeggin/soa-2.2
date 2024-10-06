@@ -26,6 +26,9 @@ public class BandService {
 
     public Band createBand(Band band) {
         band.setCreationDate(LocalDateTime.now());
+        if (band.getFrontMan() != null) {
+            band.getFrontMan().setBandID(band.getId());
+        }
         return bandRepository.save(band);
     }
 
