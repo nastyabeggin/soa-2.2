@@ -1,5 +1,4 @@
 import {Modal} from "@/app/components/Modal";
-import styles from './styles.module.css';
 import {useState} from "react";
 import {Button} from "@/app/components/Button";
 import {Single} from "@/app/types/single";
@@ -19,13 +18,13 @@ export const AddSingleModal = ({ bandId, currentValue, bandName, isVisible, onCl
 
     return (
         <Modal isVisible={isVisible} onClose={onClose}>
-            <div className={styles.container}>
+            <div className='modal-container'>
                 <h2>{currentValue ? `Update single for ${bandName}` : `New single for ${bandName}`}</h2>
-                <label className={styles.inputContainer}>
+                <label className='input-container'>
                     {currentValue ? 'New name' : 'Name'}
-                    <input id='name' value={name} className={styles.input} placeholder='e.g. Moonlight' onChange={(e) => setName(e.target.value)} />
+                    <input id='name' value={name} className='input' placeholder='e.g. Moonlight' onChange={(e) => setName(e.target.value)} />
                 </label>
-                <div className={styles.buttons}>
+                <div className='buttons'>
                     <Button style='cancel' size='m' onClick={onClose}>
                         Cancel
                     </Button>

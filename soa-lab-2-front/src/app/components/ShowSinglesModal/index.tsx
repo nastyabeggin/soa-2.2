@@ -23,7 +23,7 @@ export const ShowSinglesModal = ({ bandId, bandName, isVisible, onClose }: AddSi
     return (
         <>
             <Modal isVisible={isVisible} onClose={onClose}>
-                <div className={styles.container}>
+                <div className='modal-container'>
                     <h2>{bandName} singles</h2>
                     <ul className={styles.list}>
                         {singles.map((single) => {
@@ -42,7 +42,7 @@ export const ShowSinglesModal = ({ bandId, bandName, isVisible, onClose }: AddSi
                         })}
                     </ul>
 
-                    <div className={styles.buttons} onClick={onClose}>
+                    <div className='buttons' onClick={onClose}>
                         <Button style='primary' size='m'>
                             Ok
                         </Button>

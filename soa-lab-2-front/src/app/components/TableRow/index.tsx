@@ -3,11 +3,12 @@ import {Band} from "@/app/types/bands";
 import {format} from 'date-fns';
 import {TableCell} from "@/app/components/TableCell";
 import {Button} from "@/app/components/Button";
-import {EditIcon, PlusIcon, ShowIcon} from "@/static/icons";
+import {DeleteIcon, EditIcon, PlusIcon, ShowIcon} from "@/static/icons";
 import {AddSingleModal} from "@/app/components/AddSingleModal";
 import {useState} from "react";
 import {ShowSinglesModal} from "@/app/components/ShowSinglesModal";
 import {AddMemberModal} from "@/app/components/AddMemberModal";
+import {DeleteBandModal} from "@/app/components/DeleteBandModal";
 
 type TableRowProps = {
     band: Band;
@@ -17,6 +18,7 @@ export const TableRow = ({ band }: TableRowProps) => {
     const [isAddSingleModalVisible, setAddSingleModalVisible] = useState<boolean>(false);
     const [isShowSinglesModalVisible, setShowSinglesModalVisible] = useState<boolean>(false);
     const [isAddMemberModalVisible, setAddMemberModalVisible] = useState<boolean>(false);
+    const [isDeleteBandModalVisible, setDeleteBandModalVisible] = useState<boolean>(false);
 
     return (
         <>
@@ -68,7 +70,8 @@ export const TableRow = ({ band }: TableRowProps) => {
                             <PlusIcon className={`${styles.icon} ${styles.green}`}/>
                             Add member
                         </Button>
-                        <EditIcon className={`${styles.icon} ${styles.edit}`}/>
+                        <EditIcon className={`${styles.icon} ${styles.action}`}/>
+                        <DeleteIcon className={`${styles.icon} ${styles.action}`} onClick={() => setDeleteBandModalVisible(true)}/>
                     </TableCell>
                 </div>
                 <div className='divider'></div>
@@ -80,6 +83,9 @@ export const TableRow = ({ band }: TableRowProps) => {
             }
             {isAddMemberModalVisible &&
                 <AddMemberModal bandId={band.id} bandName={band.name} isVisible={isAddMemberModalVisible} onClose={() => setAddMemberModalVisible(false)} />
+            }
+            {isDeleteBandModalVisible &&
+                <DeleteBandModal bandId={band.id} bandName={band.name} isVisible={isDeleteBandModalVisible} onClose={() => setDeleteBandModalVisible(false)}/>
             }
         </>
     )

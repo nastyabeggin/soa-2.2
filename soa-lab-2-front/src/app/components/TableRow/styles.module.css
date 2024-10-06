@@ -21,7 +21,7 @@
 .icon.blue {
     fill: var(--accent-text);
 }
-.icon.edit {
+.icon.action {
     margin-left: 4px;
     cursor: pointer;
 }

@@ -11,12 +11,14 @@
 
   --accent-text: #3478d8;
   --accent-green-text: #369d61;
+  --danger-text: #ca3f46;
 
   --active: #2e89ff;
   --active-shadow: rgba(42, 124, 230, 0.39);
 
   --accent: #d6e8fd;
   --accent-green: #c8f0d3;
+  --danger: #ffd9de;
 
   --font-size-xs: 12px;
   --font-size-s: 14px;
@@ -35,7 +37,7 @@ body {
 .table-grid {
   padding: 16px;
   display: grid;
-  grid-template-columns: 30px 150px 180px 120px repeat(2, 60px) 80px 100px 130px 140px 160px;
+  grid-template-columns: 30px 150px 180px 120px repeat(2, 60px) 80px 100px 130px 140px 180px;
   grid-column-gap: 16px;
   color: var(--secondary-text);
 }
@@ -94,4 +96,40 @@ body {
 .button.cancel {
   background-color: var(--background);
   color: var(--primary-text);
+}
+.button.danger {
+  background-color: var(--danger);
+  color: var(--danger-text);
+}
+
+.modal-container {
+  padding: 0 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-container .input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+
+  color: var(--secondary-text);
+  margin-bottom: 16px;
+}
+
+.modal-container .input {
+  border: 1px solid var(--secondary-text-unfocused);
+  border-radius: 8px;
+  height: 24px;
+  background-color: var(--foreground);
+  padding: 4px 8px;
+}
+
+.modal-container .buttons {
+  align-self: flex-end;
+
+  display: flex;
+  flex-direction: row;
+  column-gap: 8px;
 }

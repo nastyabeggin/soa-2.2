@@ -2,7 +2,7 @@ import {PropsWithChildren} from "react";
 
 type ButtonProps = {
     onClick?: () => void;
-    style: 'primary' | 'secondary' | 'accent' | 'accent-green' | 'cancel';
+    style: 'primary' | 'secondary' | 'accent' | 'accent-green' | 'cancel' | 'danger';
     size: 's' | 'm' | 'l';
 }
 
