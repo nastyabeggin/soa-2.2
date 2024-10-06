@@ -11,36 +11,36 @@ type TableRowProps = {
 export const TableRow = ({ band }: TableRowProps) => {
     return (
         <>
-                <div className={styles.container}>
-                    <TableCell className={`${styles.title} title`} cellKey={SortKeys.NAME}>
+                <div className='table-grid'>
+                    <TableCell className={styles.title}>
                         {band.name}
                     </TableCell>
-                    <TableCell className='textProperty' cellKey={SortKeys.DESCRIPTION}>
+                    <TableCell>
                         {band.description}
                     </TableCell>
-                    <TableCell className='property' cellKey={SortKeys.CREATION_DATE}>
+                    <TableCell>
                         {format(band.creationDate, 'dd/MM/yyyy')}
                     </TableCell>
-                    <TableCell className='shortProperty' cellKey={SortKeys.X}>
+                    <TableCell>
                         {band.coordinates.x.toFixed(2)}
                     </TableCell>
-                    <TableCell className='shortProperty' cellKey={SortKeys.Y}>
+                    <TableCell>
                         {band.coordinates.y.toFixed(2)}
                     </TableCell>
-                    <TableCell className='shortProperty' cellKey={SortKeys.MEMBERS}>
+                    <TableCell>
                         {band.numberOfParticipants}
                     </TableCell>
-                    <TableCell className='property' cellKey={SortKeys.GENRE}>
+                    <TableCell>
                         {band.genre}
                     </TableCell>
-                    <TableCell className='textProperty' cellKey={SortKeys.FRONTMAN}>
+                    <TableCell>
                         {band.frontMan && band.frontMan.name}
                     </TableCell>
-                    <TableCell className='property' cellKey={SortKeys.SINGLE}>
+                    <TableCell>
                         {band.singles && 'singles'}
                     </TableCell>
                 </div>
-                <div className={styles.divider}></div>
+                <div className='divider'></div>
         </>
     )
 }

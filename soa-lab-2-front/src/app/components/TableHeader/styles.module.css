@@ -1,17 +1,5 @@
 .container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    column-gap: 8px;
-    padding: 16px;
     color: var(--secondary-text);
     font-size: var(--font-size-xs);
     font-weight: 600;
-}
-
-.divider {
-    height: 1px;
-    width: 100%;
-    background-color: var(--border);
 }

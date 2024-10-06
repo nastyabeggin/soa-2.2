@@ -4,7 +4,7 @@ import {Sort} from "@/app/components/Sort";
 import {SortKeys} from "@/app/types/sort";
 
 type TableCellProps = {
-    cellKey: SortKeys;
+    cellKey?: SortKeys;
     className?: string;
     withSort?: boolean;
 }
@@ -15,7 +15,7 @@ export const TableCell = ({ className, cellKey, withSort = false, children }: Pr
             <div className={styles.cell}>
                 {children}
             </div>
-            {withSort &&
+            {(withSort === true && cellKey !== undefined) &&
                 <Sort sortKey={cellKey}/>
             }
         </div>

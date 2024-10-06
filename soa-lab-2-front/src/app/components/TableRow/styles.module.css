@@ -1,10 +1,4 @@
 .container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    column-gap: 16px;
-    padding: 16px;
     color: var(--secondary-text);
     -webkit-line-clamp: 2;
     overflow: hidden;
@@ -14,10 +8,4 @@
 .title {
     font-weight: 600;
     color: var(--primary-text);
-}
-
-.divider {
-    height: 1px;
-    width: 100%;
-    background-color: var(--border);
 }

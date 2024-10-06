@@ -1,5 +1,4 @@
 import styles from './styles.module.css';
-import {PropsWithChildren} from "react";
 import {Band} from "@/app/types/bands";
 import {TableRow} from "@/app/components/TableRow";
 import {TableHeader} from "@/app/components/TableHeader";
@@ -8,7 +7,7 @@ type TableProps = {
     bands: Band[];
 }
 
-export const Table = ({ children, bands }: PropsWithChildren<TableProps>) => {
+export const Table = ({ bands }: TableProps) => {
     return (
         <div className={styles.table}>
             <TableHeader />
