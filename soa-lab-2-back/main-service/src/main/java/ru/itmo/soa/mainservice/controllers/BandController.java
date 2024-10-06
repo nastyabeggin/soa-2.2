@@ -32,7 +32,7 @@ public class BandController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Band> getBandById(@PathVariable Long id) {
+    public Band getBandById(@PathVariable Long id) {
         return bandService.getBandById(id);
     }
 

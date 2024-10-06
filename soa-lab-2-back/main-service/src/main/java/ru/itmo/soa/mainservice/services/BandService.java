@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ru.itmo.soa.mainservice.exceptions.ResourceNotFoundException;
 import ru.itmo.soa.mainservice.model.Band;
 import ru.itmo.soa.mainservice.repositories.BandRepository;
 
@@ -24,8 +25,9 @@ public class BandService {
         return bandRepository.findAll(pageable);
     }
 
-    public Optional<Band> getBandById(Long id) {
-        return bandRepository.findById(id);
+    public Band getBandById(Long id) {
+        return bandRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Band with id " + id + " not found"));
     }
 
     public void deleteBandById(Long id) {
