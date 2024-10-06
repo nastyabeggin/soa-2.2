@@ -7,9 +7,11 @@ import {DEFAULT_SORT_ORDER, SortContext, SortOrderMap} from "@/app/context/sort"
 import {useState} from "react";
 import {Button} from "@/app/components/Button";
 import {FilterIcon, PlusIcon} from "@/static/icons";
+import {AddBandModal} from "@/app/components/UpdateBandModal";
 
 export default function Home() {
     const [sortOrder, setSortOrder] = useState<SortOrderMap>(DEFAULT_SORT_ORDER);
+    const [isAddBandModalVisible, setAddBandModalVisible] = useState<boolean>(false);
 
     return (
         <SortContext.Provider value={{sortOrder, setSortOrder}}>
@@ -21,7 +23,7 @@ export default function Home() {
                             <FilterIcon className={styles.icon}/>
                             Filter
                         </Button>
-                        <Button style='primary' size='l'>
+                        <Button style='primary' size='l' onClick={() => {setAddBandModalVisible(true)}}>
                             <PlusIcon className={`${styles.icon} ${styles.inverted}`}/>
                             Create new band
                         </Button>
@@ -29,6 +31,9 @@ export default function Home() {
                 </div>
                 <Table bands={bandsList}/>
             </div>
+            {isAddBandModalVisible &&
+                <AddBandModal isVisible={isAddBandModalVisible} onClose={() => setAddBandModalVisible(false)}/>
+            }
         </SortContext.Provider>
     );
 }

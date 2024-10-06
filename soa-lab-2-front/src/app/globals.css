@@ -115,15 +115,25 @@ body {
   row-gap: 4px;
 
   color: var(--secondary-text);
-  margin-bottom: 16px;
+  font-size: var(--font-size-xs);
+  margin-bottom: 8px;
 }
 
-.modal-container .input {
+.modal-container .input{
   border: 1px solid var(--secondary-text-unfocused);
   border-radius: 8px;
   height: 24px;
   background-color: var(--foreground);
   padding: 4px 8px;
+}
+
+.modal-container .select {
+  height: 32px;
+  border: 1px solid var(--secondary-text-unfocused);
+  border-radius: 8px;
+  background-color: var(--foreground);
+  padding: 2px 8px;
+
 }
 
 .modal-container .buttons {
@@ -132,4 +142,13 @@ body {
   display: flex;
   flex-direction: row;
   column-gap: 8px;
+  margin-top: 16px;
+}
+
+.modal-container .textarea {
+  border: 1px solid var(--secondary-text-unfocused);
+  border-radius: 8px;
+  height: 64px;
+  padding: 6px 8px;
+  resize: none;
 }

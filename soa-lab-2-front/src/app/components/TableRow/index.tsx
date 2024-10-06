@@ -9,6 +9,7 @@ import {useState} from "react";
 import {ShowSinglesModal} from "@/app/components/ShowSinglesModal";
 import {AddMemberModal} from "@/app/components/AddMemberModal";
 import {DeleteBandModal} from "@/app/components/DeleteBandModal";
+import {AddBandModal} from "@/app/components/UpdateBandModal";
 
 type TableRowProps = {
     band: Band;
@@ -19,6 +20,7 @@ export const TableRow = ({ band }: TableRowProps) => {
     const [isShowSinglesModalVisible, setShowSinglesModalVisible] = useState<boolean>(false);
     const [isAddMemberModalVisible, setAddMemberModalVisible] = useState<boolean>(false);
     const [isDeleteBandModalVisible, setDeleteBandModalVisible] = useState<boolean>(false);
+    const [isUpdateBandModalVisible, setUpdateBandModalVisible] = useState<boolean>(false);
 
     return (
         <>
@@ -70,7 +72,7 @@ export const TableRow = ({ band }: TableRowProps) => {
                             <PlusIcon className={`${styles.icon} ${styles.green}`}/>
                             Add member
                         </Button>
-                        <EditIcon className={`${styles.icon} ${styles.action}`}/>
+                        <EditIcon className={`${styles.icon} ${styles.action}`} onClick={() => setUpdateBandModalVisible(true)}/>
                         <DeleteIcon className={`${styles.icon} ${styles.action}`} onClick={() => setDeleteBandModalVisible(true)}/>
                     </TableCell>
                 </div>
@@ -86,6 +88,9 @@ export const TableRow = ({ band }: TableRowProps) => {
             }
             {isDeleteBandModalVisible &&
                 <DeleteBandModal bandId={band.id} bandName={band.name} isVisible={isDeleteBandModalVisible} onClose={() => setDeleteBandModalVisible(false)}/>
+            }
+            {isUpdateBandModalVisible &&
+                <AddBandModal band={band} isVisible={isUpdateBandModalVisible} onClose={() => setUpdateBandModalVisible(false)}/>
             }
         </>
     )

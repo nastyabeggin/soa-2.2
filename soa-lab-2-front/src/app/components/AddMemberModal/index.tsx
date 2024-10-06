@@ -12,7 +12,7 @@ type AppMemberModalProps = {
 export const AddMemberModal = ({ bandId, bandName, isVisible, onClose }: AppMemberModalProps) => {
     const [name, setName] = useState<string | undefined>(undefined);
     const [birthday, setBirthday] = useState<string | undefined>(undefined);
-    const [passport, setPassport] = useState<number>();
+    const [passport, setPassport] = useState<string>();
     const [x, setX] = useState<number>();
     const [y, setY] = useState<number>();
     const [z, setZ] = useState<number>();
@@ -35,9 +35,9 @@ export const AddMemberModal = ({ bandId, bandName, isVisible, onClose }: AppMemb
                 </label>
                 <label className='input-container'>
                     Passport ID*
-                    <input type='number' id='passport-id' value={passport} className='input'
-                           placeholder='e.g. 623532526' required
-                           onChange={(e) => setPassport(Number(e.target.value))}/>
+                    <input id='passport-id' value={passport} className='input'
+                           placeholder='e.g. RU623532526' required
+                           onChange={(e) => setPassport(e.target.value)}/>
                 </label>
                 <h3>Location</h3>
                 <label className='input-container'>
