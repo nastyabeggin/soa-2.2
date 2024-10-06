@@ -35,7 +35,7 @@ body {
 .table-grid {
   padding: 16px;
   display: grid;
-  grid-template-columns: 30px 150px 180px 120px repeat(2, 60px) 80px 100px 180px 150px;
+  grid-template-columns: 30px 150px 180px 120px repeat(2, 60px) 80px 100px 180px 150px 30px;
   grid-column-gap: 16px;
   color: var(--secondary-text);
 }
@@ -56,19 +56,20 @@ body {
   gap: 8px;
   cursor: pointer;
   box-shadow: var(--shadow) 0 0 3px;
+  width: fit-content;
 }
 
 .button.s {
   height: 24px;
-  width: 120px;
+  min-width: 120px;
 }
 .button.m {
   height: 30px;
-  width: 72px;
+  min-width: 72px;
 }
 .button.l {
   height: 36px;
-  width: 180px;
+  min-width: 180px;
 }
 
 .button.primary {
@@ -89,4 +90,8 @@ body {
   background-color: var(--accent-green);
   color: var(--accent-green-text);
   border-radius: 16px;
+}
+.button.cancel {
+  background-color: var(--background);
+  color: var(--primary-text);
 }

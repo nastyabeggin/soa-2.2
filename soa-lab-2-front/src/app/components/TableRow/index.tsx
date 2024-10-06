@@ -3,13 +3,19 @@ import {Band} from "@/app/types/bands";
 import {format} from 'date-fns';
 import {TableCell} from "@/app/components/TableCell";
 import {Button} from "@/app/components/Button";
-import {PlusIcon, ShowIcon} from "@/static/icons";
+import {EditIcon, PlusIcon, ShowIcon} from "@/static/icons";
+import {AddSingleModal} from "@/app/components/AddSingleModal";
+import {useState} from "react";
+import {ShowSinglesModal} from "@/app/components/ShowSinglesModal";
 
 type TableRowProps = {
     band: Band;
 }
 
 export const TableRow = ({ band }: TableRowProps) => {
+    const [isAddSingleModalVisible, setAddSingleModalVisible] = useState<boolean>(false);
+    const [isShowSinglesModalVisible, setShowSinglesModalVisible] = useState<boolean>(false);
+
     return (
         <>
                 <div className='table-grid'>
@@ -43,20 +49,29 @@ export const TableRow = ({ band }: TableRowProps) => {
                     <TableCell>
                         {band.singles ?
                             (
-                                <Button style='accent' size='s'>
+                                <Button style='accent' size='s' onClick={() => setShowSinglesModalVisible(true)}>
                                     <ShowIcon className={`${styles.icon} ${styles.blue}`}/>
                                     Show singles
                                 </Button>
                             ) : (
-                                <Button style='accent-green' size='s'>
+                                <Button style='accent-green' size='s' onClick={() => setAddSingleModalVisible(true)}>
                                     <PlusIcon className={`${styles.icon} ${styles.green}`}/>
                                     Add single
                                 </Button>
                             )
                         }
                     </TableCell>
+                    <TableCell>
+                        <EditIcon className={`${styles.icon} ${styles.edit}`}/>
+                    </TableCell>
                 </div>
                 <div className='divider'></div>
+            {isAddSingleModalVisible &&
+                <AddSingleModal bandId={band.id} bandName={band.name} isVisible={isAddSingleModalVisible} onClose={() => setAddSingleModalVisible(false)}/>
+            }
+            {isShowSinglesModalVisible &&
+                <ShowSinglesModal bandId={band.id} bandName={band.name} isVisible={isShowSinglesModalVisible} onClose={() => setShowSinglesModalVisible(false)}/>
+            }
         </>
     )
 }

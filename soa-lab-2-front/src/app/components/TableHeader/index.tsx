@@ -3,12 +3,13 @@
 import styles from './styles.module.css';
 import {TableCell} from "@/app/components/TableCell";
 import {SortKeys} from "@/app/types/sort";
+import {EditIcon} from "@/static/icons";
 
 export const TableHeader = () => {
     return (
         <>
             <div className={`table-grid ${styles.container}`}>
-                <TableCell withSort cellKey={SortKeys.NAME}>
+                <TableCell withSort cellKey={SortKeys.ID}>
                     ID
                 </TableCell>
                 <TableCell withSort cellKey={SortKeys.NAME}>
@@ -38,6 +39,7 @@ export const TableHeader = () => {
                 <TableCell withSort cellKey={SortKeys.SINGLE}>
                     Singles
                 </TableCell>
+                <TableCell />
             </div>
             <div className='divider'></div>
         </>
