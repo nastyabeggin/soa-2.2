@@ -73,7 +73,7 @@ export const TableRow = ({ band }: TableRowProps) => {
                             Add member
                         </Button>
                         <EditIcon className={`${styles.icon} ${styles.action}`} onClick={() => setUpdateBandModalVisible(true)}/>
-                        <DeleteIcon className={`${styles.icon} ${styles.action}`} onClick={() => setDeleteBandModalVisible(true)}/>
+                        <DeleteIcon className={`${styles.icon} ${styles.action} ${styles.danger}`} onClick={() => setDeleteBandModalVisible(true)}/>
                     </TableCell>
                 </div>
                 <div className='divider'></div>
