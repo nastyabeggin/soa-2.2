@@ -31,15 +31,15 @@ public class GrammyController {
         return restTemplate.postForEntity(url, single, Band.class);
     }
 
-    @PutMapping("bands/{bandId}/singles/{singleId}")
+    @PutMapping("/bands/{bandId}/singles/{singleId}")
     public ResponseEntity<Single> changeSingle(@PathVariable Long bandId, @PathVariable Long singleId, @RequestBody Single single) {
         String url = String.format("http://localhost:8080/api/v1/bands/%d/singles/%d", bandId, singleId);
         return restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(single), Single.class);
     }
-//
-//    @PostMapping("/{bandId}/participants/add")
-//    public ResponseEntity<Person> addParticipant(@PathVariable Long bandId, @RequestBody PersonToBand participant) {
-//        String url = String.format("http://localhost:8080/api/v1/band/%d/participants/add", bandId);
-//        return restTemplate.postForEntity(url, participant, Person.class);
-//    }
+
+    @PostMapping("/{bandId}/participants/add")
+    public ResponseEntity<Person> addParticipant(@PathVariable Long bandId, @RequestBody Person participant) {
+        String url = String.format("http://localhost:8080/api/v1/bands/%d/participants", bandId);
+        return restTemplate.postForEntity(url, participant, Person.class);
+    }
 }

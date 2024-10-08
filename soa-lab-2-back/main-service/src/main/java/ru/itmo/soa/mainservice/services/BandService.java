@@ -11,6 +11,7 @@ import ru.itmo.soa.mainservice.exceptions.InvalidParameterException;
 import ru.itmo.soa.mainservice.exceptions.ResourceNotFoundException;
 import ru.itmo.soa.mainservice.model.Band;
 import ru.itmo.soa.mainservice.model.MusicGenre;
+import ru.itmo.soa.mainservice.model.Person;
 import ru.itmo.soa.mainservice.model.Single;
 import ru.itmo.soa.mainservice.model.dto.BandUpdate;
 import ru.itmo.soa.mainservice.repositories.BandRepository;
@@ -28,6 +29,9 @@ public class BandService {
 
     @Autowired
     private SingleService singleService;
+
+    @Autowired
+    private PersonService personService;
 
     public Band createBand(Band band) {
         band.setCreationDate(LocalDateTime.now());
@@ -178,5 +182,19 @@ public class BandService {
         } else {
             throw new ResourceNotFoundException("Single not found with id: " + singleId + " for band with id: " + bandId);
         }
+    }
+
+    public Person addPersonToBand(Long id, Person person) {
+        Band existingBand = bandRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Band not found with id: " + id));
+
+        Person newPerson = personService.createPerson(person);
+
+        Integer currentNumberOfParticipants = existingBand.getNumberOfParticipants();
+
+        existingBand.setNumberOfParticipants(currentNumberOfParticipants + 1);
+        bandRepository.save(existingBand);
+
+        return newPerson;
     }
 }
