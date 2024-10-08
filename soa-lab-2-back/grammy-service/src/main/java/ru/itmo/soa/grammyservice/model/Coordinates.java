@@ -1,5 +1,12 @@
 package ru.itmo.soa.grammyservice.model;
 
-public class Coordinates {
+import lombok.Data;
 
+@Data
+public class Coordinates {
+    private Long id;
+
+    private Long x;
+
+    private Double y;
 }

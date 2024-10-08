@@ -1,5 +1,10 @@
 package ru.itmo.soa.grammyservice.model;
 
-public class Single {
+import lombok.Data;
 
+@Data
+public class Single {
+    private Long id;
+
+    private String name;
 }

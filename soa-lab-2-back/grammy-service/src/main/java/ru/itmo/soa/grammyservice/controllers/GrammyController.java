@@ -1,8 +1,6 @@
 package ru.itmo.soa.grammyservice.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +9,6 @@ import org.springframework.web.client.RestTemplate;
 import ru.itmo.soa.grammyservice.model.Band;
 import ru.itmo.soa.grammyservice.model.Person;
 import ru.itmo.soa.grammyservice.model.Single;
-import ru.itmo.soa.grammyservice.services.BandService;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/grammy")
