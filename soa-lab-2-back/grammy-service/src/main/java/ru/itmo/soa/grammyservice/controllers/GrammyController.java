@@ -25,17 +25,17 @@ public class GrammyController {
         this.restTemplate = restTemplate;
     }
 
-    @PostMapping("/band/{band-id}/singles/add")
-    public ResponseEntity<Band> addSingle(@PathVariable("band-id") Long bandId, @RequestBody Single single) {
+    @PostMapping("/band/{bandId}/singles/add")
+    public ResponseEntity<Band> addSingle(@PathVariable Long bandId, @RequestBody Single single) {
         String url = String.format("http://localhost:8080/api/v1/bands/%d/singles", bandId);
         return restTemplate.postForEntity(url, single, Band.class);
     }
 
-//    @PutMapping("/{bandId}/singles/{singleId}")
-//    public ResponseEntity<Single> changeSingle(@PathVariable Long bandId, @PathVariable Long singleId, @RequestBody Single single) {
-//        String url = String.format("http://localhost:8080/api/v1/bands/%d/singles/%d", bandId, singleId);
-//        return restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(single), Single.class);
-//    }
+    @PutMapping("bands/{bandId}/singles/{singleId}")
+    public ResponseEntity<Single> changeSingle(@PathVariable Long bandId, @PathVariable Long singleId, @RequestBody Single single) {
+        String url = String.format("http://localhost:8080/api/v1/bands/%d/singles/%d", bandId, singleId);
+        return restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(single), Single.class);
+    }
 //
 //    @PostMapping("/{bandId}/participants/add")
 //    public ResponseEntity<Person> addParticipant(@PathVariable Long bandId, @RequestBody PersonToBand participant) {

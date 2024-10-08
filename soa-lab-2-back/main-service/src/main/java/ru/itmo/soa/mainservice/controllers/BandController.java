@@ -2,21 +2,16 @@ package ru.itmo.soa.mainservice.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.itmo.soa.mainservice.exceptions.InvalidParameterException;
 import ru.itmo.soa.mainservice.model.Band;
 import ru.itmo.soa.mainservice.model.MusicGenre;
 import ru.itmo.soa.mainservice.model.Single;
 import ru.itmo.soa.mainservice.model.dto.BandUpdate;
 import ru.itmo.soa.mainservice.services.BandService;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/bands")
@@ -81,5 +76,11 @@ public class BandController {
     public ResponseEntity<Band> addSingleToBand(@PathVariable Long id, @RequestBody Single single) {
         Band updatedBand = bandService.addSingleToBand(id, single);
         return ResponseEntity.status(HttpStatus.CREATED).body(updatedBand);
+    }
+
+    @PutMapping("bands/{bandId}/singles/{singleId}")
+    public ResponseEntity<Single> changeSingle(@PathVariable Long bandId, @PathVariable Long singleId, @RequestBody Single single) {
+        Single updatedSingle = bandService.changeSingle(bandId, singleId, single);
+        return ResponseEntity.status(HttpStatus.CREATED).body(updatedSingle);
     }
 }

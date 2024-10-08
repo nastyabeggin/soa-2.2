@@ -19,11 +19,15 @@ import ru.itmo.soa.mainservice.repositories.BandSpecifications;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BandService {
     @Autowired
     private BandRepository bandRepository;
+
+    @Autowired
+    private SingleService singleService;
 
     public Band createBand(Band band) {
         band.setCreationDate(LocalDateTime.now());
@@ -149,5 +153,30 @@ public class BandService {
         existingBand.setSingles(newBandSingles);
 
         return bandRepository.save(existingBand);
+    }
+
+    public Single changeSingle(Long bandId, Long singleId, Single single) {
+        Band existingBand = bandRepository.findById(bandId)
+                .orElseThrow(() -> new ResourceNotFoundException("Band not found with id: " + bandId));
+
+        List<Single> existingSingles = existingBand.getSingles();
+
+        Optional<Single> existingSingle = existingSingles.stream()
+                .filter(s -> s.getId().equals(singleId))
+                .findFirst();
+
+        if (existingSingle.isPresent()) {
+            Single updatedSingle = singleService.updateSingle(singleId, single);
+
+            int index = existingSingles.indexOf(existingSingle.get());
+            existingSingles.set(index, updatedSingle);
+
+            existingBand.setSingles(existingSingles);
+            bandRepository.save(existingBand);
+
+            return updatedSingle;
+        } else {
+            throw new ResourceNotFoundException("Single not found with id: " + singleId + " for band with id: " + bandId);
+        }
     }
 }
