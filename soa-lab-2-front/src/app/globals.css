@@ -64,6 +64,7 @@ body {
 .button.s {
   height: 24px;
   min-width: 120px;
+  border-radius: 16px;
 }
 .button.m {
   height: 30px;
@@ -86,12 +87,10 @@ body {
 .button.accent {
   background-color: var(--accent);
   color: var(--accent-text);
-  border-radius: 16px;
 }
 .button.accent-green {
   background-color: var(--accent-green);
   color: var(--accent-green-text);
-  border-radius: 16px;
 }
 .button.cancel {
   background-color: var(--background);
@@ -127,7 +126,7 @@ body {
   padding: 4px 8px;
 }
 
-.modal-container .select {
+.select {
   height: 32px;
   border: 1px solid var(--secondary-text-unfocused);
   border-radius: 8px;

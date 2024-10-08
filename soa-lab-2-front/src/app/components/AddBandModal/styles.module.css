@@ -14,3 +14,13 @@
     color: var(--secondary-text);
     padding-bottom: 4px;
 }
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+.buttons {
+    justify-self: flex-end;
+}

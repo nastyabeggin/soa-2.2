@@ -5,6 +5,7 @@ import {Band} from "@/app/types/bands";
 import {Genre, GENRES} from "@/app/types/genre";
 import styles from './styles.module.css';
 import {Single} from "@/app/types/single";
+import {BAND_MOCK} from "@/app/mocks/bands";
 
 type AddBandModalProps = {
     band?: Band;
@@ -20,7 +21,9 @@ export const AddBandModal = ({ band, isVisible, onClose }: AddBandModalProps) =>
     const [creationDate, setCreationDate] = useState<string | undefined>(band?.creationDate ?? undefined);
     const [numberOfParticipants, setNumberOfParticipants] = useState<number | undefined>(band?.numberOfParticipants ?? undefined);
     const [genre, setGenre] = useState<Genre | undefined>(band?.genre ?? undefined);
-    const [singles, setSingles] = useState<Single[] | undefined>();
+    // TODO: может быть понадобится, чтобы перед запросом конвертировать в синглы нормально
+    // const [singles, setSingles] = useState<Single[] | undefined>();
+    const [textSingles, setTextSingles] = useState<string | undefined>();
 
     const [frontManName, setFrontManName] = useState<string | undefined>(band?.frontMan?.name ?? undefined);
     const [frontManBirthday, setFrontManBirthday] = useState<string | undefined>(band?.frontMan?.birthday ?? undefined);
@@ -30,11 +33,34 @@ export const AddBandModal = ({ band, isVisible, onClose }: AddBandModalProps) =>
     const [frontManZ, setFrontManZ] = useState<number | undefined>(band?.frontMan?.location.z ?? undefined);
     const [frontManLocationName, setFrontManLocationName] = useState<string | undefined>(band?.frontMan?.location.name ?? undefined);
 
+    const onApplyPresetClick = () => {
+        setName(BAND_MOCK.name);
+        setDescription(BAND_MOCK.description);
+        setX(BAND_MOCK.coordinates.x);
+        setY(BAND_MOCK.coordinates.y);
+        setCreationDate(BAND_MOCK.creationDate);
+        setNumberOfParticipants(BAND_MOCK.numberOfParticipants);
+        setGenre(BAND_MOCK.genre);
+        setTextSingles(BAND_MOCK.singles ? convertSinglesToString(BAND_MOCK.singles) : '');
+        setFrontManName(BAND_MOCK.frontMan?.name);
+        setFrontManBirthday(BAND_MOCK.frontMan?.birthday);
+        setFrontManPassportID(BAND_MOCK.frontMan?.passportID);
+        setFrontManX(BAND_MOCK.frontMan?.location.x);
+        setFrontManY(BAND_MOCK.frontMan?.location.y);
+        setFrontManZ(BAND_MOCK.frontMan?.location.z);
+        setFrontManLocationName(BAND_MOCK.frontMan?.location.name);
+    }
+
     function convertStringToSingles(text: string) {
         let singles = text.split(',');
         singles = singles.map((single) => single.trim());
         const result: Single[] = singles.map((single) => ({name: single}));
         return result;
+    }
+
+    function convertSinglesToString(singles: Single[]) {
+        const names = singles.map((single) => single.name);
+        return names.join(', ');
     }
 
     // TODO: добавить отправку формы обновления группы + накинуть все ограничения на поля из сваггера
@@ -45,29 +71,29 @@ export const AddBandModal = ({ band, isVisible, onClose }: AddBandModalProps) =>
                 <div className={styles.content}>
                     <div className={styles.left}>
                         <label className='input-container'>
-                            Name
+                            Name*
                             <input id='name' value={name} className='input' placeholder='e.g. Spacecrawlers'
                                    onChange={(e) => setName(e.target.value)}/>
                         </label>
                         <label className='input-container'>
-                            Description
+                            Description*
                             <input id='description' value={description} className='input'
                                    placeholder='e.g. Complex math rock group'
                                    onChange={(e) => setDescription(e.target.value)}/>
                         </label>
                         <label className='input-container'>
-                            Creation date
+                            Creation date*
                             <input type='date' id='name' value={creationDate} className='input'
                                    onChange={(e) => setCreationDate(e.target.value)}/>
                         </label>
                         <label className='input-container'>
-                            Number of members
+                            Number of members*
                             <input type='number' id='name' value={numberOfParticipants} className='input'
                                    onChange={(e) => setNumberOfParticipants(Number(e.target.value))}/>
                         </label>
                         <label className='input-container'>
-                            Genre
-                            <select className='select' onChange={(e) => setGenre(e.target.value as Genre)}>
+                            Genre*
+                            <select className='select' onChange={(e) => setGenre(e.target.value as Genre)} value={genre}>
                                 {GENRES.map((genre) => {
                                     return (
                                         <option value={genre} key={genre}>{genre}</option>
@@ -75,14 +101,14 @@ export const AddBandModal = ({ band, isVisible, onClose }: AddBandModalProps) =>
                                 })}
                             </select>
                         </label>
-                        <h3>Coordinates</h3>
+                        <h3>Coordinates*</h3>
                         <label className='input-container'>
-                            Coordinate X
+                            Coordinate X*
                             <input type='number' id='name' value={x} className='input' placeholder='e.g. 23746'
                                    onChange={(e) => setX(Number(e.target.value))}/>
                         </label>
                         <label className='input-container'>
-                            Coordinate Y
+                            Coordinate Y*
                             <input type='number' id='name' value={y} className='input' placeholder='e.g. 765'
                                    onChange={(e) => setY(Number(e.target.value))}/>
                         </label>
@@ -91,8 +117,8 @@ export const AddBandModal = ({ band, isVisible, onClose }: AddBandModalProps) =>
                             <>
                                 <h3>Singles</h3>
                                 <span className={styles.caption}>To add singles, please write their titles separated with comma, no brackets.</span>
-                                <textarea id='singles' className='textarea' placeholder='e.g. Moonlight, The Love Of My Life, Midnight'
-                                          onChange={(e) => setSingles(convertStringToSingles(e.target.value))}/>
+                                <textarea id='singles' value={textSingles} className='textarea' placeholder='e.g. Moonlight, The Love Of My Life, Midnight'
+                                          onChange={(e) => setTextSingles(e.target.value)}/>
                             </>
                         }
                     </div>
@@ -142,13 +168,16 @@ export const AddBandModal = ({ band, isVisible, onClose }: AddBandModalProps) =>
                     </div>
                 </div>
 
-                <div className='buttons'>
-                    <Button style='cancel' size='m' onClick={onClose}>
-                        Cancel
-                    </Button>
-                    <Button style='primary' size='m'>
-                        {band ? 'Update' : 'Create'}
-                    </Button>
+                <div className={styles.container}>
+                    {!band ? <Button style='accent' size='s' onClick={onApplyPresetClick}>Apply preset</Button> : <div></div>}
+                    <div className={`buttons ${styles.buttons}`}>
+                        <Button style='cancel' size='m' onClick={onClose}>
+                            Cancel
+                        </Button>
+                        <Button style='primary' size='m'>
+                            {band ? 'Update' : 'Create'}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </Modal>

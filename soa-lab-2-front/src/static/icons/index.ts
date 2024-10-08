@@ -4,6 +4,7 @@ import PlusIcon from './plus.svg';
 import ShowIcon from './eye.svg';
 import EditIcon from './pencil.svg';
 import DeleteIcon from './trash.svg';
+import EyesIcon from './eyes.svg';
 
 export {
     FilterIcon,
@@ -11,5 +12,6 @@ export {
     PlusIcon,
     ShowIcon,
     EditIcon,
-    DeleteIcon
+    DeleteIcon,
+    EyesIcon
 }

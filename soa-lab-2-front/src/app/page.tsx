@@ -1,13 +1,14 @@
 'use client'
 
 import styles from "./page.module.css";
-import {bandsList} from "@/app/mocks/bands";
+import {BANDS_LIST_MOCK} from "@/app/mocks/bands";
 import {Table} from "@/app/components/Table";
 import {DEFAULT_SORT_ORDER, SortContext, SortOrderMap} from "@/app/context/sort";
 import {useState} from "react";
 import {Button} from "@/app/components/Button";
 import {FilterIcon, PlusIcon} from "@/static/icons";
-import {AddBandModal} from "@/app/components/UpdateBandModal";
+import {AddBandModal} from "@/app/components/AddBandModal";
+import {SpecialActions} from "@/app/components/SpecialActions";
 
 export default function Home() {
     const [sortOrder, setSortOrder] = useState<SortOrderMap>(DEFAULT_SORT_ORDER);
@@ -29,7 +30,8 @@ export default function Home() {
                         </Button>
                     </div>
                 </div>
-                <Table bands={bandsList}/>
+                <Table bands={BANDS_LIST_MOCK}/>
+                <SpecialActions />
             </div>
             {isAddBandModalVisible &&
                 <AddBandModal isVisible={isAddBandModalVisible} onClose={() => setAddBandModalVisible(false)}/>

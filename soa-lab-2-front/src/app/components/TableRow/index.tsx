@@ -9,7 +9,7 @@ import {useState} from "react";
 import {ShowSinglesModal} from "@/app/components/ShowSinglesModal";
 import {AddMemberModal} from "@/app/components/AddMemberModal";
 import {DeleteBandModal} from "@/app/components/DeleteBandModal";
-import {AddBandModal} from "@/app/components/UpdateBandModal";
+import {AddBandModal} from "../AddBandModal";
 
 type TableRowProps = {
     band: Band;
