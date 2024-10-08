@@ -12,24 +12,28 @@ public class BandSpecifications {
 
             if (filters != null) {
                 for (String filter : filters) {
-                    // Проверяем формат фильтра
-                    if (!filter.contains("=")) {
+                    if (!filter.contains("[")) {
                         throw new InvalidParameterException("Invalid filter format: " + filter);
                     }
 
-                    String[] parts = filter.split("=");
-                    if (parts.length != 2) {
-                        throw new InvalidParameterException("Invalid filter format: " + filter);
-                    }
-
-                    String[] paramParts = parts[0].split("\\[");
+                    String[] paramParts = filter.split("\\[");
                     if (paramParts.length != 2) {
                         throw new InvalidParameterException("Invalid filter parameter format: " + filter);
                     }
 
                     String field = paramParts[0].trim();
-                    String operator = paramParts[1].replace("]", "").trim();
-                    String value = parts[1].trim();
+                    String operatorAndValue = paramParts[1].trim();
+
+                    String operator;
+                    String value;
+
+                    if (operatorAndValue.contains("]")) {
+                        int operatorEndIndex = operatorAndValue.indexOf("]");
+                        operator = operatorAndValue.substring(0, operatorEndIndex);
+                        value = operatorAndValue.substring(operatorEndIndex + 1).trim(); // Получаем значение после закрывающей скобки
+                    } else {
+                        throw new InvalidParameterException("Invalid filter format: " + filter);
+                    }
 
                     Predicate condition = switch (operator.toLowerCase()) {
                         case "eq" -> criteriaBuilder.equal(root.get(field), value);
