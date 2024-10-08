@@ -32,7 +32,7 @@ public class GrammyController {
         return restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(single), Single.class);
     }
 
-    @PostMapping("/{bandId}/participants/add")
+    @PostMapping("/band/{bandId}/participants/add")
     public ResponseEntity<Person> addParticipant(@PathVariable Long bandId, @RequestBody Person participant) {
         String url = String.format("http://localhost:8080/api/v1/bands/%d/participants", bandId);
         return restTemplate.postForEntity(url, participant, Person.class);

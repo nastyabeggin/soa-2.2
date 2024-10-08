@@ -188,6 +188,7 @@ public class BandService {
         Band existingBand = bandRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Band not found with id: " + id));
 
+        person.setBandID(id);
         Person newPerson = personService.createPerson(person);
 
         Integer currentNumberOfParticipants = existingBand.getNumberOfParticipants();

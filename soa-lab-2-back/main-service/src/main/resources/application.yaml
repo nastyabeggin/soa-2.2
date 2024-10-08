@@ -1,6 +1,6 @@
 spring:
   application:
-    name: musicBand
+    name: music-band
   datasource:
     username: postgres
     password: postgres
