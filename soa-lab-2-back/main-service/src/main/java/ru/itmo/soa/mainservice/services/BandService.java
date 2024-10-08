@@ -81,6 +81,9 @@ public class BandService {
     }
 
     public void deleteBandById(Long id) {
+        bandRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Band not found with id: " + id));
+        
         bandRepository.deleteById(id);
     }
 
