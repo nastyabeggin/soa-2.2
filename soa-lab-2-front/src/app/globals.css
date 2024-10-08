@@ -141,7 +141,7 @@ body {
 
 }
 
-.modal-container .buttons {
+.buttons {
   align-self: flex-end;
 
   display: flex;
