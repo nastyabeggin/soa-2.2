@@ -5,6 +5,9 @@ import ShowIcon from './eye.svg';
 import EditIcon from './pencil.svg';
 import DeleteIcon from './trash.svg';
 import EyesIcon from './eyes.svg';
+import SubmitIcon from './check.svg';
+import RightArrowIcon from './arrow-right.svg';
+import LeftArrowIcon from './arrow-left.svg';
 
 export {
     FilterIcon,
@@ -13,5 +16,8 @@ export {
     ShowIcon,
     EditIcon,
     DeleteIcon,
-    EyesIcon
+    EyesIcon,
+    SubmitIcon,
+    RightArrowIcon,
+    LeftArrowIcon
 }

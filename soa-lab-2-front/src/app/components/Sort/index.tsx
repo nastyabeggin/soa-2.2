@@ -3,11 +3,12 @@
 import styles from './styles.module.css';
 import {useContext} from "react";
 import {SortContext, transitionSortOrder} from "@/app/context/sort";
-import {SortKeys, SortOrder} from "@/app/types/sort";
+import {SortOrder} from "@/app/types/sort";
 import {SortIcon} from "@/static/icons";
+import {Property} from "@/app/types/property";
 
 type SortProps = {
-    sortKey: SortKeys;
+    sortKey: Property;
 }
 
 export const Sort = ({ sortKey }: SortProps) => {

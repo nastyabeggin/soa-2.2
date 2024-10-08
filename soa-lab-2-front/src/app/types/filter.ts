@@ -8,7 +8,9 @@ export enum FilterType {
     CONTAIN = 'contain'
 }
 
-export const FilterText = {
+export const FILTER_LIST = Object.values(FilterType);
+
+export const FILTER_TEXT = {
     [FilterType.GT]: '>',
     [FilterType.GTE]: '>=',
     [FilterType.LT]: '<',

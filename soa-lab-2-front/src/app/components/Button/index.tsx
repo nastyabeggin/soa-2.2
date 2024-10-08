@@ -2,17 +2,20 @@ import {PropsWithChildren} from "react";
 
 type ButtonProps = {
     onClick?: () => void;
-    style: 'primary' | 'secondary' | 'accent' | 'accent-green' | 'cancel' | 'danger';
+    submit?: boolean;
+    className?: string;
+    style: 'primary' | 'secondary' | 'accent' | 'accent-green' | 'cancel' | 'danger' | 'transparent';
     size: 's' | 'm' | 'l';
 }
 
-export const Button = ({ onClick, children, style, size }: PropsWithChildren<ButtonProps>) => {
+export const Button = ({ onClick, submit, children, style, size, className }: PropsWithChildren<ButtonProps>) => {
     return (
-        <div
+        <button
             onClick={onClick}
-            className={`button ${style} ${size}`}
+            className={`button ${style} ${size} ${className}`}
+            type={submit ? 'submit' : undefined}
         >
             {children}
-        </div>
+        </button>
     )
 }
