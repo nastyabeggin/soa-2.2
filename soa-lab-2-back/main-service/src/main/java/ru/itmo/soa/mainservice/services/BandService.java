@@ -1,7 +1,6 @@
 package ru.itmo.soa.mainservice.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -12,6 +11,7 @@ import ru.itmo.soa.mainservice.exceptions.InvalidParameterException;
 import ru.itmo.soa.mainservice.exceptions.ResourceNotFoundException;
 import ru.itmo.soa.mainservice.model.Band;
 import ru.itmo.soa.mainservice.model.MusicGenre;
+import ru.itmo.soa.mainservice.model.dto.BandUpdate;
 import ru.itmo.soa.mainservice.repositories.BandRepository;
 import ru.itmo.soa.mainservice.repositories.BandSpecifications;
 
@@ -44,7 +44,6 @@ public class BandService {
                 ? bandRepository.findAll(specification, pageable).getContent()
                 : bandRepository.findAll(pageable).getContent();
     }
-
 
     private Sort createSort(String[] sortParams) {
         Sort sort = Sort.unsorted();
@@ -85,9 +84,33 @@ public class BandService {
         bandRepository.deleteById(id);
     }
 
-    public Band updateBand(Band band, Long id) {
-        band.setId(id);
-        return bandRepository.save(band);
+    public Band updateBand(BandUpdate bandUpdate, Long id) {
+        Band existingBand = bandRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Band not found with id: " + id));
+
+        if (bandUpdate.getName() != null) {
+            existingBand.setName(bandUpdate.getName());
+        }
+        if (bandUpdate.getCoordinates() != null) {
+            existingBand.setCoordinates(bandUpdate.getCoordinates());
+        }
+        if (bandUpdate.getNumberOfParticipants() != null) {
+            existingBand.setNumberOfParticipants(bandUpdate.getNumberOfParticipants());
+        }
+        if (bandUpdate.getDescription() != null) {
+            existingBand.setDescription(bandUpdate.getDescription());
+        }
+        if (bandUpdate.getGenre() != null) {
+            existingBand.setGenre(bandUpdate.getGenre());
+        }
+        if (bandUpdate.getFrontMan() != null) {
+            existingBand.setFrontMan(bandUpdate.getFrontMan());
+        }
+        if (bandUpdate.getSingles() != null) {
+            existingBand.setSingles(bandUpdate.getSingles());
+        }
+
+        return bandRepository.save(existingBand);
     }
 
     public List<MusicGenre> getAllGenres() {
@@ -105,7 +128,11 @@ public class BandService {
     }
 
     public Band getGroupWithMinGenre() {
-        return bandRepository.findTopByOrderByGenreDescNameAsc()
-                .orElseThrow(() -> new ResourceNotFoundException("No bands found"));
+        List<Band> bands = bandRepository.findAllOrderByGenreAscNameAsc();
+        if (bands.isEmpty()) {
+            throw new ResourceNotFoundException("No bands found");
+        }
+
+        return bands.get(0);
     }
 }

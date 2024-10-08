@@ -35,7 +35,7 @@ public class Band {
 
     @Min(value = 1, message = "Number of participants must be greater than 0")
     @Column(nullable = false)
-    private int numberOfParticipants;
+    private Integer numberOfParticipants;
 
     @NotNull(message = "Description is required")
     @Column(nullable = false)

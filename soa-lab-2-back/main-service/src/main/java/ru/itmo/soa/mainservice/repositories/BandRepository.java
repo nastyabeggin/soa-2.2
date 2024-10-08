@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 import ru.itmo.soa.mainservice.model.Band;
 import ru.itmo.soa.mainservice.model.MusicGenre;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface BandRepository extends JpaRepository<Band, Long>, JpaSpecificationExecutor<Band> {
     void deleteByGenre(MusicGenre genre);
 
-    @Query("SELECT b FROM Band b ORDER BY b.genre DESC, b.name ASC")
-    Optional<Band> findTopByOrderByGenreDescNameAsc();
+    @Query("SELECT b FROM Band b ORDER BY b.genre ASC, b.name ASC")
+    List<Band> findAllOrderByGenreAscNameAsc();
 }

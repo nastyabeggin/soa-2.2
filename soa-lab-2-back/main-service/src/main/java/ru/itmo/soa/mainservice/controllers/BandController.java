@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.itmo.soa.mainservice.exceptions.InvalidParameterException;
 import ru.itmo.soa.mainservice.model.Band;
 import ru.itmo.soa.mainservice.model.MusicGenre;
+import ru.itmo.soa.mainservice.model.dto.BandUpdate;
 import ru.itmo.soa.mainservice.services.BandService;
 
 import java.util.Arrays;
@@ -46,11 +47,13 @@ public class BandController {
     }
 
     @PatchMapping("/{id}")
-    public Band updateBand(@RequestBody Band band, @PathVariable Long id) {
-        return bandService.updateBand(band, id);
+    public ResponseEntity<Band> updateBand(@PathVariable Long id, @RequestBody BandUpdate bandUpdate) {
+        Band updatedBand = bandService.updateBand(bandUpdate, id);
+        return ResponseEntity.ok(updatedBand);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBandById(@PathVariable Long id) {
         bandService.deleteBandById(id);
     }
