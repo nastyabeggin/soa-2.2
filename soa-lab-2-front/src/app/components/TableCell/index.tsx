@@ -1,10 +1,10 @@
 import styles from './styles.module.css';
 import {PropsWithChildren} from "react";
 import {Sort} from "@/app/components/Sort";
-import {SortKeys} from "@/app/types/sort";
+import {Properties} from "@/app/types/properties";
 
 type TableCellProps = {
-    cellKey?: SortKeys;
+    cellKey?: Properties;
     className?: string;
     withSort?: boolean;
 }

@@ -3,16 +3,3 @@ export enum SortOrder {
     DESC,
     UNDEFINED
 }
-
-export enum SortKeys {
-    ID,
-    NAME,
-    DESCRIPTION,
-    CREATION_DATE,
-    X,
-    Y,
-    MEMBERS,
-    GENRE,
-    FRONTMAN,
-    SINGLE
-}

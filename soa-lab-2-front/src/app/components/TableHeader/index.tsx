@@ -2,40 +2,40 @@
 
 import styles from './styles.module.css';
 import {TableCell} from "@/app/components/TableCell";
-import {SortKeys} from "@/app/types/sort";
+import {Properties} from "@/app/types/properties";
 
 export const TableHeader = () => {
     return (
         <>
             <div className={`table-grid ${styles.container}`}>
-                <TableCell withSort cellKey={SortKeys.ID}>
+                <TableCell withSort cellKey={Properties.ID}>
                     ID
                 </TableCell>
-                <TableCell withSort cellKey={SortKeys.NAME}>
+                <TableCell withSort cellKey={Properties.NAME}>
                     Name
                 </TableCell>
-                <TableCell withSort cellKey={SortKeys.DESCRIPTION}>
+                <TableCell withSort cellKey={Properties.DESCRIPTION}>
                     Description
                 </TableCell>
-                <TableCell withSort cellKey={SortKeys.CREATION_DATE}>
+                <TableCell withSort cellKey={Properties.CREATION_DATE}>
                     Creation date
                 </TableCell>
-                <TableCell withSort cellKey={SortKeys.X}>
+                <TableCell withSort cellKey={Properties.COORDINATE_X}>
                     X
                 </TableCell>
-                <TableCell withSort cellKey={SortKeys.Y}>
+                <TableCell withSort cellKey={Properties.COORDINATE_Y}>
                     Y
                 </TableCell>
-                <TableCell withSort cellKey={SortKeys.MEMBERS}>
+                <TableCell withSort cellKey={Properties.NUMBER_OF_PARTICIPANTS}>
                     Members
                 </TableCell>
-                <TableCell withSort cellKey={SortKeys.GENRE}>
+                <TableCell withSort cellKey={Properties.GENRE}>
                     Genre
                 </TableCell>
-                <TableCell withSort cellKey={SortKeys.FRONTMAN}>
+                <TableCell withSort cellKey={Properties.PERSON_NAME}>
                     Frontman's name
                 </TableCell>
-                <TableCell withSort cellKey={SortKeys.SINGLE}>
+                <TableCell>
                     Singles
                 </TableCell>
                 <TableCell>

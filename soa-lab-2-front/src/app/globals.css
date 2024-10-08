@@ -7,7 +7,7 @@
   --primary-text: #000000;
   --primary-text-inverted: #ffffff;
   --secondary-text: #656565;
-  --secondary-text-unfocused: #989898;
+  --secondary-text-unfocused: #b6b6b6;
 
   --accent-text: #3478d8;
   --accent-green-text: #369d61;
@@ -49,6 +49,7 @@ body {
 }
 
 .button {
+  border: none;
   border-radius: 8px;
   display: flex;
   flex-direction: row;
@@ -62,17 +63,18 @@ body {
 }
 
 .button.s {
-  height: 24px;
-  min-width: 120px;
+  height: 32px;
+  min-width: 136px;
   border-radius: 16px;
 }
 .button.m {
-  height: 30px;
-  min-width: 72px;
+  height: 38px;
+  min-width: 88px;
 }
 .button.l {
-  height: 36px;
-  min-width: 180px;
+  height: 44px;
+  min-width: 196px;
+  font-size: var(--font-size-s);
 }
 
 .button.primary {
@@ -100,6 +102,10 @@ body {
   background-color: var(--danger);
   color: var(--danger-text);
 }
+.button.transparent{
+  background-color: var(--foreground);
+  box-shadow: none;
+}
 
 .modal-container {
   padding: 0 16px 16px 16px;
@@ -118,7 +124,7 @@ body {
   margin-bottom: 8px;
 }
 
-.modal-container .input{
+.input{
   border: 1px solid var(--secondary-text-unfocused);
   border-radius: 8px;
   height: 24px;

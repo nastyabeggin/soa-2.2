@@ -1,21 +1,21 @@
 import {createContext} from "react";
-import {SortKeys, SortOrder} from "@/app/types/sort";
+import {SortOrder} from "@/app/types/sort";
+import {Properties} from "@/app/types/properties";
 
 export type SortOrderMap = {
-    [key in SortKeys]: SortOrder;
+    [key in Properties]: SortOrder;
 };
 
 export const DEFAULT_SORT_ORDER: SortOrderMap = {
-    [SortKeys.ID]: SortOrder.UNDEFINED,
-    [SortKeys.NAME]: SortOrder.UNDEFINED,
-    [SortKeys.DESCRIPTION]: SortOrder.UNDEFINED,
-    [SortKeys.CREATION_DATE]: SortOrder.UNDEFINED,
-    [SortKeys.X]: SortOrder.UNDEFINED,
-    [SortKeys.Y]: SortOrder.UNDEFINED,
-    [SortKeys.MEMBERS]: SortOrder.UNDEFINED,
-    [SortKeys.GENRE]: SortOrder.UNDEFINED,
-    [SortKeys.FRONTMAN]: SortOrder.UNDEFINED,
-    [SortKeys.SINGLE]: SortOrder.UNDEFINED,
+    [Properties.ID]: SortOrder.UNDEFINED,
+    [Properties.NAME]: SortOrder.UNDEFINED,
+    [Properties.DESCRIPTION]: SortOrder.UNDEFINED,
+    [Properties.CREATION_DATE]: SortOrder.UNDEFINED,
+    [Properties.COORDINATE_X]: SortOrder.UNDEFINED,
+    [Properties.COORDINATE_Y]: SortOrder.UNDEFINED,
+    [Properties.NUMBER_OF_PARTICIPANTS]: SortOrder.UNDEFINED,
+    [Properties.GENRE]: SortOrder.UNDEFINED,
+    [Properties.PERSON_NAME]: SortOrder.UNDEFINED,
 }
 
 export const SortContext = createContext({
