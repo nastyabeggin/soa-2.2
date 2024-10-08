@@ -11,6 +11,7 @@ import ru.itmo.soa.mainservice.exceptions.InvalidParameterException;
 import ru.itmo.soa.mainservice.exceptions.ResourceNotFoundException;
 import ru.itmo.soa.mainservice.model.Band;
 import ru.itmo.soa.mainservice.model.MusicGenre;
+import ru.itmo.soa.mainservice.model.Single;
 import ru.itmo.soa.mainservice.model.dto.BandUpdate;
 import ru.itmo.soa.mainservice.repositories.BandRepository;
 import ru.itmo.soa.mainservice.repositories.BandSpecifications;
@@ -58,7 +59,7 @@ public class BandService {
 
                 String property = parts[0].trim();
 
-                // Default direction to ascending if not provided
+                // По умолчанию - ascending
                 String direction = (parts.length > 1 && parts[1].endsWith("]"))
                         ? parts[1].substring(0, parts[1].length() - 1).trim()
                         : "asc";
@@ -137,5 +138,16 @@ public class BandService {
         }
 
         return bands.get(0);
+    }
+
+    public Band addSingleToBand(Long id, Single single) {
+        Band existingBand = bandRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Band not found with id: " + id));
+
+        List<Single> newBandSingles = existingBand.getSingles();
+        newBandSingles.add(single);
+        existingBand.setSingles(newBandSingles);
+
+        return bandRepository.save(existingBand);
     }
 }

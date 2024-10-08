@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.itmo.soa.mainservice.exceptions.InvalidParameterException;
 import ru.itmo.soa.mainservice.model.Band;
 import ru.itmo.soa.mainservice.model.MusicGenre;
+import ru.itmo.soa.mainservice.model.Single;
 import ru.itmo.soa.mainservice.model.dto.BandUpdate;
 import ru.itmo.soa.mainservice.services.BandService;
 
@@ -73,5 +74,12 @@ public class BandController {
     public ResponseEntity<Band> getGroupWithMinGenre() {
         Band band = bandService.getGroupWithMinGenre();
         return ResponseEntity.ok(band);
+    }
+
+//    Запросы со второго сервера
+    @PostMapping("{id}/singles")
+    public ResponseEntity<Band> addSingleToBand(@PathVariable Long id, @RequestBody Single single) {
+        Band updatedBand = bandService.addSingleToBand(id, single);
+        return ResponseEntity.status(HttpStatus.CREATED).body(updatedBand);
     }
 }
