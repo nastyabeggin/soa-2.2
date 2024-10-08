@@ -48,13 +48,6 @@ public class CoordinateFilter implements Filter {
         chain.doFilter(cachedBodyHttpServletRequest, response);
     }
 
-    private String readRequestBody(HttpServletRequest httpRequest) throws IOException {
-        int contentLength = Integer.parseInt(httpRequest.getHeader("Content-Length"));
-        byte[] requestBodyBytes = new byte[contentLength];
-        httpRequest.getInputStream().read(requestBodyBytes);
-        return new String(requestBodyBytes, "UTF-8");
-    }
-
     private Map<String, Object> parseJsonToMap(String json) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, Map.class);
