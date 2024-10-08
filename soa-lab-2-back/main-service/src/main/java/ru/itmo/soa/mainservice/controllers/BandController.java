@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.itmo.soa.mainservice.exceptions.InvalidParameterException;
 import ru.itmo.soa.mainservice.model.Band;
 import ru.itmo.soa.mainservice.model.MusicGenre;
 import ru.itmo.soa.mainservice.services.BandService;
@@ -35,8 +36,8 @@ public class BandController {
             @RequestParam(required = false, defaultValue = "1") int page,
             @RequestParam(required = false, defaultValue = "10") int size) {
 
-        List<Band> bands = bandService.getBands(sort, filter, page, size);
-        return ResponseEntity.ok(bands);
+            List<Band> bands = bandService.getBands(sort, filter, page, size);
+            return ResponseEntity.ok(bands);
     }
 
     @GetMapping("/{id}")

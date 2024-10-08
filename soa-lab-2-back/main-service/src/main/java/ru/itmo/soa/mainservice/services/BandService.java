@@ -26,10 +26,11 @@ public class BandService {
 
     public Band createBand(Band band) {
         band.setCreationDate(LocalDateTime.now());
+        Band newBand = bandRepository.save(band);
         if (band.getFrontMan() != null) {
-            band.getFrontMan().setBandID(band.getId());
+            newBand.getFrontMan().setBandID(newBand.getId());
         }
-        return bandRepository.save(band);
+        return bandRepository.save(newBand);
     }
 
     public List<Band> getBands(String[] sort, String[] filter, int page, int size) {

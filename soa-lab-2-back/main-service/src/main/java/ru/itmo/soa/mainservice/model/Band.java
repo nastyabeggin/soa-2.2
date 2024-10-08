@@ -23,7 +23,7 @@ public class Band {
 
     @NotNull(message = "Name is required")
     @Size(min = 1, message = "Name must have at least 1 character")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @NotNull(message = "Coordinates are required")
