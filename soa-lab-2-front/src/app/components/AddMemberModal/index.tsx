@@ -21,11 +21,11 @@ export const AddMemberModal = ({ bandId, bandName, isVisible, onClose }: AppMemb
     // TODO: добавить отправку формы добавления участника группы
     return (
         <Modal isVisible={isVisible} onClose={onClose}>
-            <div className='modal-container'>
+            <form className='modal-container' onSubmit={(e) => e.preventDefault()}>
                 <h2>Add new member to {bandName}</h2>
                 <label className='input-container'>
                     Name
-                    <input id='name' value={name} className='input' placeholder='e.g. Daniel Moon'
+                    <input id='name' minLength={1} value={name} className='input' placeholder='e.g. Daniel Moon'
                            onChange={(e) => setName(e.target.value)}/>
                 </label>
                 <label className='input-container'>
@@ -42,7 +42,7 @@ export const AddMemberModal = ({ bandId, bandName, isVisible, onClose }: AppMemb
                 <h3>Location</h3>
                 <label className='input-container'>
                     Location title
-                    <input id='location-name' value={locationName} className='input'
+                    <input id='location-name' minLength={1} value={locationName} className='input'
                            placeholder='e.g. Toronto'
                            onChange={(e) => setLocationName(e.target.value)}/>
                 </label>
@@ -60,7 +60,7 @@ export const AddMemberModal = ({ bandId, bandName, isVisible, onClose }: AppMemb
                 </label>
                 <label className='input-container'>
                     Coordinate Z*
-                    <input type='number' id='z' value={z} className='input'
+                    <input type='number' step={1} pattern='[0-9]*[^.,]' id='z' value={z} className='input'
                            placeholder='e.g. 0' required
                            onChange={(e) => setZ(Number(e.target.value))}/>
                 </label>
@@ -68,11 +68,11 @@ export const AddMemberModal = ({ bandId, bandName, isVisible, onClose }: AppMemb
                     <Button style='cancel' size='m' onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button style='primary' size='m'>
+                    <Button style='primary' size='m' submit>
                         Create
                     </Button>
                 </div>
-            </div>
+            </form>
         </Modal>
     )
 }

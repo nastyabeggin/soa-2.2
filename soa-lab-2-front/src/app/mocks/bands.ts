@@ -157,7 +157,7 @@ export const BANDS_LIST_MOCK: Band[] = [
 export const BAND_MOCK: Band = {
     id: 1,
     name: "Electric Storm",
-    coordinates: { id: 101, x: 45.764043, y: 4.835659 },
+    coordinates: { id: 101, x: 46, y: 4.835659 },
     creationDate: "2022-01-15",
     numberOfParticipants: 5,
     description: "High-energy rock band from Paris",
