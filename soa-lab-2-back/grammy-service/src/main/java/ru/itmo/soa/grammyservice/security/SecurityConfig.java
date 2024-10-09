@@ -11,11 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // Настройка HTTPS
-        http.requiresChannel(channel ->
-                        channel.anyRequest().requiresSecure())
-
-                .authorizeHttpRequests(authorize ->
+        http.authorizeHttpRequests(authorize ->
                         authorize
                                 .anyRequest().permitAll()
                 )

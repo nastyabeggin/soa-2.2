@@ -12,9 +12,4 @@ public class GrammyServiceApplication {
         SpringApplication.run(GrammyServiceApplication.class, args);
     }
 
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-
 }
