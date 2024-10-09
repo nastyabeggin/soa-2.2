@@ -13,6 +13,7 @@ import ru.itmo.soa.grammyservice.model.Single;
 @RestController
 @RequestMapping("/api/v1/grammy")
 public class GrammyController {
+    @Autowired
     private final RestTemplate restTemplate;
 
     @Autowired
@@ -22,19 +23,19 @@ public class GrammyController {
 
     @PostMapping("/band/{bandId}/singles/add")
     public ResponseEntity<Band> addSingle(@PathVariable Long bandId, @RequestBody Single single) {
-        String url = String.format("http://localhost:8080/api/v1/bands/%d/singles", bandId);
+        String url = String.format("https://localhost:8080/api/v1/bands/%d/singles", bandId);
         return restTemplate.postForEntity(url, single, Band.class);
     }
 
     @PutMapping("/bands/{bandId}/singles/{singleId}")
     public ResponseEntity<Single> changeSingle(@PathVariable Long bandId, @PathVariable Long singleId, @RequestBody Single single) {
-        String url = String.format("http://localhost:8080/api/v1/bands/%d/singles/%d", bandId, singleId);
+        String url = String.format("https://localhost:8080/api/v1/bands/%d/singles/%d", bandId, singleId);
         return restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(single), Single.class);
     }
 
     @PostMapping("/band/{bandId}/participants/add")
     public ResponseEntity<Person> addParticipant(@PathVariable Long bandId, @RequestBody Person participant) {
-        String url = String.format("http://localhost:8080/api/v1/bands/%d/participants", bandId);
+        String url = String.format("https://localhost:8080/api/v1/bands/%d/participants", bandId);
         return restTemplate.postForEntity(url, participant, Person.class);
     }
 }

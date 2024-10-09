@@ -1,4 +1,4 @@
-package ru.itmo.soa.mainservice.filters;
+package ru.itmo.soa.mainservice.filters.io;
 
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
