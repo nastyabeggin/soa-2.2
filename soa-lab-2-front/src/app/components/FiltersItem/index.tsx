@@ -5,11 +5,16 @@ import {FilterContext} from "@/app/context/filter";
 import styles from './styles.module.css';
 
 type FiltersItemProps = {
-    propertyTitle: string;
     property: Property;
+    validate: {
+        min?: number;
+        minLength?: number;
+        step?: number;
+        type: 'number' | 'text';
+    }
 }
 
-export const FiltersItem = ({ propertyTitle, property }: FiltersItemProps) => {
+export const FiltersItem = ({ property, validate: { min, minLength, type, step } }: FiltersItemProps) => {
     const [operator, setOperator] = useState<FilterType>(FilterType.EQ);
     const [value, setValue] = useState<string>();
 
@@ -41,7 +46,7 @@ export const FiltersItem = ({ propertyTitle, property }: FiltersItemProps) => {
 
     return (
         <div className={styles.container}>
-            {propertyTitle}
+            {PROPERTIES_TEXT[property]}
             <select className='select' defaultValue={FilterType.EQ} onChange={onOperatorChange}>
                 {FILTER_LIST.map((filter) => {
                     return (
@@ -49,7 +54,7 @@ export const FiltersItem = ({ propertyTitle, property }: FiltersItemProps) => {
                     )
                 })}
             </select>
-            <input className='input' defaultValue={''} onChange={onValueChange} placeholder='Type something...'/>
+            <input type={type} min={min} minLength={minLength} step={step} className='input' defaultValue='' onChange={onValueChange} placeholder='Type something...'/>
         </div>
     )
 }
