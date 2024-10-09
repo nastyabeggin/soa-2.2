@@ -29,29 +29,29 @@ public class BandController {
 
     @GetMapping
     public ResponseEntity<List<Band>> getBands(
-            @RequestParam(required = false) String[] sort,
-            @RequestParam(required = false) String[] filter,
-            @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "10") int size) {
-
+            @RequestParam(required = false, value = "sort") String[] sort,
+            @RequestParam(required = false, value = "filter") String[] filter,
+            @RequestParam(required = false, defaultValue = "1", value = "page") int page,
+            @RequestParam(required = false, defaultValue = "10", value = "size") int size) {
+            System.out.println(sort);
             List<Band> bands = bandService.getBands(sort, filter, page, size);
             return ResponseEntity.ok(bands);
     }
 
     @GetMapping("/{id}")
-    public Band getBandById(@PathVariable Long id) {
+    public Band getBandById(@PathVariable(value = "id") Long id) {
         return bandService.getBandById(id);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Band> updateBand(@PathVariable Long id, @RequestBody BandUpdate bandUpdate) {
+    public ResponseEntity<Band> updateBand(@PathVariable(value = "id") Long id, @RequestBody BandUpdate bandUpdate) {
         Band updatedBand = bandService.updateBand(bandUpdate, id);
         return ResponseEntity.ok(updatedBand);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBandById(@PathVariable Long id) {
+    public void deleteBandById(@PathVariable(value = "id") Long id) {
         bandService.deleteBandById(id);
     }
 
@@ -61,7 +61,7 @@ public class BandController {
     }
 
     @DeleteMapping("/genre/{genre}")
-    public ResponseEntity<Void> deleteBandsByGenre(@PathVariable("genre") String genre) {
+    public ResponseEntity<Void> deleteBandsByGenre(@PathVariable(value = "genre") String genre) {
         bandService.deleteBandsByGenre(genre);
         return ResponseEntity.noContent().build();
     }
@@ -74,19 +74,19 @@ public class BandController {
 
 //    Запросы со второго сервера
     @PostMapping("/{id}/singles")
-    public ResponseEntity<Band> addSingleToBand(@PathVariable Long id, @RequestBody Single single) {
+    public ResponseEntity<Band> addSingleToBand(@PathVariable(value = "id") Long id, @RequestBody Single single) {
         Band updatedBand = bandService.addSingleToBand(id, single);
         return ResponseEntity.status(HttpStatus.CREATED).body(updatedBand);
     }
 
     @PutMapping("/{bandId}/singles/{singleId}")
-    public ResponseEntity<Single> changeSingle(@PathVariable Long bandId, @PathVariable Long singleId, @RequestBody Single single) {
+    public ResponseEntity<Single> changeSingle(@PathVariable(value = "bandId") Long bandId, @PathVariable(value = "singleId") Long singleId, @RequestBody Single single) {
         Single updatedSingle = bandService.changeSingle(bandId, singleId, single);
         return ResponseEntity.status(HttpStatus.CREATED).body(updatedSingle);
     }
 
     @PostMapping("/{id}/participants")
-    public ResponseEntity<Person> addPersonToBand(@PathVariable Long id, @RequestBody Person person) {
+    public ResponseEntity<Person> addPersonToBand(@PathVariable(value = "id") Long id, @RequestBody Person person) {
         Person newPerson = bandService.addPersonToBand(id, person);
         return ResponseEntity.status(HttpStatus.CREATED).body(newPerson);
     }
