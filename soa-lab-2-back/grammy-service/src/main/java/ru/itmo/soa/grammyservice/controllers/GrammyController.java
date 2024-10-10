@@ -28,7 +28,7 @@ public class GrammyController {
     }
 
     @PutMapping("/bands/{bandId}/singles/{singleId}")
-    public ResponseEntity<Single> changeSingle(@PathVariable(value = "bandId") Long bandId, @PathVariable Long singleId, @RequestBody Single single) {
+    public ResponseEntity<Single> changeSingle(@PathVariable(value = "bandId") Long bandId, @PathVariable(value = "singleId") Long singleId, @RequestBody Single single) {
         String url = String.format("https://localhost:8080/api/v1/bands/%d/singles/%d", bandId, singleId);
         return restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(single), Single.class);
     }
