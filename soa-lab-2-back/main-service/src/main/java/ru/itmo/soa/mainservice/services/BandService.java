@@ -1,6 +1,7 @@
 package ru.itmo.soa.mainservice.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -14,6 +15,7 @@ import ru.itmo.soa.mainservice.model.MusicGenre;
 import ru.itmo.soa.mainservice.model.Person;
 import ru.itmo.soa.mainservice.model.Single;
 import ru.itmo.soa.mainservice.model.dto.BandUpdate;
+import ru.itmo.soa.mainservice.model.dto.BandsInfoResponse;
 import ru.itmo.soa.mainservice.repositories.BandRepository;
 import ru.itmo.soa.mainservice.repositories.BandSpecifications;
 
@@ -42,16 +44,25 @@ public class BandService {
         return bandRepository.save(newBand);
     }
 
-    public List<Band> getBands(String[] sort, String[] filter, int page, int size) {
+    public BandsInfoResponse getBands(String[] sort, String[] filter, int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size, createSort(sort));
 
         Specification<Band> specification = (filter != null)
                 ? BandSpecifications.createSpecification(filter)
                 : null;
 
-        return specification != null
-                ? bandRepository.findAll(specification, pageable).getContent()
-                : bandRepository.findAll(pageable).getContent();
+        Page<Band> bandPage = specification != null
+                ? bandRepository.findAll(specification, pageable)
+                : bandRepository.findAll(pageable);
+
+        BandsInfoResponse response = new BandsInfoResponse();
+        response.setData(bandPage.getContent());
+        response.setTotal((int) bandPage.getTotalElements());
+        response.setTotalPages(bandPage.getTotalPages());
+        response.setCurrentPage(page);
+        response.setSize(size);
+
+        return response;
     }
 
     private Sort createSort(String[] sortParams) {

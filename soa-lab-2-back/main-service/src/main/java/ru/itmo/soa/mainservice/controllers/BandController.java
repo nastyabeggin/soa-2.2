@@ -10,6 +10,7 @@ import ru.itmo.soa.mainservice.model.MusicGenre;
 import ru.itmo.soa.mainservice.model.Person;
 import ru.itmo.soa.mainservice.model.Single;
 import ru.itmo.soa.mainservice.model.dto.BandUpdate;
+import ru.itmo.soa.mainservice.model.dto.BandsInfoResponse;
 import ru.itmo.soa.mainservice.services.BandService;
 
 import java.util.List;
@@ -28,13 +29,13 @@ public class BandController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Band>> getBands(
+    public ResponseEntity<BandsInfoResponse> getBands(
             @RequestParam(required = false, value = "sort") String[] sort,
             @RequestParam(required = false, value = "filter") String[] filter,
             @RequestParam(required = false, defaultValue = "1", value = "page") int page,
             @RequestParam(required = false, defaultValue = "10", value = "size") int size) {
-            System.out.println(sort);
-            List<Band> bands = bandService.getBands(sort, filter, page, size);
+
+            BandsInfoResponse bands = bandService.getBands(sort, filter, page, size);
             return ResponseEntity.ok(bands);
     }
 
