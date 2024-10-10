@@ -47,14 +47,14 @@ export const FiltersItem = ({ property, validate: { min, minLength, type, step }
     return (
         <div className={styles.container}>
             {PROPERTIES_TEXT[property]}
-            <select className='select' defaultValue={FilterType.EQ} onChange={onOperatorChange}>
+            <select className='select' defaultValue={filters[property].operator ?? FilterType.EQ} onChange={onOperatorChange}>
                 {FILTER_LIST.map((filter) => {
                     return (
                         <option key={filter} value={filter}>{FILTER_TEXT[filter]}</option>
                     )
                 })}
             </select>
-            <input type={type} min={min} minLength={minLength} step={step} className='input' defaultValue='' onChange={onValueChange} placeholder='Type something...'/>
+            <input type={type} min={min} minLength={minLength} step={step} className='input' value={filters[property].value ?? ''} onChange={onValueChange} placeholder='Type something...'/>
         </div>
     )
 }

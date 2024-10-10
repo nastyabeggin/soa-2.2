@@ -11,7 +11,8 @@ type Page = {
 }
 
 export function getPagesForView(totalPages: number, currentPage: number): pagesForView {
-    const totalPagesArray = Array(totalPages);
+    const totalPagesArray = new Array(totalPages).fill(undefined);
+    console.log(getShortTotalPagesArray(totalPagesArray, currentPage));
 
     if (totalPages <= 10) {
         return {
@@ -29,7 +30,7 @@ export function getPagesForView(totalPages: number, currentPage: number): pagesF
 }
 
 function getShortTotalPagesArray(totalPages: number[], currentPage: number): Page[] {
-    return totalPages.map((page, index) => {
+    return totalPages.map((page, index): Page => {
         if (index + 1 === currentPage) {
             return {
                 item: currentPage,
@@ -43,7 +44,7 @@ function getShortTotalPagesArray(totalPages: number[], currentPage: number): Pag
     })
 }
 
-function getPagesStart(totalPages: number, currentPage: number) {
+function getPagesStart(totalPages: number, currentPage: number): Page[] {
     switch (currentPage) {
         case 1:
             return [

@@ -1,12 +1,12 @@
 export enum Property {
     ID = 'id',
     NAME = 'name',
-    COORDINATE_X = 'coordinate.x',
-    COORDINATE_Y = 'coordinate.y',
+    COORDINATE_X = 'coordinates.x',
+    COORDINATE_Y = 'coordinates.y',
     CREATION_DATE = 'creationDate',
     NUMBER_OF_PARTICIPANTS = 'numberOfParticipants',
     DESCRIPTION = 'description',
-    PERSON_NAME = 'person.name',
+    PERSON_NAME = 'frontMan.name',
     GENRE = 'genre'
 }
 

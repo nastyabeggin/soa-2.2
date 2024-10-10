@@ -25,3 +25,14 @@ export type BandDTO = {
     frontMan?: PersonToBandDTO;
     singles?: Omit<Single, 'id'>[];
 }
+
+export type BandUpdateDTO = {
+    name?: string;
+    coordinates?: Omit<Coordinates, 'id'>;
+    creationDate?: string;
+    numberOfParticipants?: number;
+    description?: string;
+    genre?: Genre;
+    frontMan?: PersonToBandDTO;
+    singles?: Omit<Single, 'id'>[];
+}

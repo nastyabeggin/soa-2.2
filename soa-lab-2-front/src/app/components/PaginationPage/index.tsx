@@ -2,13 +2,12 @@ import styles from './styles.module.css';
 import {Button} from "@/app/components/Button";
 import {LeftArrowIcon, RightArrowIcon} from "@/static/icons";
 import {getPagesForView} from "@/app/components/PaginationPage/helpers";
-import {useContext} from "react";
-import {PaginationContext, TOTAL_PAGES} from "@/app/context/pagination";
+import {useContext, useEffect} from "react";
+import {PaginationContext} from "@/app/context/pagination";
 
 export const PaginationPage = () => {
-    // TODO: totalPages - брать из запроса и добавлять в пагинацию
-    const { page, setPage } = useContext(PaginationContext);
-    const availablePages = getPagesForView(TOTAL_PAGES, page);
+    const { page, setPage, totalPages } = useContext(PaginationContext);
+    const availablePages = getPagesForView(totalPages, page);
 
     const onLeftClick = () => {
         if (page >= 2) {
@@ -17,7 +16,7 @@ export const PaginationPage = () => {
     }
 
     const onRightClick = () => {
-        if (page <= TOTAL_PAGES - 1) {
+        if (page <= totalPages - 1) {
             setPage(page + 1);
         }
     }
@@ -25,6 +24,10 @@ export const PaginationPage = () => {
     const onPageClick = (page: number) => {
         setPage(page);
     }
+
+    useEffect(() => {
+        console.log(availablePages);
+    }, [totalPages])
 
     return (
         <div className={styles.container}>
@@ -67,9 +70,9 @@ export const PaginationPage = () => {
                 ):''}
             </div>
 
-            <Button style='transparent' size='m' className={page === TOTAL_PAGES ? styles.disabled : ''} onClick={onRightClick}>
+            <Button style='transparent' size='m' className={page === totalPages ? styles.disabled : ''} onClick={onRightClick}>
                 Next
-                <RightArrowIcon className={`${styles.icon} ${page === TOTAL_PAGES ? styles.disabled : ''}`}/>
+                <RightArrowIcon className={`${styles.icon} ${page === totalPages ? styles.disabled : ''}`}/>
             </Button>
         </div>
     )

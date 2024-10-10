@@ -47,7 +47,10 @@ export const ShowSinglesModal = ({ band, isVisible, onClose }: AddSingleModalPro
                 </div>
             </Modal>
             {isUpdateSingleModalVisible &&
-                <AddSingleModal bandId={band.id} bandName={band.name} currentValue={currentUpdateSingle} isVisible={isUpdateSingleModalVisible} onClose={() => setUpdateSingleModalVisible(false)}/>
+                <AddSingleModal bandId={band.id} bandName={band.name} currentValue={currentUpdateSingle} isVisible={isUpdateSingleModalVisible} onClose={() => {
+                    setUpdateSingleModalVisible(false);
+                    onClose();
+                }}/>
             }
         </>
     )

@@ -1,9 +1,10 @@
 import {Modal} from "@/app/components/Modal";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {Button} from "@/app/components/Button";
 import {Single} from "@/app/types/single";
 import {addSingle, changeSingle} from "@/app/queries/grammy";
 import toast from 'react-hot-toast';
+import {BandsContext} from "@/app/context/bands";
 
 type AddSingleModalProps = {
     bandId: number;
@@ -14,17 +15,17 @@ type AddSingleModalProps = {
 }
 
 export const AddSingleModal = ({ bandId, currentValue, bandName, isVisible, onClose }: AddSingleModalProps) => {
-    // TODO: добавить onClick отправлю запроса на бекенд
     const [name, setName] = useState<string>(currentValue?.name ?? '');
-    // TODO: добавить если есть уже значение - значит update
+    const { canFetch, setCanFetch } = useContext(BandsContext);
 
     function updateSingle() {
         if (currentValue?.id){
             changeSingle(bandId, currentValue?.id, { name })
                 .then((data) => {
                     toast.success('Data successfully updated');
+                    setCanFetch(canFetch + 1);
+                    onClose();
                 })
-            onClose();
         }
     }
 
@@ -32,8 +33,9 @@ export const AddSingleModal = ({ bandId, currentValue, bandName, isVisible, onCl
         addSingle(bandId, { name })
             .then((data) => {
                 toast.success('Single successfully created');
+                setCanFetch(canFetch + 1);
+                onClose();
             })
-        onClose();
     }
 
     return (

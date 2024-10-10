@@ -5,4 +5,11 @@ export enum Genre {
     POST_ROCK = 'Post Rock'
 }
 
+export const GenreText = {
+    [Genre.ROCK]: 'ROCK',
+    [Genre.SOUL]: 'SOUL',
+    [Genre.MATH_ROCK]: 'MATH_ROCK',
+    [Genre.POST_ROCK]: 'POST_ROCK',
+}
+
 export const GENRES: Genre[] = Object.values(Genre);

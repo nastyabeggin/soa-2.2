@@ -17,12 +17,13 @@ import {Band} from "@/app/types/bands";
 import {getSortQuery} from "@/app/utils/sort";
 import {getFilterQuery} from "@/app/utils/filter";
 import { BandsContext } from "./context/bands";
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Home() {
     const [sortOrder, setSortOrder] = useState<SortOrderMap>(DEFAULT_SORT_ORDER);
     const [page, setPage] = useState<number>(DEFAULT_PAGE);
     const [size, setSize] = useState<number>(DEFAULT_SIZE);
+    const [totalPages, setTotalPages] = useState<number>(DEFAULT_SIZE);
     const [filters, setFilters] = useState<FilterMap>(DEFAULT_FILTERS);
     const [canFetch, setCanFetch] = useState<number>(0);
 
@@ -39,12 +40,17 @@ export default function Home() {
             size: size
         }).then((data) => {
             setBands(data.data);
+            setPage(data.currentPage);
+            setSize(data.size);
+            setTotalPages(data.totalPages);
+        }).catch((err) => {
+            toast.error(`Error occurred while fetching data: ${err}`);
         })
     }, [sortOrder, page, size, canFetch]);
 
     return (
         <SortContext.Provider value={{sortOrder, setSortOrder}}>
-            <PaginationContext.Provider value={{page, setPage, size, setSize}}>
+            <PaginationContext.Provider value={{page, setPage, size, setSize, totalPages, setTotalPages}}>
                 <FilterContext.Provider value={{filters, setFilters}}>
                     <BandsContext.Provider value={{canFetch, setCanFetch}}>
                         <Toaster

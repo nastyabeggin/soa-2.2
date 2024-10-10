@@ -4,6 +4,7 @@ import {Button} from "@/app/components/Button";
 import {Property} from "@/app/types/property";
 import {useContext} from "react";
 import {BandsContext} from "@/app/context/bands";
+import {DEFAULT_FILTERS, FilterContext} from "@/app/context/filter";
 
 type FiltersProps = {
     onClose: () => void
@@ -11,14 +12,25 @@ type FiltersProps = {
 
 export const Filters = ({ onClose }: FiltersProps) => {
     const { canFetch, setCanFetch } = useContext(BandsContext);
+    const { setFilters } = useContext(FilterContext);
 
     function onSubmit() {
         setCanFetch(canFetch + 1);
     }
 
+    function onResetClick() {
+        setFilters(DEFAULT_FILTERS);
+        setCanFetch(canFetch + 1);
+    }
+
     return (
         <form className={styles.container} onSubmit={(e) => e.preventDefault()}>
-            <h2 className={styles.title}>Filters</h2>
+            <h2 className={styles.title}>
+                Filters
+                <Button style='danger' size='s' onClick={onResetClick}>
+                    Reset
+                </Button>
+            </h2>
             <FiltersItem property={Property.ID} validate={{type: 'number', min: 1}}/>
             <FiltersItem property={Property.NAME} validate={{type: 'text', minLength: 1}}/>
             <FiltersItem property={Property.DESCRIPTION} validate={{type: 'text'}}/>

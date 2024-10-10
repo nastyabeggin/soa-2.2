@@ -1,4 +1,4 @@
-import {Band, BandDTO} from "@/app/types/bands";
+import {Band, BandDTO, BandUpdateDTO} from "@/app/types/bands";
 import {PaginatedResponse} from "@/app/types/response";
 import {Genre} from "@/app/types/genre";
 import {PaginatedRequest} from "@/app/types/request";
@@ -11,7 +11,7 @@ async function createBand(bandData: BandDTO): Promise<Band> {
             body: JSON.stringify(bandData),
             headers: { 'Content-Type': 'application/json' }
         }});
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) return response.text().then(text => { throw new Error(text) })
         return await response.json();
     } catch (error) {
         console.error('Error creating band:', error);
@@ -76,7 +76,7 @@ async function deleteBandById(id: number): Promise<void> {
     }
 }
 
-async function updateBandById(id: number, bandData: Partial<Band>): Promise<Band> {
+async function updateBandById(id: number, bandData: Partial<BandUpdateDTO>): Promise<Band> {
     try {
         const response = await fetchUrl({path: `/bands/${id}`,  options: {
                 method: 'PATCH',
@@ -85,7 +85,7 @@ async function updateBandById(id: number, bandData: Partial<Band>): Promise<Band
             }});
 
         // TODO: Дописать обработку ошибок
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) throw new Error(response.statusText);
 
         return await response.json();
     } catch (error) {

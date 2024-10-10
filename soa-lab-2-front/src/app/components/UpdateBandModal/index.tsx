@@ -2,11 +2,11 @@ import {Button} from "@/app/components/Button";
 import {Modal} from "@/app/components/Modal";
 import {useContext, useState} from "react";
 import {Band} from "@/app/types/bands";
-import {Genre, GENRES} from "@/app/types/genre";
+import {Genre, GENRES, GenreText} from "@/app/types/genre";
 import styles from './styles.module.css';
 import {Single} from "@/app/types/single";
 import {BAND_MOCK} from "@/app/mocks/bands";
-import {createBand} from "@/app/queries/bands";
+import {createBand, updateBandById} from "@/app/queries/bands";
 import toast from 'react-hot-toast';
 import {PersonToBandDTO} from "@/app/types/person";
 import {BandsContext} from "@/app/context/bands";
@@ -55,7 +55,7 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
             return;
         }
 
-        createBand({
+        updateBandById(band.id,{
             name,
             coordinates: {
                 x,
@@ -64,27 +64,34 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
             creationDate: creationDate?.toISOString(),
             numberOfParticipants,
             description,
-            genre,
+            genre: GenreText[genre] as Genre,
             frontMan: getFrontMan(),
             singles: getSingles()
         }).then((data) =>{
+            toast.success("Successfully updated band");
             setCanFetch(canFetch + 1);
+            onClose();
         })
     }
 
     const getFrontMan = (): PersonToBandDTO |  undefined => {
         if (frontManPassportID !== undefined && frontManX !== undefined && frontManY !== undefined && frontManZ !== undefined) {
-            return {
-                name: frontManName,
-                birthday: frontManBirthday,
-                passportID: frontManPassportID,
-                location: {
-                    name: frontManLocationName,
-                    x: frontManX,
-                    y: frontManY,
-                    z: frontManZ
-                }
+            const locationBase = {
+                x: frontManX,
+                y: frontManY,
+                z: frontManZ
             }
+            const name = frontManName ? { name: frontManName } : undefined;
+            const birthday = frontManBirthday ? { birthday: frontManBirthday } : undefined;
+
+            const location = !frontManLocationName ? locationBase : { name: frontManLocationName, ...locationBase };
+
+            return {
+                ...name,
+                ...birthday,
+                passportID: frontManPassportID,
+                location: location
+            };
         }
         else {
             return;
@@ -106,27 +113,30 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
                     <div className={styles.left}>
                         <label className='input-container'>
                             Name*
-                            <input id='name' value={name ?? " "} minLength={1} className='input'
+                            <input id='name' value={name ?? undefined} minLength={1} className='input'
                                    onChange={(e) => setName(e.target.value)}/>
                         </label>
                         <label className='input-container'>
                             Description*
-                            <input id='description' value={description ?? " "} className='input'
+                            <input id='description' value={description ?? undefined} className='input'
                                    onChange={(e) => setDescription(e.target.value)}/>
                         </label>
                         <label className='input-container'>
                             Creation date*
-                            <input type='datetime-local' id='name' value={creationDate ? creationDate.toString() : ' '} className='input'
+                            <input type='date' id='name' value={creationDate?.toString() ?? undefined}
+                                   className='input'
                                    onChange={(e) => setCreationDate(new Date(e.target.value))}/>
                         </label>
                         <label className='input-container'>
                             Number of members*
-                            <input type='number' id='number-of-members' value={numberOfParticipants ?? " "} className='input'
+                            <input type='number' id='number-of-members' value={numberOfParticipants ?? undefined}
+                                   className='input'
                                    onChange={(e) => setNumberOfParticipants(Number(e.target.value))}/>
                         </label>
                         <label className='input-container'>
                             Genre*
-                            <select className='select' onChange={(e) => setGenre(e.target.value as Genre)} value={genre}>
+                            <select className='select' onChange={(e) => setGenre(e.target.value as Genre)}
+                                    value={genre}>
                                 {GENRES.map((genre) => {
                                     return (
                                         <option value={genre} key={genre}>{genre}</option>
@@ -137,12 +147,12 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
                         <h3>Coordinates*</h3>
                         <label className='input-container'>
                             Coordinate X*
-                            <input type='number' min="1" step={1} id='coordinate-x' value={x ?? " "} className='input'
+                            <input type='number' min="1" step={1} id='coordinate-x' value={x ?? undefined} className='input'
                                    onChange={(e) => setX(Number(e.target.value))}/>
                         </label>
                         <label className='input-container'>
                             Coordinate Y*
-                            <input type='number' id='coordinate-y' value={y ?? " "} className='input'
+                            <input type='number' id='coordinate-y' value={y ?? undefined} className='input'
                                    onChange={(e) => setY(Number(e.target.value))}/>
                         </label>
 
@@ -150,7 +160,7 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
                             <>
                                 <h3>Singles</h3>
                                 <span className={styles.caption}>To add singles, please write their titles separated with comma, no brackets.</span>
-                                <textarea id='singles' value={textSingles ?? " "} className='textarea'
+                                <textarea id='singles' value={textSingles ?? undefined} className='textarea'
                                           onChange={(e) => setTextSingles(e.target.value)}/>
                             </>
                         }
@@ -159,53 +169,50 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
                         <h3>Front Man</h3>
                         <label className='input-container'>
                             Name
-                            <input id='name' minLength={1} value={frontManName ?? " "} className='input'
+                            <input id='name' minLength={1} value={frontManName ?? undefined} className='input'
                                    onChange={(e) => setFrontManName(e.target.value)}/>
                         </label>
                         <label className='input-container'>
                             Birthday
-                            <input type='date' id='birthday' value={frontManBirthday ?? " "} className='input'
+                            <input type='date' id='birthday' value={frontManBirthday ?? undefined} className='input'
                                    onChange={(e) => setFrontManBirthday(e.target.value)}/>
                         </label>
                         <label className='input-container'>
                             Passport ID*
-                            <input id='passport-id' value={frontManPassportID ?? " "} className='input'
+                            <input id='passport-id' value={frontManPassportID ?? undefined} className='input'
                                    onChange={(e) => setFrontManPassportID(e.target.value)}/>
                         </label>
                         <h4>Front Man's location</h4>
                         <label className='input-container'>
                             Location title
-                            <input id='location-name' value={frontManLocationName ?? " "} className='input'
+                            <input id='location-name' value={frontManLocationName ?? undefined} className='input'
                                    onChange={(e) => setFrontManLocationName(e.target.value)}/>
                         </label>
                         <label className='input-container'>
                             Coordinate X*
-                            <input type='number' id='x' value={frontManX ?? " "} className='input'
+                            <input type='number' id='x' value={frontManX ?? undefined} className='input'
                                    onChange={(e) => setFrontManX(Number(e.target.value))}/>
                         </label>
                         <label className='input-container'>
                             Coordinate Y*
-                            <input type='number' id='y' value={frontManY ?? " "} className='input'
+                            <input type='number' id='y' value={frontManY ?? undefined} className='input'
                                    onChange={(e) => setFrontManY(Number(e.target.value))}/>
                         </label>
                         <label className='input-container'>
                             Coordinate Z*
-                            <input type='number' step={1} pattern='[0-9]*[^.,]' id='z' value={frontManZ ?? " "} className='input'
+                            <input type='number' step={1} pattern='[0-9]*[^.,]' id='z' value={frontManZ ?? undefined} className='input'
                                    onChange={(e) => setFrontManZ(Number(e.target.value))}/>
                         </label>
                     </div>
                 </div>
 
-                <div className={styles.container}>
-                    {!band ? <Button style='accent' size='s' onClick={onApplyPresetClick}>Apply preset</Button> : <div></div>}
-                    <div className={`buttons ${styles.buttons}`}>
-                        <Button style='cancel' size='m' onClick={onClose}>
-                            Cancel
-                        </Button>
-                        <Button style='primary' size='m' submit onClick={onSubmit}>
-                            {band ? 'Update' : 'Create'}
-                        </Button>
-                    </div>
+                <div className={`buttons `}>
+                    <Button style='cancel' size='m' onClick={onClose}>
+                        Cancel
+                    </Button>
+                    <Button style='primary' size='m' submit onClick={onSubmit}>
+                        {band ? 'Update' : 'Create'}
+                    </Button>
                 </div>
             </form>
         </Modal>

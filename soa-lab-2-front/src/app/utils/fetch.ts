@@ -23,7 +23,7 @@ export function customURLSearchParams(params: SearchParamType[]) {
             result += `?${key}=${value}`;
         }
         else {
-            result += `&${key}=${value}`;
+            result += `\&${key}=${value}`;
         }
     })
     return result;

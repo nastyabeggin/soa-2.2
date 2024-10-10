@@ -12,6 +12,7 @@ import {DeleteBandModal} from "@/app/components/DeleteBandModal";
 import {AddBandModal} from "../AddBandModal";
 import {deleteBandById} from "@/app/queries/bands";
 import {BandsContext} from "@/app/context/bands";
+import {UpdateBandModal} from "@/app/components/UpdateBandModal";
 
 type TableRowProps = {
     band: Band;
@@ -92,7 +93,7 @@ export const TableRow = ({ band }: TableRowProps) => {
                 <DeleteBandModal bandId={band.id} bandName={band.name} isVisible={isDeleteBandModalVisible} onClose={() => setDeleteBandModalVisible(false)}/>
             }
             {isUpdateBandModalVisible &&
-                <AddBandModal isVisible={isUpdateBandModalVisible} onClose={() => setUpdateBandModalVisible(false)}/>
+                <UpdateBandModal band={band} isVisible={isUpdateBandModalVisible} onClose={() => setUpdateBandModalVisible(false)}/>
             }
         </>
     )
