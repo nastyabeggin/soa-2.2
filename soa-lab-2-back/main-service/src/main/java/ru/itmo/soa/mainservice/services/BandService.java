@@ -37,6 +37,8 @@ public class BandService {
 
     public Band createBand(Band band) {
         band.setCreationDate(LocalDateTime.now());
+        MusicGenre genre = band.getGenre();
+
         Band newBand = bandRepository.save(band);
         if (band.getFrontMan() != null) {
             newBand.getFrontMan().setBandID(newBand.getId());
