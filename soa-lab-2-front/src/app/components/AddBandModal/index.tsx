@@ -76,24 +76,24 @@ export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
 
     const getFrontMan = (): PersonToBandDTO |  undefined => {
         if (frontManPassportID !== undefined && frontManX !== undefined && frontManY !== undefined && frontManZ !== undefined) {
-            const location = {
+            const locationBase = {
                 x: frontManX,
                 y: frontManY,
                 z: frontManZ
-            };
+            }
+            const name = frontManName ? { name: frontManName } : undefined;
+            const birthday = frontManBirthday ? { birthday: frontManBirthday } : undefined;
 
-            console.log(frontManLocationName);
+            const location = !frontManLocationName ? locationBase : { name: frontManLocationName, ...locationBase };
 
             return {
-                name: frontManName,
-                birthday: frontManBirthday,
+                ...name,
+                ...birthday,
                 passportID: frontManPassportID,
-                location: !frontManLocationName ? location : { name: frontManLocationName, ...location }
+                location: location
             };
         }
-        else {
-            return;
-        }
+        return;
     }
 
     const getSingles = (): Omit<Single, 'id'>[] | undefined => {

@@ -93,9 +93,7 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
                 location: location
             };
         }
-        else {
-            return;
-        }
+        return;
     }
 
     const getSingles = (): Omit<Single, 'id'>[] | undefined => {
