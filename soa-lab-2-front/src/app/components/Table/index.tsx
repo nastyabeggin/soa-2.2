@@ -12,11 +12,15 @@ export const Table = ({ bands }: TableProps) => {
     return (
         <div className={styles.table}>
             <TableHeader />
-            {bands.map((band) => {
+            {bands.length ? bands.map((band) => {
                 return (
                     <TableRow key={band.id} band={band}/>
                 )
-            })}
+            }) : (
+                <div className={styles.empty}>
+                    <span>No bands for now. You can add them by clicking button in the right corner of this page.</span>
+                </div>
+            )}
             <PaginationPage />
         </div>
     )

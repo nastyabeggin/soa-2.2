@@ -1,6 +1,10 @@
 import {Button} from "@/app/components/Button";
 import {Modal} from "@/app/components/Modal";
 import styles from './styles.module.css';
+import {useContext} from "react";
+import {BandsContext} from "@/app/context/bands";
+import {deleteBandById} from "@/app/queries/bands";
+import toast from 'react-hot-toast';
 
 type DeleteBandModalProps = {
     bandId: number;
@@ -9,8 +13,20 @@ type DeleteBandModalProps = {
     onClose: () => void;
 }
 
-export const DeleteBandModal = ({ bandName, isVisible, onClose }: DeleteBandModalProps) => {
-    // TODO: добавить onClick удаление группы
+export const DeleteBandModal = ({ bandId, bandName, isVisible, onClose }: DeleteBandModalProps) => {
+    const { canFetch, setCanFetch } = useContext(BandsContext);
+
+    function onDeleteBandClick() {
+        deleteBandById(bandId)
+            .then((data) => {
+                setCanFetch(canFetch + 1);
+                toast.success("Successfully deleted");
+                onClose();
+            })
+            .catch(() => {
+                toast.error("Error occurred while deleting band. See logs");
+            })
+    }
 
     return (
         <Modal isVisible={isVisible} onClose={onClose}>
@@ -21,7 +37,7 @@ export const DeleteBandModal = ({ bandName, isVisible, onClose }: DeleteBandModa
                     <Button style='cancel' size='m' onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button style='danger' size='m'>
+                    <Button style='danger' size='m' onClick={onDeleteBandClick}>
                         Delete
                     </Button>
                 </div>

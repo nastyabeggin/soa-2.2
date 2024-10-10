@@ -2,6 +2,8 @@ import {Modal} from "@/app/components/Modal";
 import {useState} from "react";
 import {Button} from "@/app/components/Button";
 import {Single} from "@/app/types/single";
+import {addSingle, changeSingle} from "@/app/queries/grammy";
+import toast from 'react-hot-toast';
 
 type AddSingleModalProps = {
     bandId: number;
@@ -16,6 +18,24 @@ export const AddSingleModal = ({ bandId, currentValue, bandName, isVisible, onCl
     const [name, setName] = useState<string>(currentValue?.name ?? '');
     // TODO: добавить если есть уже значение - значит update
 
+    function updateSingle() {
+        if (currentValue?.id){
+            changeSingle(bandId, currentValue?.id, { name })
+                .then((data) => {
+                    toast.success('Data successfully updated');
+                })
+            onClose();
+        }
+    }
+
+    function createSingle() {
+        addSingle(bandId, { name })
+            .then((data) => {
+                toast.success('Single successfully created');
+            })
+        onClose();
+    }
+
     return (
         <Modal isVisible={isVisible} onClose={onClose}>
             <div className='modal-container'>
@@ -28,7 +48,7 @@ export const AddSingleModal = ({ bandId, currentValue, bandName, isVisible, onCl
                     <Button style='cancel' size='m' onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button style='primary' size='m'>
+                    <Button style='primary' size='m' onClick={currentValue ? updateSingle : createSingle}>
                         {currentValue ? 'Update' : 'Create'}
                     </Button>
                 </div>

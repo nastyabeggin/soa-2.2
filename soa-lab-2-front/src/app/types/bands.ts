@@ -1,6 +1,6 @@
 import {Coordinates} from "@/app/types/location";
 import {Genre} from "@/app/types/genre";
-import {PersonToBand} from "@/app/types/person";
+import {PersonToBand, PersonToBandDTO} from "@/app/types/person";
 import {Single} from "@/app/types/single";
 
 export type Band = {
@@ -13,4 +13,15 @@ export type Band = {
     genre: Genre;
     frontMan?: PersonToBand;
     singles?: Single[];
+}
+
+export type BandDTO = {
+    name: string;
+    coordinates: Omit<Coordinates, 'id'>;
+    creationDate: string;
+    numberOfParticipants: number;
+    description: string;
+    genre: Genre;
+    frontMan?: PersonToBandDTO;
+    singles?: Omit<Single, 'id'>[];
 }

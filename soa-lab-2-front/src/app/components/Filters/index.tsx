@@ -2,14 +2,22 @@ import styles from './styles.module.css';
 import {FiltersItem} from "@/app/components/FiltersItem";
 import {Button} from "@/app/components/Button";
 import {Property} from "@/app/types/property";
+import {useContext} from "react";
+import {BandsContext} from "@/app/context/bands";
 
 type FiltersProps = {
     onClose: () => void
 }
 
 export const Filters = ({ onClose }: FiltersProps) => {
+    const { canFetch, setCanFetch } = useContext(BandsContext);
+
+    function onSubmit() {
+        setCanFetch(canFetch + 1);
+    }
+
     return (
-        <form className={styles.container}>
+        <form className={styles.container} onSubmit={(e) => e.preventDefault()}>
             <h2 className={styles.title}>Filters</h2>
             <FiltersItem property={Property.ID} validate={{type: 'number', min: 1}}/>
             <FiltersItem property={Property.NAME} validate={{type: 'text', minLength: 1}}/>
@@ -24,7 +32,7 @@ export const Filters = ({ onClose }: FiltersProps) => {
                 <Button style='cancel' size='m' onClick={onClose}>
                     Cancel
                 </Button>
-                <Button style='primary' size='m' submit>
+                <Button style='primary' size='m' submit onClick={onSubmit}>
                     Find
                 </Button>
             </div>

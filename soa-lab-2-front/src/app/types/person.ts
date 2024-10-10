@@ -11,3 +11,10 @@ export type PersonToBand = {
 export type Person = PersonToBand & {
     bandID: number;
 }
+
+export type PersonToBandDTO = {
+    name?: string;
+    birthday?: string;
+    passportID: string;
+    location: Omit<Location, 'id'>;
+}

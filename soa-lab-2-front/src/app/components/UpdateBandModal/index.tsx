@@ -1,6 +1,7 @@
 import {Button} from "@/app/components/Button";
 import {Modal} from "@/app/components/Modal";
 import {useContext, useState} from "react";
+import {Band} from "@/app/types/bands";
 import {Genre, GENRES} from "@/app/types/genre";
 import styles from './styles.module.css';
 import {Single} from "@/app/types/single";
@@ -10,48 +11,31 @@ import toast from 'react-hot-toast';
 import {PersonToBandDTO} from "@/app/types/person";
 import {BandsContext} from "@/app/context/bands";
 
-type AddBandModalProps = {
+type UpdateBandModalProps = {
+    band: Band;
     isVisible: boolean;
     onClose: () => void;
 }
 
-export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
-    const [name, setName] = useState<string>(BAND_MOCK.name);
-    const [description, setDescription] = useState<string>(BAND_MOCK.description);
-    const [x, setX] = useState<number>(BAND_MOCK.coordinates.x);
-    const [y, setY] = useState<number>(BAND_MOCK.coordinates.y);
-    const [creationDate, setCreationDate] = useState<Date>(new Date(BAND_MOCK.creationDate));
-    const [numberOfParticipants, setNumberOfParticipants] = useState<number>(BAND_MOCK.numberOfParticipants);
-    const [genre, setGenre] = useState<Genre>(BAND_MOCK.genre);
+export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalProps) => {
+    const [name, setName] = useState<string | undefined>(band?.name ?? undefined);
+    const [description, setDescription] = useState<string | undefined>(band?.description ?? undefined);
+    const [x, setX] = useState<number | undefined>(band?.coordinates.x ?? undefined);
+    const [y, setY] = useState<number | undefined>(band?.coordinates.y ?? undefined);
+    const [creationDate, setCreationDate] = useState<Date | undefined>(band?.creationDate ? new Date(band?.creationDate) : undefined);
+    const [numberOfParticipants, setNumberOfParticipants] = useState<number | undefined>(band?.numberOfParticipants ?? undefined);
+    const [genre, setGenre] = useState<Genre | undefined>(band?.genre ?? Genre.ROCK);
     const [textSingles, setTextSingles] = useState<string | undefined>();
 
-    const [frontManName, setFrontManName] = useState<string | undefined>(BAND_MOCK.frontMan?.name);
-    const [frontManBirthday, setFrontManBirthday] = useState<string | undefined>(BAND_MOCK.frontMan?.birthday);
-    const [frontManPassportID, setFrontManPassportID] = useState<string | undefined>(BAND_MOCK.frontMan?.passportID);
-    const [frontManX, setFrontManX] = useState<number | undefined>(BAND_MOCK.frontMan?.location.x);
-    const [frontManY, setFrontManY] = useState<number | undefined>(BAND_MOCK.frontMan?.location.y);
-    const [frontManZ, setFrontManZ] = useState<number | undefined>(BAND_MOCK.frontMan?.location.z);
-    const [frontManLocationName, setFrontManLocationName] = useState<string | undefined>(BAND_MOCK.frontMan?.location.name);
+    const [frontManName, setFrontManName] = useState<string | undefined>(band?.frontMan?.name ?? undefined);
+    const [frontManBirthday, setFrontManBirthday] = useState<string | undefined>(band?.frontMan?.birthday ?? undefined);
+    const [frontManPassportID, setFrontManPassportID] = useState<string | undefined>(band?.frontMan?.passportID ?? undefined);
+    const [frontManX, setFrontManX] = useState<number | undefined>(band?.frontMan?.location.x ?? undefined);
+    const [frontManY, setFrontManY] = useState<number | undefined>(band?.frontMan?.location.y ?? undefined);
+    const [frontManZ, setFrontManZ] = useState<number | undefined>(band?.frontMan?.location.z ?? undefined);
+    const [frontManLocationName, setFrontManLocationName] = useState<string | undefined>(band?.frontMan?.location.name ?? undefined);
 
     const { canFetch, setCanFetch } = useContext(BandsContext);
-
-    const onApplyPresetClick = () => {
-        setName(BAND_MOCK.name);
-        setDescription(BAND_MOCK.description);
-        setX(BAND_MOCK.coordinates.x);
-        setY(BAND_MOCK.coordinates.y);
-        setCreationDate(new Date(BAND_MOCK.creationDate));
-        setNumberOfParticipants(BAND_MOCK.numberOfParticipants);
-        setGenre(BAND_MOCK.genre);
-        setTextSingles(BAND_MOCK.singles ? convertSinglesToString(BAND_MOCK.singles) : '');
-        setFrontManName(BAND_MOCK.frontMan?.name);
-        setFrontManBirthday(BAND_MOCK.frontMan?.birthday);
-        setFrontManPassportID(BAND_MOCK.frontMan?.passportID);
-        setFrontManX(BAND_MOCK.frontMan?.location.x);
-        setFrontManY(BAND_MOCK.frontMan?.location.y);
-        setFrontManZ(BAND_MOCK.frontMan?.location.z);
-        setFrontManLocationName(BAND_MOCK.frontMan?.location.name);
-    }
 
     function convertStringToSingles(text: string) {
         let singles = text.split(',');
@@ -117,32 +101,32 @@ export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
     return (
         <Modal isVisible={isVisible} onClose={onClose}>
             <form className='modal-container' onSubmit={(e) => e.preventDefault()}>
-                <h2>Create new band</h2>
+                <h2>{band? `Update info about ${band.name}` : 'Create new band'}</h2>
                 <div className={styles.content}>
                     <div className={styles.left}>
                         <label className='input-container'>
                             Name*
-                            <input id='name' value={name ?? " "} minLength={1} className='input' required
+                            <input id='name' value={name ?? " "} minLength={1} className='input'
                                    onChange={(e) => setName(e.target.value)}/>
                         </label>
                         <label className='input-container'>
                             Description*
-                            <input id='description' value={description ?? " "} className='input' required
+                            <input id='description' value={description ?? " "} className='input'
                                    onChange={(e) => setDescription(e.target.value)}/>
                         </label>
                         <label className='input-container'>
                             Creation date*
-                            <input type='datetime-local' id='name' value={creationDate ? creationDate.toString() : ' '} className='input' required
+                            <input type='datetime-local' id='name' value={creationDate ? creationDate.toString() : ' '} className='input'
                                    onChange={(e) => setCreationDate(new Date(e.target.value))}/>
                         </label>
                         <label className='input-container'>
                             Number of members*
-                            <input type='number' id='number-of-members' value={numberOfParticipants ?? " "} className='input' required
+                            <input type='number' id='number-of-members' value={numberOfParticipants ?? " "} className='input'
                                    onChange={(e) => setNumberOfParticipants(Number(e.target.value))}/>
                         </label>
                         <label className='input-container'>
                             Genre*
-                            <select className='select' onChange={(e) => setGenre(e.target.value as Genre)} value={genre} required>
+                            <select className='select' onChange={(e) => setGenre(e.target.value as Genre)} value={genre}>
                                 {GENRES.map((genre) => {
                                     return (
                                         <option value={genre} key={genre}>{genre}</option>
@@ -153,19 +137,23 @@ export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
                         <h3>Coordinates*</h3>
                         <label className='input-container'>
                             Coordinate X*
-                            <input type='number' min="1" step={1} id='coordinate-x' value={x ?? " "} className='input' required
+                            <input type='number' min="1" step={1} id='coordinate-x' value={x ?? " "} className='input'
                                    onChange={(e) => setX(Number(e.target.value))}/>
                         </label>
                         <label className='input-container'>
                             Coordinate Y*
-                            <input type='number' id='coordinate-y' value={y ?? " "} className='input' required
+                            <input type='number' id='coordinate-y' value={y ?? " "} className='input'
                                    onChange={(e) => setY(Number(e.target.value))}/>
                         </label>
 
-                        <h3>Singles</h3>
-                        <span className={styles.caption}>To add singles, please write their titles separated with comma, no brackets.</span>
-                        <textarea id='singles' value={textSingles ?? " "} className='textarea'
-                                  onChange={(e) => setTextSingles(e.target.value)}/>
+                        {!band &&
+                            <>
+                                <h3>Singles</h3>
+                                <span className={styles.caption}>To add singles, please write their titles separated with comma, no brackets.</span>
+                                <textarea id='singles' value={textSingles ?? " "} className='textarea'
+                                          onChange={(e) => setTextSingles(e.target.value)}/>
+                            </>
+                        }
                     </div>
                     <div className={styles.right}>
                         <h3>Front Man</h3>
@@ -209,13 +197,13 @@ export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
                 </div>
 
                 <div className={styles.container}>
-                    <Button style='accent' size='s' onClick={onApplyPresetClick}>Apply preset</Button>
+                    {!band ? <Button style='accent' size='s' onClick={onApplyPresetClick}>Apply preset</Button> : <div></div>}
                     <div className={`buttons ${styles.buttons}`}>
                         <Button style='cancel' size='m' onClick={onClose}>
                             Cancel
                         </Button>
                         <Button style='primary' size='m' submit onClick={onSubmit}>
-                            Create
+                            {band ? 'Update' : 'Create'}
                         </Button>
                     </div>
                 </div>

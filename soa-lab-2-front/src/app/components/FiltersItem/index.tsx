@@ -22,14 +22,15 @@ export const FiltersItem = ({ property, validate: { min, minLength, type, step }
 
     const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
-        setFilters({
-            ...filters,
-            [property]: {
-                operator: operator,
-                value: e.target.value
-            }
-        });
-        console.log(filters);
+        if (e.target.value.length > 0) {
+            setFilters({
+                ...filters,
+                [property]: {
+                    operator: operator,
+                    value: e.target.value
+                }
+            });
+        }
     }
 
     const onOperatorChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -41,7 +42,6 @@ export const FiltersItem = ({ property, validate: { min, minLength, type, step }
                 value: value
             }
         });
-        console.log(filters);
     }
 
     return (

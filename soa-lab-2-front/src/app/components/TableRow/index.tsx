@@ -5,11 +5,13 @@ import {TableCell} from "@/app/components/TableCell";
 import {Button} from "@/app/components/Button";
 import {DeleteIcon, EditIcon, PlusIcon, ShowIcon} from "@/static/icons";
 import {AddSingleModal} from "@/app/components/AddSingleModal";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {ShowSinglesModal} from "@/app/components/ShowSinglesModal";
 import {AddMemberModal} from "@/app/components/AddMemberModal";
 import {DeleteBandModal} from "@/app/components/DeleteBandModal";
 import {AddBandModal} from "../AddBandModal";
+import {deleteBandById} from "@/app/queries/bands";
+import {BandsContext} from "@/app/context/bands";
 
 type TableRowProps = {
     band: Band;
@@ -81,7 +83,7 @@ export const TableRow = ({ band }: TableRowProps) => {
                 <AddSingleModal bandId={band.id} bandName={band.name} isVisible={isAddSingleModalVisible} onClose={() => setAddSingleModalVisible(false)}/>
             }
             {isShowSinglesModalVisible &&
-                <ShowSinglesModal bandId={band.id} bandName={band.name} isVisible={isShowSinglesModalVisible} onClose={() => setShowSinglesModalVisible(false)}/>
+                <ShowSinglesModal band={band} isVisible={isShowSinglesModalVisible} onClose={() => setShowSinglesModalVisible(false)}/>
             }
             {isAddMemberModalVisible &&
                 <AddMemberModal bandId={band.id} bandName={band.name} isVisible={isAddMemberModalVisible} onClose={() => setAddMemberModalVisible(false)} />
@@ -90,7 +92,7 @@ export const TableRow = ({ band }: TableRowProps) => {
                 <DeleteBandModal bandId={band.id} bandName={band.name} isVisible={isDeleteBandModalVisible} onClose={() => setDeleteBandModalVisible(false)}/>
             }
             {isUpdateBandModalVisible &&
-                <AddBandModal band={band} isVisible={isUpdateBandModalVisible} onClose={() => setUpdateBandModalVisible(false)}/>
+                <AddBandModal isVisible={isUpdateBandModalVisible} onClose={() => setUpdateBandModalVisible(false)}/>
             }
         </>
     )

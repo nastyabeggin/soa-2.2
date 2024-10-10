@@ -5,7 +5,7 @@ export enum FilterType {
     LTE = 'lte',
     EQ = 'eq',
     NEQ = 'neq',
-    CONTAIN = 'contain'
+    CONTAIN = '~'
 }
 
 export const FILTER_LIST = Object.values(FilterType);

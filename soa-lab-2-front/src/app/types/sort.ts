@@ -1,5 +1,5 @@
 export enum SortOrder {
-    ASC,
-    DESC,
-    UNDEFINED
+    ASC= 'asc',
+    DESC = 'desc',
+    UNDEFINED = 'undefined'
 }
