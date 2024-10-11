@@ -37,7 +37,6 @@ public class BandService {
 
     public Band createBand(Band band) {
         band.setCreationDate(LocalDateTime.now());
-        MusicGenre genre = band.getGenre();
 
         Band newBand = bandRepository.save(band);
         if (band.getFrontMan() != null) {
@@ -109,6 +108,7 @@ public class BandService {
         bandRepository.deleteById(id);
     }
 
+    @Transactional
     public Band updateBand(BandUpdate bandUpdate, Long id) {
         Band existingBand = bandRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Band not found with id: " + id));
@@ -129,14 +129,22 @@ public class BandService {
             existingBand.setGenre(bandUpdate.getGenre());
         }
         if (bandUpdate.getFrontMan() != null) {
-            existingBand.setFrontMan(bandUpdate.getFrontMan());
+            personService.createOrUpdatePerson(bandUpdate.getFrontMan());
         }
         if (bandUpdate.getSingles() != null) {
-            existingBand.setSingles(bandUpdate.getSingles());
+            List<Single> singles = bandUpdate.getSingles();
+            for(Single single : singles) {
+                singleService.createOrUpdateSingle(single);
+            }
         }
 
-        return bandRepository.save(existingBand);
+
+
+        return existingBand;
+
+//        return bandRepository.save(existingBand);
     }
+
 
     public List<MusicGenre> getAllGenres() {
         return Arrays.asList(MusicGenre.values());
