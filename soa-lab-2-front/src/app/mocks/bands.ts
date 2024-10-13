@@ -1,5 +1,4 @@
 import {Band} from "@/app/types/bands";
-import {Genre} from "@/app/types/genre";
 
 export const BANDS_LIST_MOCK: Band[] = [
     {
@@ -9,7 +8,7 @@ export const BANDS_LIST_MOCK: Band[] = [
         creationDate: "2022-01-15",
         numberOfParticipants: 5,
         description: "High-energy rock band from Paris",
-        genre: Genre.ROCK,
+        genre: 'ROCK',
         frontMan: {
             id: 201,
             name: "Alexandre Dupont",
@@ -29,7 +28,7 @@ export const BANDS_LIST_MOCK: Band[] = [
         creationDate: "2019-06-01",
         numberOfParticipants: 7,
         description: "Harmonious soul band from New York City",
-        genre: Genre.SOUL,
+        genre: 'SOUL',
         frontMan: {
             id: 202,
             name: "Maya Johnson",
@@ -45,7 +44,7 @@ export const BANDS_LIST_MOCK: Band[] = [
         creationDate: "2018-03-20",
         numberOfParticipants: 4,
         description: "Complex math rock band from London",
-        genre: Genre.MATH_ROCK,
+        genre: 'MATH_ROCK',
         singles: [
             { id: 303, name: "Fractal Patterns" },
             { id: 304, name: "Quantum Leap" }
@@ -58,7 +57,7 @@ export const BANDS_LIST_MOCK: Band[] = [
         creationDate: "2021-08-15",
         numberOfParticipants: 6,
         description: "Innovative post-rock band from Paris",
-        genre: Genre.POST_ROCK,
+        genre: 'POST_ROCK',
         frontMan: {
             id: 203,
             name: "Léa Martin",
@@ -74,7 +73,7 @@ export const BANDS_LIST_MOCK: Band[] = [
         creationDate: "2020-02-29",
         numberOfParticipants: 3,
         description: "Experimental math rock band from Los Angeles",
-        genre: Genre.MATH_ROCK,
+        genre: 'MATH_ROCK',
         singles: [
             { id: 305, name: "Wave Function Collapse" },
             { id: 306, name: "Quantum Entanglement" }
@@ -87,7 +86,7 @@ export const BANDS_LIST_MOCK: Band[] = [
         creationDate: "2017-04-15",
         numberOfParticipants: 5,
         description: "Moody post-rock band from the City of Light",
-        genre: Genre.POST_ROCK,
+        genre: 'POST_ROCK',
         frontMan: {
             id: 204,
             name: "Sophie Lefebvre",
@@ -103,7 +102,7 @@ export const BANDS_LIST_MOCK: Band[] = [
         creationDate: "2015-11-01",
         numberOfParticipants: 6,
         description: "Classic soul revival band from Chicago",
-        genre: Genre.SOUL,
+        genre: 'SOUL',
         singles: [
             { id: 307, name: "Come Together" },
             { id: 308, name: "Love Train" }
@@ -123,7 +122,7 @@ export const BANDS_LIST_MOCK: Band[] = [
         creationDate: "2019-07-04",
         numberOfParticipants: 4,
         description: "Rebellious rock band from London",
-        genre: Genre.ROCK,
+        genre: 'ROCK',
         frontMan: {
             id: 206,
             name: "Ethan Patel",
@@ -139,7 +138,7 @@ export const BANDS_LIST_MOCK: Band[] = [
         creationDate: "2021-03-21",
         numberOfParticipants: 5,
         description: "Intellectual math rock band from Tokyo",
-        genre: Genre.MATH_ROCK,
+        genre: 'MATH_ROCK',
         singles: [
             { id: 309, name: "Binary Code" },
             { id: 310, name: "Algorithmic Rhythm" }
@@ -161,7 +160,7 @@ export const BAND_MOCK: Band = {
     creationDate: "2022-01-15T10:00:00.000Z",
     numberOfParticipants: 5,
     description: "High-energy rock band from Paris",
-    genre: Genre.SOUL,
+    genre: 'SOUL',
     frontMan: {
         id: 201,
         name: "Alexandre Dupont",

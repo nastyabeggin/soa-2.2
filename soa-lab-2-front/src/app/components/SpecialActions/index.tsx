@@ -2,23 +2,27 @@ import styles from './styles.module.css';
 import {Button} from "@/app/components/Button";
 import {DeleteIcon, EyesIcon} from "@/static/icons";
 import {useContext, useState} from "react";
-import {Genre, GENRES} from "@/app/types/genre";
 import {Band} from "@/app/types/bands";
 import {deleteBandsByGenre, getAllGenres, getBandWithMinGenre} from "@/app/queries/bands";
 import toast from 'react-hot-toast';
 import {BandsContext} from "@/app/context/bands";
+import {GenresContext} from "@/app/context/genres";
 
 export const SpecialActions = () => {
-    const [genres, setGenres] = useState<Genre[]>();
-    const [minBand, setMinBand] = useState<Band>();
-    const [genreToDelete, setGenreToDelete] = useState<Genre>(Genre.ROCK);
-
     const { canFetch, setCanFetch } = useContext(BandsContext);
+    const { genres } = useContext(GenresContext);
+
+    const [genresFetched, setGenresFetched] = useState<string[]>();
+    const [minBand, setMinBand] = useState<Band>();
+    const [genreToDelete, setGenreToDelete] = useState<string>(genres[0] ?? '');
 
     function onGetAllGenresSubmit() {
         getAllGenres()
             .then((data) => {
-                setGenres(data);
+                setGenresFetched(data);
+            })
+            .catch((err) => {
+                toast.error(`${err}`);
             })
     }
 
@@ -27,6 +31,9 @@ export const SpecialActions = () => {
             .then((data) => {
                 setMinBand(data);
             })
+            .catch((err) => {
+                toast.error(`${err}`);
+            })
     }
 
     function onDeleteBandsByGenre() {
@@ -34,6 +41,9 @@ export const SpecialActions = () => {
             .then((data) => {
                 setCanFetch(canFetch + 1);
                 toast.success("Successfully deleted");
+            })
+            .catch((err) => {
+                toast.error(`${err}`);
             })
     }
 
@@ -44,7 +54,7 @@ return (
                 <div className={styles.genres}>
                     <label>
                         All available genres
-                        <pre className={styles.json}><code>{genres ? JSON.stringify(genres, null, 2) : 'Click below to get available genres'}</code></pre>
+                        <pre className={styles.json}><code>{genresFetched ? JSON.stringify(genresFetched, null, 2) : 'Click below to get available genres'}</code></pre>
                     </label>
                     <Button style='accent-green' size='s' onClick={onGetAllGenresSubmit}>
                         <EyesIcon className={`${styles.icon} ${styles.green}`}/>
@@ -64,8 +74,8 @@ return (
                 <div className={styles.genres}>
                     <label className={styles.select}>
                         Delete all bands with selected genre
-                        <select className='select' onChange={(e) => setGenreToDelete(e.target.value as Genre)} value={genreToDelete}>
-                            {GENRES.map((genre) => {
+                        <select className='select' onChange={(e) => setGenreToDelete(e.target.value)} value={genreToDelete}>
+                            {genres.map((genre) => {
                                 return (
                                     <option value={genre} key={genre}>{genre}</option>
                                 )

@@ -1,12 +1,17 @@
-import {MAIN_FETCH_URL} from "@/app/constants";
+import {GRAMMY_FETCH_URL, MAIN_FETCH_URL} from "@/app/constants";
 
 export type SearchParamType = {
     key: string;
     value: string;
 }
 
-export const fetchUrl = ({path, params, options}: {path: string, params?: SearchParamType[],  options?: RequestInit}): Promise<Response> => {
-    let url = `${MAIN_FETCH_URL}${path}`;
+export type ErrorResponse = {
+    code: string;
+    message: string;
+}
+
+export const fetchUrl = ({path, params, options, mainApi = true}: {path: string, params?: SearchParamType[],  options?: RequestInit, mainApi?: boolean}): Promise<Response> => {
+    let url = `${mainApi ? MAIN_FETCH_URL : GRAMMY_FETCH_URL}${path}`;
 
     if (params) {
         url += customURLSearchParams(params);
@@ -27,4 +32,15 @@ export function customURLSearchParams(params: SearchParamType[]) {
         }
     })
     return result;
+}
+
+export function getErrorMessage(text: string) {
+    const response: ErrorResponse = JSON.parse(text);
+    return response.message;
+}
+
+export function getErrorMessages(text: string) {
+    const response: ErrorResponse = JSON.parse(text);
+    const resultMap = Object.values(response.message);
+    return resultMap.join(". ");
 }

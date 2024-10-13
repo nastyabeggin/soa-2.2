@@ -1,5 +1,4 @@
 import {Coordinates} from "@/app/types/location";
-import {Genre} from "@/app/types/genre";
 import {PersonToBand, PersonToBandDTO} from "@/app/types/person";
 import {Single} from "@/app/types/single";
 
@@ -10,7 +9,7 @@ export type Band = {
     creationDate: string;
     numberOfParticipants: number;
     description: string;
-    genre: Genre;
+    genre: string;
     frontMan?: PersonToBand;
     singles?: Single[];
 }
@@ -18,10 +17,9 @@ export type Band = {
 export type BandDTO = {
     name: string;
     coordinates: Omit<Coordinates, 'id'>;
-    creationDate: string;
     numberOfParticipants: number;
     description: string;
-    genre: Genre;
+    genre: string;
     frontMan?: PersonToBandDTO;
     singles?: Omit<Single, 'id'>[];
 }
@@ -29,10 +27,9 @@ export type BandDTO = {
 export type BandUpdateDTO = {
     name?: string;
     coordinates?: Omit<Coordinates, 'id'>;
-    creationDate?: string;
     numberOfParticipants?: number;
     description?: string;
-    genre?: Genre;
+    genre?: string;
     frontMan?: PersonToBandDTO;
     singles?: Omit<Single, 'id'>[];
 }

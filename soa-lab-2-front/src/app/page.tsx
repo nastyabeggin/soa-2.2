@@ -12,12 +12,13 @@ import {DEFAULT_PAGE, DEFAULT_SIZE, PaginationContext} from "@/app/context/pagin
 import {PaginationSize} from "@/app/components/PaginationSize";
 import {DEFAULT_FILTERS, FilterContext, FilterMap} from "@/app/context/filter";
 import {Filters} from "@/app/components/Filters";
-import {getBands} from "@/app/queries/bands";
+import {getAllGenres, getBands} from "@/app/queries/bands";
 import {Band} from "@/app/types/bands";
 import {getSortQuery} from "@/app/utils/sort";
 import {getFilterQuery} from "@/app/utils/filter";
 import { BandsContext } from "./context/bands";
 import toast, { Toaster } from 'react-hot-toast';
+import {GenresContext} from "@/app/context/genres";
 
 export default function Home() {
     const [sortOrder, setSortOrder] = useState<SortOrderMap>(DEFAULT_SORT_ORDER);
@@ -27,6 +28,7 @@ export default function Home() {
     const [filters, setFilters] = useState<FilterMap>(DEFAULT_FILTERS);
     const [canFetch, setCanFetch] = useState<number>(0);
 
+    const [genres, setGenres] = useState<string[]>([]);
     const [bands, setBands] = useState<Band[]>([]);
 
     const [isAddBandModalVisible, setAddBandModalVisible] = useState<boolean>(false);
@@ -44,8 +46,16 @@ export default function Home() {
             setSize(data.size);
             setTotalPages(data.totalPages);
         }).catch((err) => {
-            toast.error(`Error occurred while fetching data: ${err}`);
-        })
+            toast.error(`${err}`);
+        });
+
+        getAllGenres()
+            .then((data) => {
+                setGenres(data);
+            })
+            .catch((err) => {
+                toast.error(`${err}`);
+            })
     }, [sortOrder, page, size, canFetch]);
 
     return (
@@ -53,32 +63,34 @@ export default function Home() {
             <PaginationContext.Provider value={{page, setPage, size, setSize, totalPages, setTotalPages}}>
                 <FilterContext.Provider value={{filters, setFilters}}>
                     <BandsContext.Provider value={{canFetch, setCanFetch}}>
-                        <Toaster
-                            position="bottom-right"
-                            reverseOrder={false}
-                        />
-                        <div className={styles.page}>
-                            <div className={styles.header}>
-                                <h1 className={styles.title}>Bands</h1>
-                                <div className={styles.controls}>
-                                    <PaginationSize />
-                                    <Button style='secondary' size='m' onClick={() => setFiltersModalVisible(!isFiltersModalVisible)}>
-                                        <FilterIcon className={styles.icon}/>
-                                        Filter
-                                    </Button>
-                                    {isFiltersModalVisible && <Filters onClose={() => setFiltersModalVisible(false)}/>}
-                                    <Button style='primary' size='l' onClick={() => {setAddBandModalVisible(true)}}>
-                                        <PlusIcon className={`${styles.icon} ${styles.inverted}`}/>
-                                        Create new band
-                                    </Button>
+                        <GenresContext.Provider value={{genres, setGenres}}>
+                            <Toaster
+                                position="bottom-right"
+                                reverseOrder={false}
+                            />
+                            <div className={styles.page}>
+                                <div className={styles.header}>
+                                    <h1 className={styles.title}>Bands</h1>
+                                    <div className={styles.controls}>
+                                        <PaginationSize />
+                                        <Button style='secondary' size='m' onClick={() => setFiltersModalVisible(!isFiltersModalVisible)}>
+                                            <FilterIcon className={styles.icon}/>
+                                            Filter
+                                        </Button>
+                                        {isFiltersModalVisible && <Filters onClose={() => setFiltersModalVisible(false)}/>}
+                                        <Button style='primary' size='l' onClick={() => {setAddBandModalVisible(true)}}>
+                                            <PlusIcon className={`${styles.icon} ${styles.inverted}`}/>
+                                            Create new band
+                                        </Button>
+                                    </div>
                                 </div>
+                                <Table bands={bands}/>
+                                <SpecialActions />
                             </div>
-                            <Table bands={bands}/>
-                            <SpecialActions />
-                        </div>
-                        {isAddBandModalVisible &&
-                            <AddBandModal isVisible={isAddBandModalVisible} onClose={() => setAddBandModalVisible(false)}/>
-                        }
+                            {isAddBandModalVisible &&
+                                <AddBandModal isVisible={isAddBandModalVisible} onClose={() => setAddBandModalVisible(false)}/>
+                            }
+                        </GenresContext.Provider>
                     </BandsContext.Provider>
                 </FilterContext.Provider>
             </PaginationContext.Provider>

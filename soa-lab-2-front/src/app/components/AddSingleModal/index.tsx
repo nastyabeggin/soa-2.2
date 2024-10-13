@@ -26,6 +26,9 @@ export const AddSingleModal = ({ bandId, currentValue, bandName, isVisible, onCl
                     setCanFetch(canFetch + 1);
                     onClose();
                 })
+                .catch(err => {
+                    toast.error(`${err}`)
+                })
         }
     }
 
@@ -35,6 +38,9 @@ export const AddSingleModal = ({ bandId, currentValue, bandName, isVisible, onCl
                 toast.success('Single successfully created');
                 setCanFetch(canFetch + 1);
                 onClose();
+            })
+            .catch(err => {
+                toast.error(`${err}`)
             })
     }
 

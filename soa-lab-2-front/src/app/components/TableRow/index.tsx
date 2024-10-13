@@ -5,13 +5,10 @@ import {TableCell} from "@/app/components/TableCell";
 import {Button} from "@/app/components/Button";
 import {DeleteIcon, EditIcon, PlusIcon, ShowIcon} from "@/static/icons";
 import {AddSingleModal} from "@/app/components/AddSingleModal";
-import {useContext, useState} from "react";
+import {useState} from "react";
 import {ShowSinglesModal} from "@/app/components/ShowSinglesModal";
 import {AddMemberModal} from "@/app/components/AddMemberModal";
 import {DeleteBandModal} from "@/app/components/DeleteBandModal";
-import {AddBandModal} from "../AddBandModal";
-import {deleteBandById} from "@/app/queries/bands";
-import {BandsContext} from "@/app/context/bands";
 import {UpdateBandModal} from "@/app/components/UpdateBandModal";
 
 type TableRowProps = {
@@ -56,7 +53,7 @@ export const TableRow = ({ band }: TableRowProps) => {
                         {band.frontMan ? band.frontMan.name : '–'}
                     </TableCell>
                     <TableCell>
-                        {band.singles ?
+                        {band.singles?.length ?
                             (
                                 <Button style='accent' size='s' onClick={() => setShowSinglesModalVisible(true)}>
                                     <ShowIcon className={`${styles.icon} ${styles.blue}`}/>

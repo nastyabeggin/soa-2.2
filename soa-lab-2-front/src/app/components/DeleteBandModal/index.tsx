@@ -23,8 +23,8 @@ export const DeleteBandModal = ({ bandId, bandName, isVisible, onClose }: Delete
                 toast.success("Successfully deleted");
                 onClose();
             })
-            .catch(() => {
-                toast.error("Error occurred while deleting band. See logs");
+            .catch((err) => {
+                toast.error(`${err}`);
             })
     }
 

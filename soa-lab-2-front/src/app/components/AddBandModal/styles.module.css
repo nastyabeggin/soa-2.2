@@ -15,6 +15,11 @@
     padding-bottom: 4px;
 }
 
+.captionFrontMan {
+    color: var(--secondary-text);
+    margin-bottom: 8px;
+}
+
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
