@@ -3,7 +3,8 @@ import {SortOrder} from "@/app/types/sort";
 
 export const getSortQuery = (sortMap: SortOrderMap) => {
     const appliedSorts = Object.entries(sortMap)
-        .filter(([key, order]) => order !== SortOrder.UNDEFINED)
+        // eslint-disable-next-line  @typescript-eslint/no-unused-vars
+        .filter(([_, order]) => order !== SortOrder.UNDEFINED)
         .map(([key, order], index) => {
             if (index === 0) return encodeURIComponent(`${key}[${order}]`);
             return encodeURIComponent(`sort=${key}[${order}]`);

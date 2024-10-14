@@ -33,5 +33,6 @@ export const DEFAULT_FILTERS: FilterMap = {
 
 export const FilterContext = createContext({
     filters: DEFAULT_FILTERS,
+    // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     setFilters: (filters: FilterMap) => {}
 });

@@ -20,7 +20,7 @@ export const DeleteBandModal = ({ bandId, bandName, isVisible, onClose }: Delete
 
     function onDeleteBandClick() {
         deleteBandById(bandId)
-            .then((data) => {
+            .then(() => {
                 setCanFetch(canFetch + 1);
                 toast.success("Successfully deleted");
                 onClose();

@@ -33,7 +33,7 @@ export const TableHeader = () => {
                     Genre
                 </TableCell>
                 <TableCell withSort cellKey={Property.PERSON_NAME}>
-                    Frontman's name
+                    {"Front Man\'s name"}
                 </TableCell>
                 <TableCell>
                     Singles

@@ -1,11 +1,10 @@
 'use client'
 
-import {PROPERTIES_LIST, PROPERTIES_TEXT, Property} from "@/app/types/property";
-import {FILTER_LIST, FILTER_TEXT, FilterType} from "@/app/types/filter";
-import {ChangeEvent, PropsWithChildren, useContext, useEffect, useState} from "react";
+import {PROPERTIES_TEXT, Property} from "@/app/types/property";
+import {FILTER_TEXT, FilterType} from "@/app/types/filter";
+import {ChangeEvent, useContext, useState} from "react";
 import {FilterContext} from "@/app/context/filter";
 import styles from './styles.module.css';
-import toast from "react-hot-toast";
 
 type FiltersItemProps = {
     property: Property;
@@ -15,9 +14,10 @@ type FiltersItemProps = {
         step?: number;
         type: 'number' | 'text';
     }
+    filtersList: FilterType[];
 }
 
-export const FiltersItem = ({ property, validate: { min, minLength, type, step } }: FiltersItemProps) => {
+export const FiltersItem = ({ property, filtersList, validate: { min, minLength, type, step } }: FiltersItemProps) => {
     const { filters, setFilters } = useContext(FilterContext);
 
     const [operator, setOperator] = useState<FilterType>(filters[property].operator ?? FilterType.EQ);
@@ -49,7 +49,7 @@ export const FiltersItem = ({ property, validate: { min, minLength, type, step }
         <div className={styles.container}>
             {PROPERTIES_TEXT[property]}
             <select className='select' defaultValue={operator} onChange={onOperatorChange}>
-                {FILTER_LIST.map((filter) => {
+                {filtersList.map((filter) => {
                     return (
                         <option key={filter} value={filter}>{FILTER_TEXT[filter]}</option>
                     )

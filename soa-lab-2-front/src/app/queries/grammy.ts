@@ -1,6 +1,6 @@
 import {Band} from "@/app/types/bands";
 import {Single} from "@/app/types/single";
-import {Person, PersonToBand, PersonToBandDTO} from "@/app/types/person";
+import {Person, PersonToBandDTO} from "@/app/types/person";
 import {fetchUrl, getErrorMessage} from "@/app/utils/fetch";
 
 async function addSingle(bandId: number, singleData: Single): Promise<Band> {

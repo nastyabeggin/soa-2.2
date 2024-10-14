@@ -7,6 +7,7 @@ import {Property} from "@/app/types/property";
 import {useContext} from "react";
 import {BandsContext} from "@/app/context/bands";
 import {DEFAULT_FILTERS, FilterContext} from "@/app/context/filter";
+import {FILTER_LIST, FILTER_LIST_NUMBER} from "@/app/types/filter";
 
 type FiltersProps = {
     onClose: () => void
@@ -34,15 +35,15 @@ export const Filters = ({ onClose }: FiltersProps) => {
                     Reset
                 </Button>
             </h2>
-            <FiltersItem property={Property.ID} validate={{type: 'number', min: 1}}/>
-            <FiltersItem property={Property.NAME} validate={{type: 'text', minLength: 1}}/>
-            <FiltersItem property={Property.DESCRIPTION} validate={{type: 'text'}}/>
-            <FiltersItem property={Property.COORDINATE_X} validate={{type: 'number', step: 1}}/>
-            <FiltersItem property={Property.COORDINATE_Y} validate={{type: 'number', min: -439}}/>
-            <FiltersItem property={Property.CREATION_DATE} validate={{type: 'text'}}/>
-            <FiltersItem property={Property.NUMBER_OF_PARTICIPANTS} validate={{type: 'number', min: 1, step: 1}}/>
-            <FiltersItem property={Property.GENRE} validate={{type: 'text'}}/>
-            <FiltersItem property={Property.PERSON_NAME} validate={{type: 'text', minLength: 1}}/>
+            <FiltersItem filtersList={FILTER_LIST_NUMBER} property={Property.ID} validate={{type: 'number', min: 1}}/>
+            <FiltersItem filtersList={FILTER_LIST} property={Property.NAME} validate={{type: 'text', minLength: 1}}/>
+            <FiltersItem filtersList={FILTER_LIST} property={Property.DESCRIPTION} validate={{type: 'text'}}/>
+            <FiltersItem filtersList={FILTER_LIST_NUMBER} property={Property.COORDINATE_X} validate={{type: 'number', step: 1}}/>
+            <FiltersItem filtersList={FILTER_LIST_NUMBER} property={Property.COORDINATE_Y} validate={{type: 'number', min: -439}}/>
+            <FiltersItem filtersList={FILTER_LIST_NUMBER} property={Property.CREATION_DATE} validate={{type: 'text'}}/>
+            <FiltersItem filtersList={FILTER_LIST_NUMBER} property={Property.NUMBER_OF_PARTICIPANTS} validate={{type: 'number', min: 1, step: 1}}/>
+            <FiltersItem filtersList={FILTER_LIST} property={Property.GENRE} validate={{type: 'text'}}/>
+            <FiltersItem filtersList={FILTER_LIST} property={Property.PERSON_NAME} validate={{type: 'text', minLength: 1}}/>
             <div className='buttons'>
                 <Button style='cancel' size='m' onClick={onClose}>
                     Cancel
