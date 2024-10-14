@@ -28,7 +28,7 @@ export const getFrontMan = (frontMan: GetFrontManProps): PersonToBandDTO |  unde
         };
     }
     else if ((frontMan.passportID === undefined || frontMan.location.x === undefined || frontMan.location.y === undefined || frontMan.location.z === undefined) && (frontMan.name || frontMan.birthday || frontMan.location.name)){
-        throw new Error("If you want to add front man, enter all the required values or leave it undefined");
+        throw new Error("If you want to add front man, enter all the required values or leave it untouched");
     }
     return;
 }

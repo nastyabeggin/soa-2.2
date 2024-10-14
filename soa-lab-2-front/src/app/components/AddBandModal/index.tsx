@@ -37,6 +37,7 @@ export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
 
     function onSubmit() {
         let frontMan;
+        let singles;
 
         if (!name || x == undefined || y === undefined || numberOfParticipants === undefined || !description || !genre) {
             toast.error("Please enter all the required values: Name, X, Y, creation Date, number of members, description, genre");
@@ -59,6 +60,13 @@ export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
             return;
         }
 
+        try {
+            singles = getSingles();
+        } catch (err) {
+            toast.error(`${err}`);
+            return;
+        }
+
         createBand({
             name,
             coordinates: {
@@ -69,7 +77,7 @@ export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
             description,
             genre,
             frontMan,
-            singles: getSingles()
+            singles
         }).then((data) =>{
             toast.success("Successfully created band");
             setCanFetch(canFetch + 1);
@@ -81,7 +89,15 @@ export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
 
     const getSingles = (): Omit<Single, 'id'>[] | undefined => {
         if (textSingles !== undefined) {
-            return (convertStringToSingles(textSingles));
+            let result;
+
+            try {
+                result = convertStringToSingles(textSingles);
+            } catch (err) {
+                throw err;
+            }
+
+            return result;
         }
         return;
     }
@@ -130,7 +146,7 @@ export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
                         </label>
 
                         <h3>Singles</h3>
-                        <span className={styles.caption}>To add singles, please write their titles separated with comma, in "" brackets.</span>
+                        <span className={styles.caption}>To add singles, please write their titles separated with comma, in double quotes.</span>
                         <textarea id='singles' value={textSingles ?? ''} className='textarea'
                                   onChange={(e) => setTextSingles(e.target.value)}/>
                     </div>

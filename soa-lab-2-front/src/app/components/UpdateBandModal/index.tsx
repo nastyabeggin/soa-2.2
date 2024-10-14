@@ -142,15 +142,6 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
                             <input type='number' id='coordinate-y' value={y ?? ''} className='input'
                                    onChange={(e) => setY(Number(e.target.value))}/>
                         </label>
-
-                        {!band &&
-                            <>
-                                <h3>Singles</h3>
-                                <span className={styles.caption}>To add singles, please write their titles separated with comma, no brackets.</span>
-                                <textarea id='singles' value={textSingles ?? ''} className='textarea'
-                                          onChange={(e) => setTextSingles(e.target.value)}/>
-                            </>
-                        }
                     </div>
                     <div className={styles.right}>
                         <h3>Front Man</h3>
