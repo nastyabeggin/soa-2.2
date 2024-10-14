@@ -18,7 +18,13 @@ public class SecurityConfig {
 
     private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://localhost:8081", "http://localhost:8081, https://se.ifmo.ru/~s335045/.next/server/app/"));
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:3000",
+                "https://localhost:1112",
+                "http://localhost:1112",
+                "https://se.ifmo.ru/~s335045/.next/server/app/",
+                "https://se.ifmo.ru"
+        ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
         configuration.setAllowCredentials(true);
