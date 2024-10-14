@@ -80,7 +80,7 @@ export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
             genre,
             frontMan,
             singles
-        }).then((data) =>{
+        }).then(() =>{
             toast.success("Successfully created band");
             setCanFetch(canFetch + 1);
             onClose();
@@ -170,7 +170,7 @@ export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
                             <input id='passport-id' value={frontManPassportID ?? ''} className='input'
                                    onChange={(e) => setFrontManPassportID(e.target.value.trim())}/>
                         </label>
-                        <h4>Front Man's location*</h4>
+                        <h4>{"Front Man\'s location*"}</h4>
                         <label className='input-container'>
                             Location title
                             <input id='location-name' value={frontManLocationName ?? ''} className='input'

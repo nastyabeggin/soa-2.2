@@ -41,7 +41,7 @@ export const AddMemberModal = ({ bandId, bandName, isVisible, onClose }: AppMemb
                 z,
                 name: locationName
             }
-        }).then((data) => {
+        }).then(() => {
             toast.success("Successfully created new member!");
             setCanFetch(canFetch + 1);
             onClose();

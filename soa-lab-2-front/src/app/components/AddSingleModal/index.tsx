@@ -23,7 +23,7 @@ export const AddSingleModal = ({ bandId, currentValue, bandName, isVisible, onCl
     function updateSingle() {
         if (currentValue?.id){
             changeSingle(bandId, currentValue?.id, { name })
-                .then((data) => {
+                .then(() => {
                     toast.success('Data successfully updated');
                     setCanFetch(canFetch + 1);
                     onClose();
@@ -36,7 +36,7 @@ export const AddSingleModal = ({ bandId, currentValue, bandName, isVisible, onCl
 
     function createSingle() {
         addSingle(bandId, { name })
-            .then((data) => {
+            .then(() => {
                 toast.success('Single successfully created');
                 setCanFetch(canFetch + 1);
                 onClose();

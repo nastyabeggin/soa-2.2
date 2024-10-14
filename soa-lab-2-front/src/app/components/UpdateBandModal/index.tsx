@@ -5,11 +5,9 @@ import {Modal} from "@/app/components/Modal";
 import {ChangeEvent, useContext, useState} from "react";
 import {Band} from "@/app/types/bands";
 import styles from './styles.module.css';
-import {Single} from "@/app/types/single";
 import {updateBandById} from "@/app/queries/bands";
 import toast from 'react-hot-toast';
 import {BandsContext} from "@/app/context/bands";
-import {convertStringToSingles} from "@/app/utils/singles";
 import {getFrontMan} from "@/app/utils/band";
 import {GenresContext} from "@/app/context/genres";
 
@@ -29,7 +27,6 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
     const [y, setY] = useState<number | undefined>(band?.coordinates.y);
     const [numberOfParticipants, setNumberOfParticipants] = useState<number | undefined>(band?.numberOfParticipants);
     const [genre, setGenre] = useState<string | undefined>(band?.genre);
-    const [textSingles, setTextSingles] = useState<string | undefined>();
 
     const [frontManName, setFrontManName] = useState<string | undefined>(band?.frontMan?.name);
     const [frontManBirthday, setFrontManBirthday] = useState<string | undefined>(band?.frontMan?.birthday);
@@ -73,21 +70,13 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
             description,
             genre,
             frontMan,
-            singles: getSingles()
-        }).then((data) =>{
+        }).then(() =>{
             toast.success("Successfully updated band");
             setCanFetch(canFetch + 1);
             onClose();
         }).catch((err) => {
             toast.error(`${err}`)
         })
-    }
-
-    const getSingles = (): Omit<Single, 'id'>[] | undefined => {
-        if (textSingles !== undefined && textSingles.length) {
-            return (convertStringToSingles(textSingles));
-        }
-        return;
     }
 
     const onBirthdayChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -163,7 +152,7 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
                             <input id='passport-id' value={frontManPassportID ?? ''} className='input'
                                    onChange={(e) => setFrontManPassportID(e.target.value.trim())}/>
                         </label>
-                        <h4>Front Man's location*</h4>
+                        <h4>{"Front Man\'s location*"}</h4>
                         <label className='input-container'>
                             Location title
                             <input id='location-name' value={frontManLocationName ?? ''} className='input'

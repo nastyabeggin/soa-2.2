@@ -9,6 +9,14 @@ export enum FilterType {
 }
 
 export const FILTER_LIST = Object.values(FilterType);
+export const FILTER_LIST_NUMBER = [
+    FilterType.GT,
+    FilterType.GTE,
+    FilterType.LT,
+    FilterType.LTE,
+    FilterType.EQ,
+    FilterType.NEQ
+];
 
 export const FILTER_TEXT = {
     [FilterType.GT]: '>',

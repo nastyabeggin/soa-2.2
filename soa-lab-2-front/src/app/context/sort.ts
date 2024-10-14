@@ -20,6 +20,7 @@ export const DEFAULT_SORT_ORDER: SortOrderMap = {
 
 export const SortContext = createContext({
     sortOrder: DEFAULT_SORT_ORDER,
+    // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     setSortOrder: (update: SortOrderMap) => {}
 });
 

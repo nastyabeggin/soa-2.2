@@ -40,7 +40,7 @@ export const SpecialActions = () => {
 
     function onDeleteBandsByGenre() {
         deleteBandsByGenre(genreToDelete)
-            .then((data) => {
+            .then(() => {
                 setCanFetch(canFetch + 1);
                 toast.success("Successfully deleted");
             })
