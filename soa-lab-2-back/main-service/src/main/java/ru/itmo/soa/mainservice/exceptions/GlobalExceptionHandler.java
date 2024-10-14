@@ -18,7 +18,6 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    // Обработка ошибок валидации (400)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -69,14 +68,14 @@ public class GlobalExceptionHandler {
         response.put("code", HttpStatus.BAD_REQUEST.value());
 
         String message = e.getMessage();
-        
+
         if (message.contains("duplicate key value")) {
             String fieldName = extractFieldNameFromMessage(message);
             response.put("message", "Error: Duplicate value for field '" + fieldName + "'. Please use a unique value.");
         } else {
             response.put("message", e.getMessage());
         }
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     private String extractFieldNameFromMessage(String message) {
@@ -95,21 +94,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BadSqlGrammarException.class)
     public ResponseEntity<Map<String, Object>> handleBadSqlGrammarException(BadSqlGrammarException e) {
         Map<String, Object> response = new HashMap<>();
-        response.put("code", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        response.put("code", HttpStatus.BAD_REQUEST.value());
         response.put("message", "Error в SQL-request: " + e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(SQLException.class)
     public ResponseEntity<Map<String, Object>> handleSQLException(SQLException e) {
         Map<String, Object> response = new HashMap<>();
-        response.put("code", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        response.put("code", HttpStatus.BAD_REQUEST.value());
         response.put("message", "Database error occurred: " + e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, Object>> handleGeneralException(Exception ex) {
         Map<String, Object> response = new HashMap<>();
         response.put("code", HttpStatus.INTERNAL_SERVER_ERROR.value());

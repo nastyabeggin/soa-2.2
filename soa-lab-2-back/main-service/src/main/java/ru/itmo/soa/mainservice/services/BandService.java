@@ -130,6 +130,7 @@ public class BandService {
         }
         if (bandUpdate.getFrontMan() != null) {
             personService.createOrUpdatePerson(bandUpdate.getFrontMan());
+            existingBand.setFrontMan(bandUpdate.getFrontMan());
         }
         if (bandUpdate.getSingles() != null) {
             List<Single> singles = bandUpdate.getSingles();
