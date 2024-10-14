@@ -130,7 +130,7 @@ export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
                         </label>
 
                         <h3>Singles</h3>
-                        <span className={styles.caption}>To add singles, please write their titles separated with comma, no brackets.</span>
+                        <span className={styles.caption}>To add singles, please write their titles separated with comma, in "" brackets.</span>
                         <textarea id='singles' value={textSingles ?? ''} className='textarea'
                                   onChange={(e) => setTextSingles(e.target.value)}/>
                     </div>

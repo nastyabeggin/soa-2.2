@@ -1,6 +1,6 @@
 import {Button} from "@/app/components/Button";
 import {Modal} from "@/app/components/Modal";
-import {useContext, useState} from "react";
+import {ChangeEvent, useContext, useState} from "react";
 import {Band} from "@/app/types/bands";
 import styles from './styles.module.css';
 import {Single} from "@/app/types/single";
@@ -61,11 +61,6 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
             return;
         }
 
-        // TODO: не отправляется фронтмен при обновлении группы
-        console.log(frontMan);
-
-        // TODO: др фронтмена не больше чем сегодня, дата создания аналогично
-
         updateBandById(band.id,{
             name,
             coordinates: {
@@ -87,13 +82,21 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
     }
 
     const getSingles = (): Omit<Single, 'id'>[] | undefined => {
-        if (textSingles !== undefined) {
+        if (textSingles !== undefined && textSingles.length) {
             return (convertStringToSingles(textSingles));
         }
         return;
     }
 
-    // TODO: когда возвращается массив ошибок по каждому полю, по-другому из обрабатывать. добавить ограничение на количетсов участников больше 0
+    const onBirthdayChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const now = new Date();
+        const birthday = new Date(e.target.value);
+        if (birthday > now){
+            toast.error("Birthday should be less than today");
+            return;
+        }
+        setFrontManBirthday(e.target.value);
+    }
 
     return (
         <Modal isVisible={isVisible} onClose={onClose}>
@@ -160,7 +163,7 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
                         <label className='input-container'>
                             Birthday
                             <input type='date' id='birthday' value={frontManBirthday ?? ''} className='input'
-                                   onChange={(e) => setFrontManBirthday(e.target.value)}/>
+                                   onChange={(e) => onBirthdayChange(e)}/>
                         </label>
                         <label className='input-container'>
                             Passport ID*
