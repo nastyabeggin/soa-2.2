@@ -1,3 +1,5 @@
+'use client'
+
 import {Button} from "@/app/components/Button";
 import {Modal} from "@/app/components/Modal";
 import styles from './styles.module.css';
@@ -23,8 +25,8 @@ export const DeleteBandModal = ({ bandId, bandName, isVisible, onClose }: Delete
                 toast.success("Successfully deleted");
                 onClose();
             })
-            .catch(() => {
-                toast.error("Error occurred while deleting band. See logs");
+            .catch((err) => {
+                toast.error(`${err}`);
             })
     }
 

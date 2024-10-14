@@ -1,3 +1,5 @@
+'use client'
+
 import styles from './styles.module.css';
 import {FiltersItem} from "@/app/components/FiltersItem";
 import {Button} from "@/app/components/Button";
@@ -21,6 +23,7 @@ export const Filters = ({ onClose }: FiltersProps) => {
     function onResetClick() {
         setFilters(DEFAULT_FILTERS);
         setCanFetch(canFetch + 1);
+        onClose();
     }
 
     return (

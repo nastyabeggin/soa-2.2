@@ -1,8 +1,7 @@
 import {Band, BandDTO, BandUpdateDTO} from "@/app/types/bands";
 import {PaginatedResponse} from "@/app/types/response";
-import {Genre} from "@/app/types/genre";
 import {PaginatedRequest} from "@/app/types/request";
-import {fetchUrl, SearchParamType} from "@/app/utils/fetch";
+import {fetchUrl, getErrorMessage, getErrorMessages, SearchParamType} from "@/app/utils/fetch";
 
 async function createBand(bandData: BandDTO): Promise<Band> {
     try {
@@ -11,10 +10,11 @@ async function createBand(bandData: BandDTO): Promise<Band> {
             body: JSON.stringify(bandData),
             headers: { 'Content-Type': 'application/json' }
         }});
-        if (!response.ok) return response.text().then(text => { throw new Error(text) })
+
+        if (!response.ok) return response.text().then(text => { throw new Error(getErrorMessages(text))})
+
         return await response.json();
     } catch (error) {
-        console.error('Error creating band:', error);
         throw error;
     }
 }
@@ -36,12 +36,10 @@ async function getBands({
             method: 'GET',
         }});
 
-        // TODO: Дописать обработку ошибок
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) return response.text().then(text => { throw new Error(getErrorMessage(text)) })
 
         return await response.json();
     } catch (error) {
-        console.error('Error getting bands:', error);
         throw error;
     }
 }
@@ -52,12 +50,10 @@ async function getBandById(id: number): Promise<Band> {
                 method: 'GET',
             }});
 
-        // TODO: Дописать обработку ошибок
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) return response.text().then(text => { throw new Error(getErrorMessage(text)) })
 
         return await response.json();
     } catch (error) {
-        console.error('Error getting bands:', error);
         throw error;
     }
 }
@@ -68,10 +64,8 @@ async function deleteBandById(id: number): Promise<void> {
                 method: 'DELETE',
             }});
 
-        // TODO: Дописать обработку ошибок
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) return response.text().then(text => { throw new Error(getErrorMessage(text)) })
     } catch (error) {
-        console.error('Error getting bands:', error);
         throw error;
     }
 }
@@ -84,42 +78,36 @@ async function updateBandById(id: number, bandData: Partial<BandUpdateDTO>): Pro
                 headers: { 'Content-Type': 'application/json' }
             }});
 
-        // TODO: Дописать обработку ошибок
-        if (!response.ok) throw new Error(response.statusText);
+        if (!response.ok) return response.text().then(text => { throw new Error(getErrorMessages(text)) })
 
         return await response.json();
     } catch (error) {
-        console.error('Error getting bands:', error);
         throw error;
     }
 }
 
-async function getAllGenres(): Promise<Genre[]> {
+async function getAllGenres(): Promise<string[]> {
     try {
         const response = await fetchUrl({path: `/bands/genre`,  options: {
                 method: 'GET',
             }});
 
-        // TODO: Дописать обработку ошибок
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) return response.text().then(text => { throw new Error(getErrorMessage(text)) })
 
         return await response.json();
     } catch (error) {
-        console.error('Error getting bands:', error);
         throw error;
     }
 }
 
-async function deleteBandsByGenre(genre: Genre): Promise<void> {
+async function deleteBandsByGenre(genre: string): Promise<void> {
     try {
         const response = await fetchUrl({path: `/bands/genre/${genre}`,  options: {
                 method: 'DELETE',
             }});
 
-        // TODO: Дописать обработку ошибок
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) return response.text().then(text => { throw new Error(getErrorMessage(text)) })
     } catch (error) {
-        console.error('Error getting bands:', error);
         throw error;
     }
 }
@@ -130,12 +118,10 @@ async function getBandWithMinGenre(): Promise<Band> {
                 method: 'GET',
             }});
 
-        // TODO: Дописать обработку ошибок
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) return response.text().then(text => { throw new Error(getErrorMessage(text)) })
 
         return await response.json();
     } catch (error) {
-        console.error('Error getting bands:', error);
         throw error;
     }
 }

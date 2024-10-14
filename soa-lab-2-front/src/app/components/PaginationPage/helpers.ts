@@ -12,7 +12,6 @@ type Page = {
 
 export function getPagesForView(totalPages: number, currentPage: number): pagesForView {
     const totalPagesArray = new Array(totalPages).fill(undefined);
-    console.log(getShortTotalPagesArray(totalPagesArray, currentPage));
 
     if (totalPages <= 10) {
         return {

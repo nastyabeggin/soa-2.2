@@ -1,8 +1,11 @@
+'use client'
+
 import {PROPERTIES_LIST, PROPERTIES_TEXT, Property} from "@/app/types/property";
 import {FILTER_LIST, FILTER_TEXT, FilterType} from "@/app/types/filter";
-import {ChangeEvent, PropsWithChildren, useContext, useState} from "react";
+import {ChangeEvent, PropsWithChildren, useContext, useEffect, useState} from "react";
 import {FilterContext} from "@/app/context/filter";
 import styles from './styles.module.css';
+import toast from "react-hot-toast";
 
 type FiltersItemProps = {
     property: Property;
@@ -15,22 +18,20 @@ type FiltersItemProps = {
 }
 
 export const FiltersItem = ({ property, validate: { min, minLength, type, step } }: FiltersItemProps) => {
-    const [operator, setOperator] = useState<FilterType>(FilterType.EQ);
-    const [value, setValue] = useState<string>();
-
     const { filters, setFilters } = useContext(FilterContext);
+
+    const [operator, setOperator] = useState<FilterType>(filters[property].operator ?? FilterType.EQ);
+    const [value, setValue] = useState<string | undefined>(filters[property].value);
 
     const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
-        if (e.target.value.length > 0) {
-            setFilters({
-                ...filters,
-                [property]: {
-                    operator: operator,
-                    value: e.target.value
-                }
-            });
-        }
+        setFilters({
+            ...filters,
+            [property]: {
+                operator: operator,
+                value: e.target.value
+            }
+        });
     }
 
     const onOperatorChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -47,14 +48,14 @@ export const FiltersItem = ({ property, validate: { min, minLength, type, step }
     return (
         <div className={styles.container}>
             {PROPERTIES_TEXT[property]}
-            <select className='select' defaultValue={filters[property].operator ?? FilterType.EQ} onChange={onOperatorChange}>
+            <select className='select' defaultValue={operator} onChange={onOperatorChange}>
                 {FILTER_LIST.map((filter) => {
                     return (
                         <option key={filter} value={filter}>{FILTER_TEXT[filter]}</option>
                     )
                 })}
             </select>
-            <input type={type} min={min} minLength={minLength} step={step} className='input' value={filters[property].value ?? ''} onChange={onValueChange} placeholder='Type something...'/>
+            <input type={type} min={min} minLength={minLength} step={step} className='input' value={value ?? ''} onChange={onValueChange} placeholder='Type something...'/>
         </div>
     )
 }

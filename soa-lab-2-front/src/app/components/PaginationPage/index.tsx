@@ -1,8 +1,10 @@
+'use client'
+
 import styles from './styles.module.css';
 import {Button} from "@/app/components/Button";
 import {LeftArrowIcon, RightArrowIcon} from "@/static/icons";
 import {getPagesForView} from "@/app/components/PaginationPage/helpers";
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import {PaginationContext} from "@/app/context/pagination";
 
 export const PaginationPage = () => {
@@ -24,10 +26,6 @@ export const PaginationPage = () => {
     const onPageClick = (page: number) => {
         setPage(page);
     }
-
-    useEffect(() => {
-        console.log(availablePages);
-    }, [totalPages])
 
     return (
         <div className={styles.container}>
