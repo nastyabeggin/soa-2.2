@@ -139,11 +139,7 @@ public class BandService {
             }
         }
 
-
-
-        return existingBand;
-
-//        return bandRepository.save(existingBand);
+        return bandRepository.save(existingBand);
     }
 
 
