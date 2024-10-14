@@ -1,6 +1,8 @@
+'use client'
+
 import {Button} from "@/app/components/Button";
 import {Modal} from "@/app/components/Modal";
-import {ChangeEvent, useContext, useState} from "react";
+import {useContext, useState} from "react";
 import styles from './styles.module.css';
 import {Single} from "@/app/types/single";
 import {createBand} from "@/app/queries/bands";

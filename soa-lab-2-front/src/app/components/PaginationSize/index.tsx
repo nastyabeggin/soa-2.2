@@ -1,3 +1,5 @@
+'use client'
+
 import styles from './styles.module.css';
 import {useContext, useState} from "react";
 import {DEFAULT_SIZE, PaginationContext} from "@/app/context/pagination";

@@ -1,3 +1,5 @@
+'use client'
+
 import styles from './styles.module.css';
 import {Button} from "@/app/components/Button";
 import {LeftArrowIcon, RightArrowIcon} from "@/static/icons";

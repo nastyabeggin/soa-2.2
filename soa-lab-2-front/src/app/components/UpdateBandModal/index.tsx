@@ -1,3 +1,5 @@
+'use client'
+
 import {Button} from "@/app/components/Button";
 import {Modal} from "@/app/components/Modal";
 import {ChangeEvent, useContext, useState} from "react";

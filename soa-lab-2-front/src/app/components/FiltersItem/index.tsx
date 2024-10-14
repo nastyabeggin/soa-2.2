@@ -1,3 +1,5 @@
+'use client'
+
 import {PROPERTIES_LIST, PROPERTIES_TEXT, Property} from "@/app/types/property";
 import {FILTER_LIST, FILTER_TEXT, FilterType} from "@/app/types/filter";
 import {ChangeEvent, PropsWithChildren, useContext, useEffect, useState} from "react";

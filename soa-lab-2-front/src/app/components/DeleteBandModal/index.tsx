@@ -1,3 +1,5 @@
+'use client'
+
 import {Button} from "@/app/components/Button";
 import {Modal} from "@/app/components/Modal";
 import styles from './styles.module.css';

@@ -1,11 +1,12 @@
+'use client'
+
 import styles from './styles.module.css';
 import {FiltersItem} from "@/app/components/FiltersItem";
 import {Button} from "@/app/components/Button";
 import {Property} from "@/app/types/property";
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import {BandsContext} from "@/app/context/bands";
 import {DEFAULT_FILTERS, FilterContext} from "@/app/context/filter";
-import toast from "react-hot-toast";
 
 type FiltersProps = {
     onClose: () => void

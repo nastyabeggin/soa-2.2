@@ -1,3 +1,5 @@
+'use client'
+
 import styles from './styles.module.css';
 import {Band} from "@/app/types/bands";
 import {format} from 'date-fns';
