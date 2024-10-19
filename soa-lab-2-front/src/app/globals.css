@@ -9,14 +9,14 @@
   --secondary-text: #656565;
   --secondary-text-unfocused: #b6b6b6;
 
-  --accent-text: #3478d8;
+  --accent-text: #cb6dc5;
   --accent-green-text: #369d61;
   --danger-text: #ca3f46;
 
   --active: #2e89ff;
-  --active-shadow: rgba(42, 124, 230, 0.39);
+  --active-shadow: rgba(227, 42, 230, 0.39);
 
-  --accent: #d6e8fd;
+  --accent: #fdd6fa;
   --accent-green: #c8f0d3;
   --danger: #ffd9de;
 
@@ -79,7 +79,7 @@ body {
 }
 
 .button.primary {
-  background-color: var(--active);
+  background-color: var(--accent-text);
   color: var(--primary-text-inverted);
   box-shadow: var(--active-shadow) 0 0 5px;
 }
@@ -111,6 +111,9 @@ body {
 .modal-container {
   padding: 0 16px 16px 16px;
   display: flex;
+  justify-content: center;
+  align-items: center;
+
   flex-direction: column;
 }
 

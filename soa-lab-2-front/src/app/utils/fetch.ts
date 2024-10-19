@@ -1,4 +1,5 @@
 import {GRAMMY_FETCH_URL, MAIN_FETCH_URL} from "@/app/constants";
+import { XMLParser } from "fast-xml-parser";
 
 export type SearchParamType = {
     key: string;
@@ -13,6 +14,7 @@ export type ErrorResponse = {
 export const fetchUrl = ({path, params, options, mainApi = true}: {path: string, params?: SearchParamType[],  options?: RequestInit, mainApi?: boolean}): Promise<Response> => {
     let url = `${mainApi ? MAIN_FETCH_URL : GRAMMY_FETCH_URL}${path}`;
 
+    console.log(url);
     if (params) {
         url += customURLSearchParams(params);
     }
@@ -35,8 +37,8 @@ export function customURLSearchParams(params: SearchParamType[]) {
 }
 
 export function getErrorMessage(text: string) {
-    const response: ErrorResponse = JSON.parse(text);
-    return response.message;
+    const xml = new XMLParser().parse(text); 
+    return xml.message;
 }
 
 export function getErrorMessages(text: string) {

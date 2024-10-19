@@ -1,15 +1,13 @@
 export enum Genre {
-    ROCK = 'Rock',
-    SOUL = 'Soul',
+    POP = 'Pop',
     MATH_ROCK = 'Math Rock',
-    POST_ROCK = 'Post Rock'
+    BRIT_POP = 'Brit Pop'
 }
 
 export const GenreText = {
-    [Genre.ROCK]: 'ROCK',
-    [Genre.SOUL]: 'SOUL',
+    [Genre.POP]: 'POP',
     [Genre.MATH_ROCK]: 'MATH_ROCK',
-    [Genre.POST_ROCK]: 'POST_ROCK',
+    [Genre.BRIT_POP]: 'BRIT_POP',
 }
 
 export const GENRES: Genre[] = Object.values(Genre);

@@ -18,6 +18,14 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    compile.exclude module: 'spring-boot-starter-tomcat'
+    compile.exclude group: 'org.apache.tomcat'
+    compile.exclude group: 'org.apache.tomcat.embed'
+}
+
+configurations.all {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    exclude group: 'org.apache.tomcat.embed', module: 'tomcat-embed-el'
 }
 
 repositories {
@@ -32,11 +40,13 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.7.2'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework:spring-web:6.1.13'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.17.0'
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-jetty'
+    providedCompile 'jakarta.servlet:jakarta.servlet-api:6.0.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

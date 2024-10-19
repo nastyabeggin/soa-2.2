@@ -14,8 +14,8 @@ export const TableHeader = () => {
                 <TableCell withSort cellKey={Property.NAME}>
                     Name
                 </TableCell>
-                <TableCell withSort cellKey={Property.DESCRIPTION}>
-                    Description
+                <TableCell withSort cellKey={Property.SINGLES_COUNT}>
+                    Singles count
                 </TableCell>
                 <TableCell withSort cellKey={Property.CREATION_DATE}>
                     Creation date
@@ -32,11 +32,8 @@ export const TableHeader = () => {
                 <TableCell withSort cellKey={Property.GENRE}>
                     Genre
                 </TableCell>
-                <TableCell withSort cellKey={Property.PERSON_NAME}>
-                    {"Front Man\'s name"}
-                </TableCell>
-                <TableCell>
-                    Singles
+                <TableCell withSort cellKey={Property.STUDIO_NAME}>
+                    {"Studio name"}
                 </TableCell>
                 <TableCell>
                     Actions

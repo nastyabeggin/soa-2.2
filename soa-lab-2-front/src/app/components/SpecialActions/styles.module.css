@@ -26,7 +26,7 @@
 .icon.green {
     fill: var(--accent-green-text);
 }
-.icon.blue {
+.icon.accent {
     fill: var(--accent-text);
 }
 .icon.danger {

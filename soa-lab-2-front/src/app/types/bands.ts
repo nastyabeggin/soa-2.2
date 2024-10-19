@@ -1,6 +1,4 @@
-import {Coordinates} from "@/app/types/location";
-import {PersonToBand, PersonToBandDTO} from "@/app/types/person";
-import {Single} from "@/app/types/single";
+import {Coordinates, Studio} from "@/app/types/location";
 
 export type Band = {
     id: number;
@@ -8,28 +6,28 @@ export type Band = {
     coordinates: Coordinates;
     creationDate: string;
     numberOfParticipants: number;
-    description: string;
+    albumsCount: number;
+    singlesCount: number;
+    studio: Studio;
     genre: string;
-    frontMan?: PersonToBand;
-    singles?: Single[];
 }
 
 export type BandDTO = {
     name: string;
     coordinates: Omit<Coordinates, 'id'>;
     numberOfParticipants: number;
-    description: string;
+    singlesCount: number;
+    albumsCount: number;
     genre: string;
-    frontMan?: PersonToBandDTO;
-    singles?: Omit<Single, 'id'>[];
+    studio?: Omit<Studio, 'id'>;
 }
 
 export type BandUpdateDTO = {
-    name?: string;
-    coordinates?: Omit<Coordinates, 'id'>;
-    numberOfParticipants?: number;
-    description?: string;
-    genre?: string;
-    frontMan?: PersonToBandDTO;
-    singles?: Omit<Single, 'id'>[];
+    name: string;
+    coordinates: Omit<Coordinates, 'id'>;
+    numberOfParticipants: number;
+    singlesCount: number;
+    albumsCount: number;
+    genre: string;
+    studio?: Omit<Studio, 'id'>;
 }

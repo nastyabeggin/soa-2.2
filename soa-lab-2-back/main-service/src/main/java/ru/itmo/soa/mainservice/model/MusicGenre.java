@@ -1,5 +1,8 @@
 package ru.itmo.soa.mainservice.model;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public enum MusicGenre {
-    ROCK, SOUL, MATH_ROCK, POST_ROCK
+    POP, MATH_ROCK, BRIT_POP
 }

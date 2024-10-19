@@ -7,16 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.itmo.soa.mainservice.model.Band;
 import ru.itmo.soa.mainservice.model.MusicGenre;
-import ru.itmo.soa.mainservice.model.Person;
-import ru.itmo.soa.mainservice.model.Single;
-import ru.itmo.soa.mainservice.model.dto.BandUpdate;
-import ru.itmo.soa.mainservice.model.dto.BandsInfoResponse;
+import ru.itmo.soa.mainservice.model.dto.*;
 import ru.itmo.soa.mainservice.services.BandService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/bands")
+@RequestMapping(path = "/api/music-bands")
 public class BandController {
 
     @Autowired
@@ -61,34 +58,19 @@ public class BandController {
         return ResponseEntity.ok(bandService.getAllGenres());
     }
 
-    @DeleteMapping("/genre/{genre}")
-    public ResponseEntity<Void> deleteBandsByGenre(@PathVariable(value = "genre") String genre) {
-        bandService.deleteBandsByGenre(genre);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/singles-count-sum")
+    public ResponseEntity<SinglesCountResponse> getSinglesCountSum() {
+        return ResponseEntity.ok(bandService.getSinglesCountSum());
     }
 
-    @GetMapping("/genre/min")
-    public ResponseEntity<Band> getGroupWithMinGenre() {
-        Band band = bandService.getGroupWithMinGenre();
-        return ResponseEntity.ok(band);
+    @GetMapping("/count-by-creation-date")
+    public ResponseEntity<List<GetBandCountByCreationDateResponse>> getCountByCreationDate() {
+        return ResponseEntity.ok(bandService.getBandsCountByCreationDate());
     }
 
-//    Запросы со второго сервера
-    @PostMapping("/{id}/singles")
-    public ResponseEntity<Band> addSingleToBand(@PathVariable(value = "id") Long id, @RequestBody Single single) {
-        Band updatedBand = bandService.addSingleToBand(id, single);
-        return ResponseEntity.status(HttpStatus.CREATED).body(updatedBand);
-    }
-
-    @PutMapping("/{bandId}/singles/{singleId}")
-    public ResponseEntity<Single> changeSingle(@PathVariable(value = "bandId") Long bandId, @PathVariable(value = "singleId") Long singleId, @RequestBody Single single) {
-        Single updatedSingle = bandService.changeSingle(bandId, singleId, single);
-        return ResponseEntity.status(HttpStatus.CREATED).body(updatedSingle);
-    }
-
-    @PostMapping("/{id}/participants")
-    public ResponseEntity<Person> addPersonToBand(@PathVariable(value = "id") Long id, @RequestBody Person person) {
-        Person newPerson = bandService.addPersonToBand(id, person);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newPerson);
+    @GetMapping("/all")
+    public ResponseEntity<List<BandNoDateResponse>> getAllBands() {
+        List<BandNoDateResponse> bands = bandService.getAllBandsNoDate();
+        return ResponseEntity.ok(bands);
     }
 }

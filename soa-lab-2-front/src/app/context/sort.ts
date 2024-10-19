@@ -9,13 +9,13 @@ export type SortOrderMap = {
 export const DEFAULT_SORT_ORDER: SortOrderMap = {
     [Property.ID]: SortOrder.UNDEFINED,
     [Property.NAME]: SortOrder.UNDEFINED,
-    [Property.DESCRIPTION]: SortOrder.UNDEFINED,
+    [Property.STUDIO_NAME]: SortOrder.UNDEFINED,
     [Property.CREATION_DATE]: SortOrder.UNDEFINED,
     [Property.COORDINATE_X]: SortOrder.UNDEFINED,
     [Property.COORDINATE_Y]: SortOrder.UNDEFINED,
     [Property.NUMBER_OF_PARTICIPANTS]: SortOrder.UNDEFINED,
     [Property.GENRE]: SortOrder.UNDEFINED,
-    [Property.PERSON_NAME]: SortOrder.UNDEFINED,
+    [Property.SINGLES_COUNT]: SortOrder.UNDEFINED,
 }
 
 export const SortContext = createContext({

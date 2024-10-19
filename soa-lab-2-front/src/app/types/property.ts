@@ -5,8 +5,8 @@ export enum Property {
     COORDINATE_Y = 'coordinates.y',
     CREATION_DATE = 'creationDate',
     NUMBER_OF_PARTICIPANTS = 'numberOfParticipants',
-    DESCRIPTION = 'description',
-    PERSON_NAME = 'frontMan.name',
+    SINGLES_COUNT = 'singlesCount',
+    STUDIO_NAME = 'studio.name',
     GENRE = 'genre'
 }
 
@@ -17,8 +17,8 @@ export const PROPERTIES_TEXT = {
     [Property.COORDINATE_Y]: 'Coordinate Y',
     [Property.CREATION_DATE]: 'Creation Date',
     [Property.NUMBER_OF_PARTICIPANTS]: 'Number of participants',
-    [Property.DESCRIPTION]: 'Description',
-    [Property.PERSON_NAME]: 'Front Man\'s name',
+    [Property.SINGLES_COUNT]: 'Singles count',
+    [Property.STUDIO_NAME]: 'Studio name',
     [Property.GENRE]: 'Genre'
 }
 

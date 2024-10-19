@@ -20,6 +20,9 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:3000",
+                "http://localhost:3001",
+                "https://127.0.0.1:8543/springmvc",
+                "https://127.0.0.1:8543",
                 "https://localhost:1112",
                 "http://localhost:1112",
                 "https://se.ifmo.ru/~s335045/.next/server/app/",

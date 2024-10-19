@@ -12,37 +12,30 @@ import ru.itmo.soa.mainservice.exceptions.InvalidParameterException;
 import ru.itmo.soa.mainservice.exceptions.ResourceNotFoundException;
 import ru.itmo.soa.mainservice.model.Band;
 import ru.itmo.soa.mainservice.model.MusicGenre;
-import ru.itmo.soa.mainservice.model.Person;
-import ru.itmo.soa.mainservice.model.Single;
-import ru.itmo.soa.mainservice.model.dto.BandUpdate;
-import ru.itmo.soa.mainservice.model.dto.BandsInfoResponse;
+import ru.itmo.soa.mainservice.model.dto.*;
 import ru.itmo.soa.mainservice.repositories.BandRepository;
 import ru.itmo.soa.mainservice.repositories.BandSpecifications;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BandService {
     @Autowired
     private BandRepository bandRepository;
 
-    @Autowired
-    private SingleService singleService;
-
-    @Autowired
-    private PersonService personService;
-
     public Band createBand(Band band) {
         band.setCreationDate(LocalDateTime.now());
 
         Band newBand = bandRepository.save(band);
-        if (band.getFrontMan() != null) {
-            newBand.getFrontMan().setBandID(newBand.getId());
-        }
         return bandRepository.save(newBand);
+    }
+
+    public List<Band> getAllBands() {
+        return bandRepository.findAll();
     }
 
     public BandsInfoResponse getBands(String[] sort, String[] filter, int page, int size) {
@@ -122,21 +115,11 @@ public class BandService {
         if (bandUpdate.getNumberOfParticipants() != null) {
             existingBand.setNumberOfParticipants(bandUpdate.getNumberOfParticipants());
         }
-        if (bandUpdate.getDescription() != null) {
-            existingBand.setDescription(bandUpdate.getDescription());
-        }
         if (bandUpdate.getGenre() != null) {
             existingBand.setGenre(bandUpdate.getGenre());
         }
-        if (bandUpdate.getFrontMan() != null) {
-            personService.createOrUpdatePerson(bandUpdate.getFrontMan());
-            existingBand.setFrontMan(bandUpdate.getFrontMan());
-        }
-        if (bandUpdate.getSingles() != null) {
-            List<Single> singles = bandUpdate.getSingles();
-            for(Single single : singles) {
-                singleService.createOrUpdateSingle(single);
-            }
+        if (bandUpdate.getStudio() != null) {
+            existingBand.setStudio(bandUpdate.getStudio());
         }
 
         return bandRepository.save(existingBand);
@@ -147,73 +130,32 @@ public class BandService {
         return Arrays.asList(MusicGenre.values());
     }
 
-    @Transactional
-    public void deleteBandsByGenre(String genreStr) {
-        try {
-            MusicGenre genre = MusicGenre.valueOf(genreStr.toUpperCase());
-            bandRepository.deleteByGenre(genre);
-        } catch (IllegalArgumentException ex) {
-            throw new ResourceNotFoundException("Genre not found: " + genreStr);
+    public SinglesCountResponse getSinglesCountSum() {
+        List<Band> bands = bandRepository.findAll();
+        int count = 0;
+        for (Band band: bands) {
+            count += band.getSinglesCount();
         }
+        SinglesCountResponse response = new SinglesCountResponse(count);
+        return response;
     }
 
-    public Band getGroupWithMinGenre() {
-        List<Band> bands = bandRepository.findAllOrderByGenreAscNameAsc();
-        if (bands.isEmpty()) {
-            throw new ResourceNotFoundException("No bands found");
-        }
-
-        return bands.get(0);
+    public List<GetBandCountByCreationDateResponse> getBandsCountByCreationDate() {
+        return bandRepository.getBandCountByCreationDate();
     }
-
-    public Band addSingleToBand(Long id, Single single) {
-        Band existingBand = bandRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Band not found with id: " + id));
-
-        List<Single> newBandSingles = existingBand.getSingles();
-        newBandSingles.add(single);
-        existingBand.setSingles(newBandSingles);
-
-        return bandRepository.save(existingBand);
-    }
-
-    public Single changeSingle(Long bandId, Long singleId, Single single) {
-        Band existingBand = bandRepository.findById(bandId)
-                .orElseThrow(() -> new ResourceNotFoundException("Band not found with id: " + bandId));
-
-        List<Single> existingSingles = existingBand.getSingles();
-
-        Optional<Single> existingSingle = existingSingles.stream()
-                .filter(s -> s.getId().equals(singleId))
-                .findFirst();
-
-        if (existingSingle.isPresent()) {
-            Single updatedSingle = singleService.updateSingle(singleId, single);
-
-            int index = existingSingles.indexOf(existingSingle.get());
-            existingSingles.set(index, updatedSingle);
-
-            existingBand.setSingles(existingSingles);
-            bandRepository.save(existingBand);
-
-            return updatedSingle;
-        } else {
-            throw new ResourceNotFoundException("Single not found with id: " + singleId + " for band with id: " + bandId);
-        }
-    }
-
-    public Person addPersonToBand(Long id, Person person) {
-        Band existingBand = bandRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Band not found with id: " + id));
-
-        person.setBandID(id);
-        Person newPerson = personService.createPerson(person);
-
-        Integer currentNumberOfParticipants = existingBand.getNumberOfParticipants();
-
-        existingBand.setNumberOfParticipants(currentNumberOfParticipants + 1);
-        bandRepository.save(existingBand);
-
-        return newPerson;
+    
+    public List<BandNoDateResponse> getAllBandsNoDate() {
+        return bandRepository.findAll().stream()
+                .map(band -> new BandNoDateResponse(
+                        band.getId(),
+                        band.getName(),
+                        band.getCoordinates(),
+                        band.getNumberOfParticipants(),
+                        band.getSinglesCount(),
+                        band.getAlbumsCount(),
+                        band.getGenre(),
+                        band.getStudio()
+                ))
+                .collect(Collectors.toList());
     }
 }
