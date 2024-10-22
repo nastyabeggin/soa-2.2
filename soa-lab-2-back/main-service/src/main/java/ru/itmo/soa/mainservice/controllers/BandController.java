@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/music-bands")
+@CrossOrigin("*")
 public class BandController {
 
     @Autowired
