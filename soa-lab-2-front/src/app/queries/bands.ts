@@ -155,7 +155,7 @@ async function updateBandById(id: number, bandData: Partial<BandUpdateDTO>): Pro
     try {
         const response = await fetchUrl({path: `/music-bands/${id}`,  options: {
                 method: 'PATCH',
-                body: JSON.stringify(bandData),
+                body: jsonToXML(JSON.stringify(bandData), "MusicBand"),
                 headers: { 'Content-Type': 'application/xml' }
             }});
 
