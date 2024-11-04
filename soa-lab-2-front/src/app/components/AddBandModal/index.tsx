@@ -32,6 +32,31 @@ export const AddBandModal = ({ isVisible, onClose }: AddBandModalProps) => {
             toast.error("Please enter all the required values: Name, X, Y, Genre, studio name, singles count");
             return;
         }
+        
+        if (String(numberOfParticipants).includes('.') || String(numberOfParticipants).includes('-') || String(numberOfParticipants).includes('e')) {
+            toast.error("Invalid value in field Number of members");
+            return;
+        }
+
+        if (String(singlesCount).includes('.') || String(singlesCount).includes('-') || String(singlesCount).includes('e')) {
+            toast.error("Invalid value in field singlesCount");
+            return;
+        }
+
+        if (String(albumsCount).includes('.') || String(albumsCount).includes('-') || String(albumsCount).includes('e')) {
+            toast.error("Invalid value in field albumsCount");
+            return;
+        }
+
+        if ((String(x).length - String(x).lastIndexOf('.') > 3 && String(x).includes('.')) || String(x).length > 10 || String(x).startsWith('.')) {
+            toast.error("Invalid value in field x");
+            return;
+        }
+
+        if ((String(y).length - String(y).lastIndexOf('.') > 3 && String(y).includes('.')) || String(y).length > 10 || String(y).startsWith('.')) {
+            toast.error("Invalid value in field y");
+            return;
+        }
 
         createBand({
             name: name.trim(),

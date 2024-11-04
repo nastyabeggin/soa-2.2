@@ -26,6 +26,10 @@ export const FiltersItem = ({ property, filtersList, validate: { min, minLength,
 
     const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
+        if (type === 'number' && e.target.value.startsWith('.')) {
+            toast.error("Not valid number");
+            return;
+        }
         if (type === 'datetime-local') {
             if (!e.target['validity'].valid) {
                 toast.error("Not valid date");

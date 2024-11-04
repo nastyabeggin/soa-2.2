@@ -17,6 +17,8 @@ import ru.itmo.soa.mainservice.repositories.BandRepository;
 import ru.itmo.soa.mainservice.repositories.BandSpecifications;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +30,7 @@ public class BandService {
     private BandRepository bandRepository;
 
     public Band createBand(Band band) {
-        band.setCreationDate(LocalDateTime.now());
+        band.setCreationDate(ZonedDateTime.now(ZoneOffset.UTC).toLocalDateTime());
 
         Band newBand = bandRepository.save(band);
         return bandRepository.save(newBand);
@@ -114,6 +116,9 @@ public class BandService {
         }
         if (bandUpdate.getNumberOfParticipants() != null) {
             existingBand.setNumberOfParticipants(bandUpdate.getNumberOfParticipants());
+        }
+        if (bandUpdate.getSinglesCount() != null) {
+            existingBand.setSinglesCount(bandUpdate.getSinglesCount());
         }
         if (bandUpdate.getGenre() != null) {
             existingBand.setGenre(bandUpdate.getGenre());

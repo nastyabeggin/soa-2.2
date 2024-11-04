@@ -15,7 +15,7 @@ export const PROPERTIES_TEXT = {
     [Property.NAME]: 'Name',
     [Property.COORDINATE_X]: 'Coordinate X',
     [Property.COORDINATE_Y]: 'Coordinate Y',
-    [Property.CREATION_DATE]: 'Creation Date',
+    [Property.CREATION_DATE]: 'Creation Date (UTC+0)',
     [Property.NUMBER_OF_PARTICIPANTS]: 'Number of participants',
     [Property.SINGLES_COUNT]: 'Singles count',
     [Property.STUDIO_NAME]: 'Studio name',
