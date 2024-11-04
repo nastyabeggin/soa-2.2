@@ -34,8 +34,28 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
             return;
         }
 
+        if (String(numberOfParticipants).includes('.') || String(numberOfParticipants).includes('-') || String(numberOfParticipants).includes('e')) {
+            toast.error("Invalid value in field Number of members");
+            return;
+        }
+
+        if (String(singlesCount).includes('.') || String(singlesCount).includes('-') || String(singlesCount).includes('e')) {
+            toast.error("Invalid value in field singlesCount");
+            return;
+        }
+
+        if ((String(x).length - String(x).lastIndexOf('.') > 3 && String(x).includes('.')) || String(x).length > 10 || String(x).startsWith('.')) {
+            toast.error("Invalid value in field x");
+            return;
+        }
+
+        if ((String(y).length - String(y).lastIndexOf('.') > 3 && String(y).includes('.')) || String(y).length > 10 || String(y).startsWith('.')) {
+            toast.error("Invalid value in field y");
+            return;
+        }
+
         updateBandById(band.id, {
-            name: name.trim(),
+            name: name,
             coordinates: {
                 x,
                 y,
@@ -44,7 +64,7 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
             genre,
             singlesCount,
             studio: {
-                name: studioName.trim()
+                name: studioName
             }
         }).then(() => {
             toast.success("Successfully updated band");

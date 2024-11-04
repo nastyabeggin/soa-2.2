@@ -21,4 +21,6 @@ public class BandUpdate {
     private MusicGenre genre;
     @XmlElement
     private Studio studio;
+    @XmlElement
+    private Integer singlesCount;
 }

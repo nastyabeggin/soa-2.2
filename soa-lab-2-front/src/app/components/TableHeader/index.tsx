@@ -18,7 +18,7 @@ export const TableHeader = () => {
                     Singles count
                 </TableCell>
                 <TableCell withSort cellKey={Property.CREATION_DATE}>
-                    Creation date
+                    Creation date (UTC+0)
                 </TableCell>
                 <TableCell withSort cellKey={Property.COORDINATE_X}>
                     X
