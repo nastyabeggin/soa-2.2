@@ -228,7 +228,7 @@ async function nominateBand(id: number, genre: string): Promise<void> {
                 method: 'POST',
             }, mainApi: false});
 
-        if (!response.ok) return response.text().then(text => { throw new Error(getErrorMessage(text)) });
+        if (!response.ok) return response.text().then(text => { throw new Error(text) });
     } catch (error) {
         throw error;
     }

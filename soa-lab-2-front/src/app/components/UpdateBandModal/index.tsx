@@ -35,7 +35,7 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
         }
 
         updateBandById(band.id, {
-            name: name.trim(),
+            name: name,
             coordinates: {
                 x,
                 y,
@@ -44,7 +44,7 @@ export const UpdateBandModal = ({ band, isVisible, onClose }: UpdateBandModalPro
             genre,
             singlesCount,
             studio: {
-                name: studioName.trim()
+                name: studioName
             }
         }).then(() => {
             toast.success("Successfully updated band");
