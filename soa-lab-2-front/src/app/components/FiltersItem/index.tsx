@@ -30,6 +30,14 @@ export const FiltersItem = ({ property, filtersList, validate: { min, minLength,
             toast.error("Not valid number");
             return;
         }
+
+        console.log(e)
+
+        if ((e.target.value.length - e.target.value.lastIndexOf('.') > 3 && e.target.value.includes('.')) || e.target.value.length > 10 || e.target.value.startsWith('.')) {
+            toast.error("Not valid number");
+            return;
+        }
+
         if (type === 'datetime-local') {
             if (!e.target['validity'].valid) {
                 toast.error("Not valid date");
