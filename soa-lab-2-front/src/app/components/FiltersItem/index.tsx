@@ -26,8 +26,28 @@ export const FiltersItem = ({ property, filtersList, validate: { min, minLength,
 
     const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
-        if (type === 'number' && e.target.value.startsWith('.')) {
-            toast.error("Not valid number");
+        if (type === 'number') {
+            // Убедимся, что число корректное и не начинается с "."
+            if (e.target.value.startsWith('.')) {
+                toast.error("Not valid number");
+                return;
+            }
+
+            // Ограничение на 5 знаков после запятой
+            const match = e.target.value.match(/^(\d+(\.\d{0,5})?)?/);
+            if (match) {
+                e.target.value = match[0];
+            }
+
+            setValue(e.target.value);
+
+            setFilters({
+                ...filters,
+                [property]: {
+                    operator: operator,
+                    value: e.target.value
+                }
+            });
             return;
         }
         if (type === 'datetime-local') {
@@ -40,6 +60,26 @@ export const FiltersItem = ({ property, filtersList, validate: { min, minLength,
                 [property]: {
                     operator: operator,
                     value: e.target.value + ':00.000000'
+                }
+            });
+            return;
+        }
+        if (type === 'text') {
+            if (e.target.value.includes('[') || e.target.value.includes(']')) {
+                toast.error("Text should not contain square brackets");
+                return;
+            }
+
+            if (!e.target.validity.valid) {
+                toast.error("Not valid text");
+                return;
+            }
+
+            setFilters({
+                ...filters,
+                [property]: {
+                    operator: operator,
+                    value: e.target.value
                 }
             });
             return;

@@ -9,9 +9,11 @@ import ru.itmo.soa.mainservice.model.Band;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class BandSpecifications {
+
     public static Specification<Band> createSpecification(String[] filters) {
         return (root, query, criteriaBuilder) -> {
             Predicate predicate = criteriaBuilder.conjunction();
@@ -41,41 +43,19 @@ public class BandSpecifications {
                         throw new InvalidParameterException("Invalid filter format: " + filter);
                     }
 
-                    String[] fieldParts = field.split("\\.");
-                    Path<?> currentPath = root;
-
-                    for (String part : fieldParts) {
-                        currentPath = currentPath.get(part);
-                    }
-
+                    Path<?> currentPath = buildPath(root, field);
                     Class<?> fieldType = currentPath.getJavaType();
-                    Predicate condition;
 
-                    switch (operator.toLowerCase()) {
-                        case "eq":
-                            condition = handleEqual(currentPath, fieldType, value, criteriaBuilder);
-                            break;
-                        case "neq":
-                            condition = handleNotEqual(currentPath, fieldType, value, criteriaBuilder);
-                            break;
-                        case "gt":
-                            condition = handleGreaterThan(currentPath, fieldType, value, criteriaBuilder);
-                            break;
-                        case "gte":
-                            condition = handleGreaterThanOrEqualTo(currentPath, fieldType, value, criteriaBuilder);
-                            break;
-                        case "lt":
-                            condition = handleLessThan(currentPath, fieldType, value, criteriaBuilder);
-                            break;
-                        case "lte":
-                            condition = handleLessThanOrEqualTo(currentPath, fieldType, value, criteriaBuilder);
-                            break;
-                        case "~":
-                            condition = handleLike(currentPath, fieldType, value, criteriaBuilder);
-                            break;
-                        default:
-                            throw new InvalidParameterException("Unknown operator: " + operator);
-                    }
+                    Predicate condition = switch (operator.toLowerCase()) {
+                        case "eq" -> handleEqual(currentPath, fieldType, value, criteriaBuilder);
+                        case "neq" -> handleNotEqual(currentPath, fieldType, value, criteriaBuilder);
+                        case "gt" -> handleGreaterThan(currentPath, fieldType, value, criteriaBuilder);
+                        case "gte" -> handleGreaterThanOrEqualTo(currentPath, fieldType, value, criteriaBuilder);
+                        case "lt" -> handleLessThan(currentPath, fieldType, value, criteriaBuilder);
+                        case "lte" -> handleLessThanOrEqualTo(currentPath, fieldType, value, criteriaBuilder);
+                        case "~" -> handleLike(currentPath, fieldType, value, criteriaBuilder);
+                        default -> throw new InvalidParameterException("Unknown operator: " + operator);
+                    };
 
                     predicate = criteriaBuilder.and(predicate, condition);
                 }
@@ -83,6 +63,15 @@ public class BandSpecifications {
 
             return predicate;
         };
+    }
+
+    private static Path<?> buildPath(Path<?> root, String field) {
+        String[] fieldParts = field.split("\\.");
+        Path<?> currentPath = root;
+        for (String part : fieldParts) {
+            currentPath = currentPath.get(part);
+        }
+        return currentPath;
     }
 
     private static Predicate handleEqual(Path<?> currentPath, Class<?> fieldType, String value, CriteriaBuilder criteriaBuilder) {
@@ -124,10 +113,10 @@ public class BandSpecifications {
             return criteriaBuilder.greaterThan(currentPath.as(LocalDate.class), parseDate(value));
         } else if (fieldType.equals(LocalDateTime.class)) {
             return criteriaBuilder.greaterThan(currentPath.as(LocalDateTime.class), parseDateTime(value));
-        } else if (fieldType.equals(String.class)) {
+        } else if (fieldType.isEnum()) {
             return criteriaBuilder.greaterThan(criteriaBuilder.upper(currentPath.as(String.class)), value.toUpperCase());
         } else {
-            throw new InvalidParameterException("Operator 'gt' can only be applied to numeric, date or string fields");
+            throw new InvalidParameterException("Operator 'gt' can only be applied to numeric, date, string or enum fields");
         }
     }
 
@@ -142,10 +131,10 @@ public class BandSpecifications {
             return criteriaBuilder.greaterThanOrEqualTo(currentPath.as(LocalDate.class), parseDate(value));
         } else if (fieldType.equals(LocalDateTime.class)) {
             return criteriaBuilder.greaterThanOrEqualTo(currentPath.as(LocalDateTime.class), parseDateTime(value));
-        } else if (fieldType.equals(String.class)) {
+        } else if (fieldType.isEnum()) {
             return criteriaBuilder.greaterThanOrEqualTo(criteriaBuilder.upper(currentPath.as(String.class)), value.toUpperCase());
         } else {
-            throw new InvalidParameterException("Operator 'gte' can only be applied to numeric, date or string fields");
+            throw new InvalidParameterException("Operator 'gte' can only be applied to numeric, date, string or enum fields");
         }
     }
 
@@ -160,10 +149,10 @@ public class BandSpecifications {
             return criteriaBuilder.lessThan(currentPath.as(LocalDate.class), parseDate(value));
         } else if (fieldType.equals(LocalDateTime.class)) {
             return criteriaBuilder.lessThan(currentPath.as(LocalDateTime.class), parseDateTime(value));
-        } else if (fieldType.equals(String.class)) {
+        } else if (fieldType.isEnum()) {
             return criteriaBuilder.lessThan(criteriaBuilder.upper(currentPath.as(String.class)), value.toUpperCase());
         } else {
-            throw new InvalidParameterException("Operator 'lt' can only be applied to numeric, date or string fields");
+            throw new InvalidParameterException("Operator 'lt' can only be applied to numeric, date, string or enum fields");
         }
     }
 
@@ -178,19 +167,18 @@ public class BandSpecifications {
             return criteriaBuilder.lessThanOrEqualTo(currentPath.as(LocalDate.class), parseDate(value));
         } else if (fieldType.equals(LocalDateTime.class)) {
             return criteriaBuilder.lessThanOrEqualTo(currentPath.as(LocalDateTime.class), parseDateTime(value));
-        } else if (fieldType.equals(String.class)) {
+        } else if (fieldType.isEnum()) {
             return criteriaBuilder.lessThanOrEqualTo(criteriaBuilder.upper(currentPath.as(String.class)), value.toUpperCase());
         } else {
-            throw new InvalidParameterException("Operator 'lte' can only be applied to numeric, date or string fields");
+            throw new InvalidParameterException("Operator 'lte' can only be applied to numeric, date, string or enum fields");
         }
     }
 
+
     private static Predicate handleLike(Path<?> currentPath, Class<?> fieldType, String value, CriteriaBuilder criteriaBuilder) {
-        if (fieldType.isEnum()) {
-            return criteriaBuilder.like(
-                    criteriaBuilder.upper(currentPath.as(String.class)), "%" + value.toUpperCase() + "%"
-            );
-        } else if (fieldType.equals(String.class)) {
+        if (fieldType.equals(String.class)) {
+            return criteriaBuilder.like(criteriaBuilder.upper(currentPath.as(String.class)), "%" + value.toUpperCase() + "%");
+        } else if (fieldType.isEnum()) {
             return criteriaBuilder.like(criteriaBuilder.upper(currentPath.as(String.class)), "%" + value.toUpperCase() + "%");
         } else {
             throw new InvalidParameterException("Operator '~' can only be applied to string or enum fields");
@@ -199,15 +187,15 @@ public class BandSpecifications {
 
     private static LocalDateTime parseDateTime(String value) {
         try {
-            return LocalDateTime.parse(value);
+            return LocalDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME);
         } catch (DateTimeParseException e) {
-            throw new InvalidParameterException("Invalid date format: " + value);
+            throw new InvalidParameterException("Invalid date-time format: " + value);
         }
     }
 
     private static LocalDate parseDate(String value) {
         try {
-            return LocalDate.parse(value);
+            return LocalDate.parse(value, DateTimeFormatter.ISO_DATE);
         } catch (DateTimeParseException e) {
             throw new InvalidParameterException("Invalid date format: " + value);
         }
