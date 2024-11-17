@@ -26,7 +26,9 @@ public class SecurityConfig {
                 "https://localhost:1112",
                 "http://localhost:1112",
                 "https://se.ifmo.ru/~s335045/.next/server/app/",
-                "https://se.ifmo.ru"
+                "https://se.ifmo.ru",
+                "https://localhost",
+                "https://localhost:443"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
