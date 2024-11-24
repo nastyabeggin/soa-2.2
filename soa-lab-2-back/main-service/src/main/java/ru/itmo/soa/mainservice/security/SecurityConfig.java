@@ -19,6 +19,7 @@ public class SecurityConfig {
     private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
+                "http://localhost",
                 "http://localhost:3000",
                 "http://localhost:3001",
                 "https://127.0.0.1:8543/springmvc",

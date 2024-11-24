@@ -9,10 +9,18 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
+#  cloud:
+#    consul:
+#      host: localhost
+#      port: 8500
+#      discovery:
+#        enabled: true
+#        register: true
+#        instance-id: ${spring.application.name}-${server.port}-${random.uuid}
 
 server:
   port: 8080

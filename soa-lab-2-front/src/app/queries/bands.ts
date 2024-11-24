@@ -114,7 +114,7 @@ async function getBands({
         if (filter !== undefined) params.push({ key: 'filter', value: filter});
 
         const response = await fetchUrl({path: '/music-bands', params, options: {
-            method: 'GET',
+            method: 'GET'
         }});
 
         if (!response.ok) return response.text().then(text => { throw new Error(getErrorMessage(text)) })
