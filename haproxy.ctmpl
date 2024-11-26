@@ -26,11 +26,9 @@ backend https_back
     timeout connect 10s
     timeout server 20s
     timeout check 5s
-    
-    server macbook-D9P444P6D9 172.16.231.178:8080 check
-    
-    server macbook-D9P444P6D9 172.16.231.178:8082 check
-    
+    {{ range service "music-band" }}
+    server {{ .Node }} {{ .Address }}:{{ .Port }} check
+    {{ end }}
 
 listen stats
     bind *:8487

@@ -37,7 +37,7 @@ management:
       show-details: always
 
 server:
-  port: 8080
+  port: 8082
   ssl:
     enabled: true
     key-store: classpath:static/keystore.jks
