@@ -187,7 +187,14 @@ async function getBandsByGenre(genre: string): Promise<[Band]> {
                 method: 'GET'
             }, mainApi: false});
         if (!response.ok) return response.text().then(text => { throw new Error(getErrorMessage(text)) })
-        return parseXML(await response.text());
+
+        // Получаем текст ответа
+        let responseText = await response.text();
+
+        // Заменяем все вхождения ns2:id на id
+        responseText = responseText.replace(/ns2:/g, '');
+        console.log(responseText)
+        return parseXML(responseText);
     } catch (error) {
         throw error;
     }

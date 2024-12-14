@@ -58,16 +58,25 @@ export const SpecialActions = () => {
     function onSetGenreToGet() {
         getBandsByGenre(genreToGet)
             .then((data) => {
-                console.log("data is ", data);
+                console.log("data is (get bu genre)", data);
                 const bandsArray = Array.isArray(data) ? data : [data];
-                if (data === undefined) {
+                if (data === undefined || data === null) {
                     toast.success('No bands found for the selected genre');
                     setBandsByGenre([]);
                     return;
                 }
-                    const bandNames = bandsArray.map((band: Band) => band.name);
+                  
+                const bandIds = bandsArray.map((band: Band) => String(band.id));
+
                 setCanFetch(canFetch + 1);
-                setBandsByGenre(bandNames);
+                console.log("bandsIds", bandIds);
+                if (bandIds[0] === "undefined" || bandIds[0] === null) {
+                    toast.success('No bands found for the selected genre');
+                    setBandsByGenre([]);
+                    return;
+                }
+
+                setBandsByGenre(bandIds);
             })
             .catch((err) => {
                 toast.error(`${err}`);
